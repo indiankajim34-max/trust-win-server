@@ -93,7 +93,7 @@ HTML_TEMPLATE = """
         .container { max-width: 410px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 10px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
         
         .top-banner { background: #181818; border: 1px solid #333; border-radius: 12px; padding: 8px; margin-bottom: 6px; flex-shrink: 0; }
-        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 4px; margin-bottom: 4px; }
+        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 4px; margin-bottom: 4px; }
         .live-dot { height: 7px; width: 7px; background-color: #00ff88; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px #00ff88; }
         
         .main-title { font-size: 15px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
@@ -119,15 +119,21 @@ HTML_TEMPLATE = """
         .countdown { font-size: 16px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
 
         .radar-box { background: #141414; border: 1px solid #333; border-radius: 12px; padding: 10px; margin-top: 6px; position: relative; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-        .radar-title { font-size: 9px; color: #777; letter-spacing: 1px; }
-        .radar-sub { font-size: 8px; color: #aaa; margin-top: 2px; }
+        .radar-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+        .radar-title { font-size: 9px; color: #777; letter-spacing: 1px; text-align: left; }
         
-        .radar-circle-wrap { width: 110px; height: 110px; margin: 8px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
-        .radar-circle-inner { width: 75px; height: 75px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; }
-        .prediction-display { font-size: 16px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.6); }
-        .analyzing-text { font-size: 9px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; }
+        /* Top-Left Red Check Result Button Inside Terminal */
+        .mini-check-btn { background: linear-gradient(45deg, #ff4444, #cc0000); color: #fff; border: none; padding: 3px 8px; font-size: 8px; font-weight: bold; border-radius: 4px; cursor: pointer; box-shadow: 0 0 8px rgba(255,68,68,0.5); transition: 0.2s; }
+        .mini-check-btn:active { transform: scale(0.95); }
 
-        .reveal-btn { background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; border: none; width: 100%; padding: 10px; font-size: 12px; font-weight: bold; border-radius: 25px; cursor: pointer; margin-top: 8px; animation: btn-glow 2s infinite; transition: 0.2s; }
+        .radar-sub { font-size: 8px; color: #aaa; margin-top: 2px; text-align: left; }
+        
+        .radar-circle-wrap { width: 100px; height: 100px; margin: 6px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
+        .radar-circle-inner { width: 70px; height: 70px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; }
+        .prediction-display { font-size: 15px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.6); }
+        .analyzing-text { font-size: 8px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; }
+
+        .reveal-btn { background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; border: none; width: 100%; padding: 8px; font-size: 11px; font-weight: bold; border-radius: 20px; cursor: pointer; margin-top: 6px; animation: btn-glow 2s infinite; transition: 0.2s; }
         .reveal-btn:active { transform: scale(0.96); }
 
         .tab-content { display: none; height: 100%; flex-direction: column; }
@@ -168,10 +174,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> DEEP 200-SCAN ACTIVE</span>
+                <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer">30d 00h</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO PERFECT PERIOD SYNC ENGINE</div>
+            <div class="sub-engine">WINGO UTC TIMER-SYNC ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -186,7 +192,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:8px; color:#888;">PERIOD SYNC</div>
-                <div style="font-size:9px; color:#ccc;">CORRECT NEXT PERIOD</div>
+                <div style="font-size:9px; color:#ccc;">UTC CLOCK LOCKED</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
                 <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
@@ -227,8 +233,14 @@ HTML_TEMPLATE = """
         <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
-                <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                <div class="radar-sub">200-RESULT FREQUENCY & PATTERN SCAN</div>
+                <div class="radar-header-row">
+                    <div>
+                        <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
+                        <div class="radar-sub">200-RESULT FREQUENCY & PATTERN SCAN</div>
+                    </div>
+                    <!-- Top-Left Red Check Result Button for Floating Window -->
+                    <button type="button" class="mini-check-btn" onclick="revealPrediction()">🔴 CHECK RESULT</button>
+                </div>
                 
                 <div class="radar-circle-wrap">
                     <div class="radar-circle-inner" id="radarInner">
@@ -270,7 +282,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">200-Scan & Perfect Period Sync</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">UTC Timer & Floating Optimized</b></p>
                 </div>
             </div>
         </div>
@@ -321,7 +333,6 @@ HTML_TEMPLATE = """
         let currentPredType = "WAITING";
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
-        let activeNextPeriod = null;
 
         function switchTab(tabName, element) {
             playClickSound();
@@ -376,7 +387,7 @@ HTML_TEMPLATE = """
             btn.disabled = true;
             btn.style.opacity = "0.5";
 
-            inner.innerHTML = '<div class="analyzing-text">👑 200-SCAN<br>ANALYSING...<br>[AI SCANNING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">👑 UTC SCAN<br>ANALYSING...<br>[AI SCANNING]</div>';
 
             setTimeout(() => {
                 isRevealed = true;
@@ -384,6 +395,19 @@ HTML_TEMPLATE = """
                 btn.style.opacity = "1";
                 btn.disabled = false;
             }, 2000);
+        }
+
+        // Pure UTC Timer-based Period Generator (Zero Server Lag)
+        function getUTCPeriod() {
+            const now = new Date();
+            const yyyy = now.getUTCFullYear();
+            const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
+            const dd = String(now.getUTCDate()).padStart(2, '0');
+            const hours = now.getUTCHours();
+            const mins = now.getUTCMinutes();
+            const totalMins = hours * 60 + mins;
+            const serial = 10000 + totalMins;
+            return `${yyyy}${mm}${dd}1000${serial}`;
         }
 
         async function fetchLotteryData() {
@@ -428,13 +452,9 @@ HTML_TEMPLATE = """
                         document.getElementById('radarInner').innerHTML = `<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>`;
                     }
 
-                    // Correct Next Period Logic: Always worker latest + 1 so it never equals the latest result period
-                    activeNextPeriod = String(parseInt(actIssue, 10) + 1);
-                    document.getElementById('periodVal').innerText = activeNextPeriod;
-
                     updateBdgChartUI(items);
 
-                    // DEEP 200-RESULT AI SCAN & ANALYSIS (Thorough scanning of up to 200 items)
+                    // DEEP 200-RESULT AI SCAN & ANALYSIS
                     const analysisPool = items.slice(0, 200);
                     let digitFreq = {};
                     for(let i=0; i<=9; i++) digitFreq[i] = 0;
@@ -607,16 +627,18 @@ HTML_TEMPLATE = """
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
             
-            // Instant local roll if seconds hit 0 or 59
-            if ((remaining === 59 || remaining === 0) && activeNextPeriod) {
-                activeNextPeriod = String(parseInt(activeNextPeriod, 10) + 1);
-                document.getElementById('periodVal').innerText = activeNextPeriod;
+            // Immediate UTC Period Update
+            document.getElementById('periodVal').innerText = getUTCPeriod();
+
+            if (remaining === 59 || remaining === 0) {
                 fetchLotteryData();
             }
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
+        // Initial fetch
+        document.getElementById('periodVal').innerText = getUTCPeriod();
         fetchLotteryData();
         setInterval(fetchLotteryData, 3000);
     </script>
