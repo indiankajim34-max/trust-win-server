@@ -1,5 +1,5 @@
 from flask import Flask, render_template_string, request, redirect, url_for, session
-import requests
+from curl_cffi import requests
 import threading
 import time
 import random
@@ -8,16 +8,24 @@ import os
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
 
-# Using alternative direct API endpoint gateway for cloud reliability
 URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json"
+REFERER_URL = "https://bdgwinor.com/"
 
 HEADERS = {
     "Host": "draw.ar-lottery01.com",
+    "Connection": "keep-alive",
+    "sec-ch-ua": "\"Chromium\";v=\"122\", \"Not(A:Brand\";v=\"8\", \"Google Chrome\";v=\"122\"",
     "Accept": "application/json, text/plain, */*",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Referer": "https://bdgwinor.com/",
+    "sec-ch-ua-mobile": "?1",
+    "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36",
+    "sec-ch-ua-platform": "\"Android\"",
     "Origin": "https://bdgwinor.com",
-    "Accept-Language": "en-US,en;q=0.9"
+    "Sec-Fetch-Site": "cross-site",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Dest": "empty",
+    "Referer": "https://bdgwinor.com/",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "en-US,en;q=0.9,hi;q=0.8"
 }
 
 app_state = {
@@ -28,7 +36,7 @@ app_state = {
     "period": "Fetching...",
     "prediction_type": "WAITING",
     "prediction_num": 0,
-    "last_result_display": "SYNCING CLOUD NODE...",
+    "last_result_display": "BYPASSING CLOUD SEC...",
     "revealed": False,
     "analyzing": False,
     "history_log": [],
@@ -167,7 +175,7 @@ HTML_TEMPLATE = """
                 <span><span class="live-dot"></span> LIVE</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">CLOUD AI OPTIMIZED ENGINE</div>
+            <div class="sub-engine">CLOUD AI BROWSER-FINGERPRINT ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -182,7 +190,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:9px; color:#888;">HOST: CLOUD NODE</div>
-                <div style="font-size:10px; color:#ccc;">IP-SEC: SECURE DIRECT GATEWAY</div>
+                <div style="font-size:10px; color:#ccc;">IP-SEC: TLS BYPASS (ACTIVE)</div>
             </div>
             <div class="host-right">
                 <div style="font-size:9px; color:#888;">PING</div>
@@ -228,7 +236,7 @@ HTML_TEMPLATE = """
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
                 <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                <div class="radar-sub">MOMENTUM RIDER & CLOUD OPTIMIZED</div>
+                <div class="radar-sub">MOMENTUM RIDER & CLOUD BYPASS</div>
                 
                 <div class="radar-circle-wrap">
                     <div class="radar-circle-inner" id="radarInner">
@@ -284,7 +292,7 @@ HTML_TEMPLATE = """
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Analyzed:</span> <b style="color:#fff;">{{ state.total }}</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Accuracy Rate:</span> <b style="color:#00ff88;">{{ "%.1f"|format((state.wins / state.total * 100) if state.total > 0 else 0.00) }}%</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Loss Guard Efficiency:</span> <b style="color:#ffdf73;">99.9%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Cloud Optimized Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Cloud TLS Bypass Active</b></p>
                 </div>
             </div>
         </div>
@@ -432,7 +440,8 @@ def background_worker():
     while True:
         try:
             params = {"pageNo": 1, "pageSize": 200}
-            response = requests.get(URL, headers=HEADERS, params=params, timeout=10)
+            # 🛡️ Using curl_cffi with chrome impersonation to bypass Cloudflare on Render
+            response = requests.get(URL, headers=HEADERS, params=params, impersonate="chrome", timeout=10)
             
             if response.status_code == 200:
                 data = response.json()
@@ -507,7 +516,7 @@ def background_worker():
             else:
                 app_state["last_result_display"] = f"HTTP Error: {response.status_code}"
         except Exception as e:
-            app_state["last_result_display"] = f"Sync Error: {str(e)[:30]}"
+            app_state["last_result_display"] = f"Error: {str(e)[:25]}"
         time.sleep(10)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -535,11 +544,10 @@ def reveal():
     return redirect(url_for('home'))
 
 @app.route('/set_tab')
-def set_tab():
+def set_tab':
     tab = request.args.get('tab', 'terminal')
     app_state["active_tab"] = tab
     return "OK"
-    
 
 @app.route('/')
 def home():
@@ -547,6 +555,7 @@ def home():
         return redirect(url_for('login'))
     return render_template_string(HTML_TEMPLATE, state=app_state)
 
+# 🔥 Background thread initialization for Gunicorn/Render
 t = threading.Thread(target=background_worker, daemon=True)
 t.start()
 
