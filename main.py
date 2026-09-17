@@ -132,7 +132,7 @@ HTML_TEMPLATE = """
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* BDG Win Chart Style Pattern Rows */
+        /* BDG Chart Style Pattern Rows */
         .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 7px 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
         .tiranga-period { color: #aaa; font-family: monospace; font-size: 9px; text-align: left; }
         .tiranga-nums { display: flex; gap: 3px; align-items: center; }
@@ -429,7 +429,7 @@ HTML_TEMPLATE = """
 
                     updateBdgChartUI(items);
 
-                    # DEEP 200-RESULT AI SCAN & ANALYSIS
+                    // DEEP 200-RESULT AI SCAN & ANALYSIS
                     const analysisPool = items.slice(0, 200);
                     let digitFreq = {};
                     for(let i=0; i<=9; i++) digitFreq[i] = 0;
