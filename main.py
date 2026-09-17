@@ -440,7 +440,6 @@ def background_worker():
     while True:
         try:
             params = {"pageNo": 1, "pageSize": 200}
-            # 🛡️ Using curl_cffi with chrome impersonation to bypass Cloudflare on Render
             response = requests.get(URL, headers=HEADERS, params=params, impersonate="chrome", timeout=10)
             
             if response.status_code == 200:
@@ -544,7 +543,7 @@ def reveal():
     return redirect(url_for('home'))
 
 @app.route('/set_tab')
-def set_tab':
+def set_tab():
     tab = request.args.get('tab', 'terminal')
     app_state["active_tab"] = tab
     return "OK"
@@ -555,7 +554,6 @@ def home():
         return redirect(url_for('login'))
     return render_template_string(HTML_TEMPLATE, state=app_state)
 
-# 🔥 Background thread initialization for Gunicorn/Render
 t = threading.Thread(target=background_worker, daemon=True)
 t.start()
 
