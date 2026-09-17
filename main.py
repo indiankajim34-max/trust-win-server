@@ -1,5 +1,6 @@
 from flask import Flask, render_template_string, request, redirect, url_for, session
 import os
+import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 import time
@@ -7,13 +8,20 @@ import time
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
 
-# Initialize Firebase Admin
+# Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
     try:
-        # सुनिश्चित करें कि serviceAccountKey.json फाइल आपके प्रोजेक्ट फोल्डर में मौजूद है
-        cred = credentials.Certificate('serviceAccountKey.json')
-        firebase_admin.initialize_app(cred)
-        print("Firebase Admin initialized successfully in Python.")
+        firebase_json_str = os.environ.get('FIREBASE_CONFIG_JSON')
+        if firebase_json_str:
+            cred_dict = json.loads(firebase_json_str)
+            cred = credentials.Certificate(cred_dict)
+            firebase_admin.initialize_app(cred)
+            print("Firebase initialized securely from Environment Variable.")
+        else:
+            # Local testing fallback
+            cred = credentials.Certificate('serviceAccountKey.json')
+            firebase_admin.initialize_app(cred)
+            print("Firebase initialized from local file.")
     except Exception as e:
         print(f"Firebase initialization error: {e}")
 
@@ -503,7 +511,6 @@ def login():
         else:
             if db:
                 try:
-                    # Firestore से trustwin_keys कलेक्शन में की चेक करें
                     doc_ref = db.collection('trustwin_keys').document(key)
                     doc = doc_ref.get()
                     if doc.exists:
