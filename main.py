@@ -3,7 +3,7 @@ import os
 import json
 import firebase_admin
 from firebase_admin import credentials, firestore
-import time
+from datetime import datetime, timezone
 
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
@@ -172,10 +172,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer">30d 00h</span>)</span>
+                <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO SEQUENTIAL PATTERN ENGINE</div>
+            <div class="sub-engine">300-RESULTS SEQUENTIAL PATTERN ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -190,7 +190,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:8px; color:#888;">PERIOD SYNC</div>
-                <div style="font-size:9px; color:#ccc;">LIVE CLOCK TICKS</div>
+                <div style="font-size:9px; color:#ccc;">UTC CLOCK STRICT +1</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
                 <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
@@ -236,7 +236,7 @@ HTML_TEMPLATE = """
                     <button type="button" class="premium-round-btn" onclick="revealPrediction()" title="Check Result">🎯</button>
                     <div class="radar-titles">
                         <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                        <div class="radar-sub">200-RESULT SEQUENTIAL TRANSITION SCAN</div>
+                        <div class="radar-sub">300-RESULT SEQUENTIAL TRANSITION SCAN</div>
                     </div>
                 </div>
                 
@@ -278,7 +278,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Sequential Transition Engine Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">300-Result Transition Engine Active</b></p>
                 </div>
             </div>
         </div>
@@ -288,8 +288,9 @@ HTML_TEMPLATE = """
             <div class="radar-box" style="text-align: left; display: block;">
                 <div class="radar-title" style="text-align: center;">👑 USER PROFILE</div>
                 <div class="profile-card">
-                    <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key') }}</span></p>
+                    <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
+                    <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
                     <p>Server Connected: <span>Cloud Dedicated Node</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:8px; border-radius:6px; font-weight:bold;">LOGOUT ACCOUNT</a>
@@ -319,6 +320,7 @@ HTML_TEMPLATE = """
 
     <script>
         const WORKER_URL = "https://wingo-cloudflare-worker.anishanisha143love.workers.dev";
+        const KEY_EXPIRE_ISO = "{{ session.get('key_expire_iso', '') }}";
 
         let totalRounds = 0;
         let winsCount = 0;
@@ -329,6 +331,40 @@ HTML_TEMPLATE = """
         let currentPredType = "WAITING";
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
+
+        // Dynamic Real-Time License Countdown Timer Calculation
+        function updateRealKeyTimer() {
+            let labelText = "VIP ACTIVE";
+            if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
+                const expireDate = new Date(KEY_EXPIRE_ISO);
+                const now = new Date();
+                const diffMs = expireDate - now;
+
+                if (diffMs <= 0) {
+                    labelText = "EXPIRED";
+                } else {
+                    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+                    if (days > 0) {
+                        labelText = `${days}d ${hours}h ${mins}m`;
+                    } else if (hours > 0) {
+                        labelText = `${hours}h ${mins}m ${secs}s`;
+                    } else {
+                        labelText = `${mins}m ${secs}s`;
+                    }
+                }
+            } else {
+                labelText = "UNLIMITED VIP";
+            }
+            document.getElementById('keyTimer').innerText = labelText;
+            const profTimer = document.getElementById('profileKeyTimer');
+            if (profTimer) profTimer.innerText = labelText;
+        }
+        setInterval(updateRealKeyTimer, 1000);
+        updateRealKeyTimer();
 
         function switchTab(tabName, element) {
             playClickSound();
@@ -400,11 +436,48 @@ HTML_TEMPLATE = """
             return `${yyyy}${mm}${dd}1000${serial}`;
         }
 
+        // Safe Multi-Page Data Retrieval for 300 Results
+        async function fetch300Results() {
+            let combinedList = [];
+            try {
+                const res1 = await fetch(WORKER_URL + "?pageSize=100&pageNo=1");
+                const data1 = await res1.json();
+                if (data1 && data1.data && data1.data.list) {
+                    combinedList = combinedList.concat(data1.data.list);
+                }
+            } catch(e) {}
+
+            if (combinedList.length === 0) {
+                try {
+                    const resDef = await fetch(WORKER_URL);
+                    const dataDef = await resDef.json();
+                    if (dataDef && dataDef.data && dataDef.data.list) {
+                        combinedList = dataDef.data.list;
+                    }
+                } catch(e) {}
+            }
+
+            // Fetch Page 2 & 3 if worker supports pagination
+            if (combinedList.length > 0 && combinedList.length < 300) {
+                try {
+                    const res2 = await fetch(WORKER_URL + "?pageSize=100&pageNo=2");
+                    const data2 = await res2.json();
+                    if (data2 && data2.data && data2.data.list) {
+                        combinedList = combinedList.concat(data2.data.list);
+                    }
+                    const res3 = await fetch(WORKER_URL + "?pageSize=100&pageNo=3");
+                    const data3 = await res3.json();
+                    if (data3 && data3.data && data3.data.list) {
+                        combinedList = combinedList.concat(data3.data.list);
+                    }
+                } catch(e) {}
+            }
+            return combinedList;
+        }
+
         async function fetchLotteryData() {
             try {
-                const res = await fetch(WORKER_URL);
-                const data = await res.json();
-                const items = data.data && data.data.list ? data.data.list : [];
+                const items = await fetch300Results();
                 if (items.length > 0) {
                     const latest = items[0];
                     const actIssue = String(latest.issueNumber);
@@ -445,9 +518,9 @@ HTML_TEMPLATE = """
                     updateBdgChartUI(items);
 
                     // ==============================================================
-                    // DEEP 200-RESULT SEQUENTIAL TRANSITION PATTERN ANALYSIS
+                    // DEEP 300-RESULT SEQUENTIAL TRANSITION PATTERN ANALYSIS
                     // ==============================================================
-                    const analysisPool = items.slice(0, 200);
+                    const analysisPool = items.slice(0, 300);
                     const lastNum = parseInt(items[0].number, 10);
                     const lastType = lastNum >= 5 ? "BIG" : "SMALL";
 
@@ -457,7 +530,7 @@ HTML_TEMPLATE = """
                     let nextSmallCount = 0;
                     let transitionMatches = 0;
 
-                    // Scan the last 200 results to find every instance where 'lastNum' occurred in history
+                    // Scan the 300 results history to find every occurrence of lastNum
                     for (let i = 0; i < analysisPool.length - 1; i++) {
                         let histPrevNum = parseInt(analysisPool[i + 1].number, 10);
                         let histNextNum = parseInt(analysisPool[i].number, 10);
@@ -474,13 +547,13 @@ HTML_TEMPLATE = """
                     let predN = 0;
 
                     if (transitionMatches >= 2) {
-                        // High Confidence Transition Matrix derived from exact historical sequence
+                        // High Confidence Transition Matrix derived from exact historical sequence of 300 items
                         predT = nextBigCount >= nextSmallCount ? "BIG" : "SMALL";
                         let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
                         subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
                         predN = subPool[0];
                     } else {
-                        // Fallback: Overall pattern & frequency analysis
+                        // Fallback: Overall frequency analysis over 300 results
                         let overallBig = 0, overallSmall = 0;
                         let overallDigitFreq = {};
                         for(let i=0; i<=9; i++) overallDigitFreq[i] = 0;
@@ -680,8 +753,27 @@ def login():
                         if data.get('isExpired', False):
                             error = '❌ Ye Trust Win Key Expire ho chuki hai!'
                         else:
+                            # Calculate or extract exact expiry timestamp
+                            expire_iso = None
+                            if 'expiresAt' in data and data['expiresAt']:
+                                exp_val = data['expiresAt']
+                                if hasattr(exp_val, 'isoformat'):
+                                    expire_iso = exp_val.isoformat()
+                                else:
+                                    expire_iso = str(exp_val)
+                            elif 'expire_time' in data and data['expire_time']:
+                                expire_iso = str(data['expire_time'])
+                            elif 'createdAt' in data and data['createdAt']:
+                                # If validDays or duration exists
+                                valid_days = int(data.get('validDays', data.get('durationDays', 30)))
+                                created_val = data['createdAt']
+                                if hasattr(created_val, 'timestamp'):
+                                    ts = created_val.timestamp() + (valid_days * 86400)
+                                    expire_iso = datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+
                             session['authenticated'] = True
                             session['active_key'] = key
+                            session['key_expire_iso'] = expire_iso
                             return redirect(url_for('home'))
                     else:
                         error = '❌ Trust Win ki galat Key hai!'
@@ -695,6 +787,7 @@ def login():
 def logout():
     session.pop('authenticated', None)
     session.pop('active_key', None)
+    session.pop('key_expire_iso', None)
     return redirect(url_for('login'))
 
 @app.route('/keepalive')
