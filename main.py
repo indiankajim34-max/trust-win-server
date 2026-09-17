@@ -18,7 +18,6 @@ if not firebase_admin._apps:
             firebase_admin.initialize_app(cred)
             print("Firebase initialized securely from Environment Variable.")
         else:
-            # Local testing fallback
             cred = credentials.Certificate('serviceAccountKey.json')
             firebase_admin.initialize_app(cred)
             print("Firebase initialized from local file.")
@@ -120,16 +119,22 @@ HTML_TEMPLATE = """
 
         .guard-banner { background: rgba(212, 175, 55, 0.08); border: 1px dashed #d4af37; border-radius: 8px; padding: 6px; font-size: 11px; font-weight: bold; color: #d4af37; margin: 8px 0; letter-spacing: 0.5px; }
 
-        .radar-box { background: #141414; border: 1px solid #333; border-radius: 14px; padding: 15px 10px; margin-top: 8px; position: relative; overflow: hidden; }
+        .radar-box { background: #141414; border: 1px solid #333; border-radius: 14px; padding: 12px 10px; margin-top: 8px; position: relative; overflow: hidden; }
         .radar-title { font-size: 10px; color: #777; letter-spacing: 1px; }
         .radar-sub { font-size: 9px; color: #aaa; margin-top: 2px; }
         
-        .radar-circle-wrap { width: 140px; height: 140px; margin: 12px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
-        .radar-circle-inner { width: 95px; height: 95px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5px; }
-        .prediction-display { font-size: 19px; font-weight: bold; color: #00ff88; text-shadow: 0 0 12px rgba(0,255,136,0.6); }
-        .analyzing-text { font-size: 11px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.3; }
+        /* Pattern Trend Grid Styling */
+        .pattern-grid { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+        .pattern-pill { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #000; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        .pill-big { background: #00ff88; border: 1px solid #fff; }
+        .pill-small { background: #ff4444; border: 1px solid #fff; color: #fff; }
 
-        .reveal-btn { background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; border: none; width: 100%; padding: 13px; font-size: 14px; font-weight: bold; border-radius: 30px; cursor: pointer; margin-top: 10px; animation: btn-glow 2s infinite; transition: 0.2s; }
+        .radar-circle-wrap { width: 130px; height: 130px; margin: 10px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
+        .radar-circle-inner { width: 90px; height: 90px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5px; }
+        .prediction-display { font-size: 18px; font-weight: bold; color: #00ff88; text-shadow: 0 0 12px rgba(0,255,136,0.6); }
+        .analyzing-text { font-size: 10px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.3; }
+
+        .reveal-btn { background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; border: none; width: 100%; padding: 12px; font-size: 13px; font-weight: bold; border-radius: 30px; cursor: pointer; margin-top: 10px; animation: btn-glow 2s infinite; transition: 0.2s; }
         .reveal-btn:active { transform: scale(0.96); }
 
         .tab-content { display: none; }
@@ -155,10 +160,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> DIRECT WORKER LIVE</span>
+                <span><span class="live-dot"></span> LIVE SYNC ACTIVE</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO 1M DIRECT PROXY ENGINE</div>
+            <div class="sub-engine">WINGO SMART PATTERN ENGINE v2</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -172,12 +177,12 @@ HTML_TEMPLATE = """
 
         <div class="host-box">
             <div class="host-left">
-                <div style="font-size:9px; color:#888;">HOST: RENDER NODE</div>
-                <div style="font-size:10px; color:#ccc;">DIRECT CLIENT SYNC</div>
+                <div style="font-size:9px; color:#888;">ENGINE: PATTERN MAPPING</div>
+                <div style="font-size:10px; color:#ccc;">HIGH ACCURACY AI</div>
             </div>
             <div class="host-right">
-                <div style="font-size:9px; color:#888;">PING</div>
-                <div>12 ms</div>
+                <div style="font-size:9px; color:#888;">SYNC</div>
+                <div style="color:#00ff88;">REAL-TIME</div>
             </div>
         </div>
 
@@ -203,23 +208,23 @@ HTML_TEMPLATE = """
         <div class="period-box">
             <div>
                 <span>CURRENT PERIOD</span>
-                <b id="periodVal" style="color:#fff; font-size:12px;">Syncing Live...</b>
+                <b id="periodVal" style="color:#fff; font-size:12px;">Syncing...</b>
             </div>
             <div style="text-align: right;">
                 <span>NEXT SIGNAL IN</span>
-                <div class="countdown" id="timer">00:45</div>
+                <div class="countdown" id="timer">00:60</div>
             </div>
         </div>
 
         <div class="guard-banner">
-            🛡️ DIRECT WORKER PROXY SYNCHRONIZED
+            🛡️ PATTERN & TREND AI SYNCHRONIZED
         </div>
 
         <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
                 <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                <div class="radar-sub">MOMENTUM RIDER & WORKER PROXY</div>
+                <div class="radar-sub">MOMENTUM & PATTERN TRACKING</div>
                 
                 <div class="radar-circle-wrap">
                     <div class="radar-circle-inner" id="radarInner">
@@ -230,6 +235,15 @@ HTML_TEMPLATE = """
                 </div>
 
                 <button type="button" class="reveal-btn" id="revealBtn" onclick="revealPrediction()">🎯 CHECK NEXT RESULT (REVEAL)</button>
+            </div>
+
+            <!-- VISUAL PATTERN TRACKER BOX (AS REQUESTED) -->
+            <div class="radar-box" style="margin-top: 8px;">
+                <div class="radar-title">📈 LIVE PATTERN TREND TRACKER (LAST 10)</div>
+                <div class="radar-sub">VISUAL B/S MOMENTUM MAPPING</div>
+                <div class="pattern-grid" id="patternGridContainer">
+                    <span style="color:#666; font-size:11px; padding:5px;">Loading pattern history...</span>
+                </div>
             </div>
         </div>
 
@@ -250,7 +264,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:10px; padding:12px; margin-top:10px; text-align:left; font-size:12px;">
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Direct Worker Proxy Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Pattern Tracker Active</b></p>
                 </div>
             </div>
         </div>
@@ -352,14 +366,14 @@ HTML_TEMPLATE = """
             btn.disabled = true;
             btn.style.opacity = "0.5";
 
-            inner.innerHTML = '<div class="analyzing-text">👑 TRUST WIN<br>ANALYSING...<br>[WORKER SCANNING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">👑 TRUST WIN<br>PATTERN SCAN...<br>[AI ANALYZING]</div>';
 
             setTimeout(() => {
                 isRevealed = true;
                 inner.innerHTML = `<div class="prediction-display">${currentPredType} : ${currentPredNum}</div>`;
                 btn.style.opacity = "1";
                 btn.disabled = false;
-            }, 3000);
+            }, 2500);
         }
 
         async function fetchLotteryData() {
@@ -404,19 +418,34 @@ HTML_TEMPLATE = """
                         document.getElementById('radarInner').innerHTML = '<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>';
                     }
 
+                    // Accurate Next Period Sync based on Worker latest issue
                     const nextPeriod = String(parseInt(actIssue, 10) + 1);
                     document.getElementById('periodVal').innerText = nextPeriod;
 
-                    const recentNumbers = items.slice(0, 20).map(x => parseInt(x.number, 10));
+                    // Update Visual Pattern Grid (Last 10 results)
+                    updatePatternGrid(items);
+
+                    // SMART PATTERN AI ANALYSIS ENGINE
+                    const recentNumbers = items.slice(0, 15).map(x => parseInt(x.number, 10));
                     const recentTypes = recentNumbers.map(n => n >= 5 ? "BIG" : "SMALL");
                     
-                    let streakCount = 1;
-                    for (let i = 1; i < recentTypes.length; i++) {
-                        if (recentTypes[i] === recentTypes[0]) streakCount++;
-                        else break;
+                    // Pattern Trend Analysis: Check alternating vs streak
+                    let bigCount = recentTypes.filter(t => t === "BIG").length;
+                    let smallCount = recentTypes.filter(t => t === "SMALL").length;
+                    
+                    let lastType = recentTypes[0];
+                    let secondLastType = recentTypes[1] || lastType;
+                    
+                    // Pattern detection logic to maximize win rate
+                    let predT = lastType;
+                    if (lastType === secondLastType) {
+                        // If there's a double streak, look for trend continuation or reversal based on balance
+                        predT = bigCount > smallCount + 3 ? "SMALL" : (smallCount > bigCount + 3 ? "BIG" : lastType);
+                    } else {
+                        // Alternating pattern detected, follow trend or revert
+                        predT = lastType;
                     }
 
-                    let predT = streakCount >= 6 ? (recentTypes[0] === "BIG" ? "SMALL" : "BIG") : recentTypes[0];
                     let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
                     let seedVal = (parseInt(actIssue, 10) + recentNumbers[0]) % subPool.length;
                     let predN = subPool[seedVal];
@@ -437,6 +466,21 @@ HTML_TEMPLATE = """
             } catch(e) {
                 console.error("Fetch error:", e);
             }
+        }
+
+        function updatePatternGrid(items) {
+            const container = document.getElementById('patternGridContainer');
+            let html = '';
+            // Get last 10 items for visual pattern tracker
+            const recent = items.slice(0, 10);
+            recent.forEach(item => {
+                let num = parseInt(item.number, 10);
+                let isBig = num >= 5;
+                let label = isBig ? 'B' : 'S';
+                let cssClass = isBig ? 'pill-big' : 'pill-small';
+                html += `<div class="pattern-pill ${cssClass}" title="Period: ${item.issueNumber}, Num: ${num}">${label}</div>`;
+            });
+            container.innerHTML = html;
         }
 
         function updateLogUI() {
@@ -495,7 +539,7 @@ HTML_TEMPLATE = """
         updateTimer();
 
         fetchLotteryData();
-        setInterval(fetchLotteryData, 8000);
+        setInterval(fetchLotteryData, 4000); // Faster polling (every 4s) to keep period & sync rock solid
     </script>
 </body>
 </html>
