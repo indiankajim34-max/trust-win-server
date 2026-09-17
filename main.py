@@ -539,6 +539,7 @@ def set_tab():
     tab = request.args.get('tab', 'terminal')
     app_state["active_tab"] = tab
     return "OK"
+    
 
 @app.route('/')
 def home():
