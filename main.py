@@ -168,10 +168,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> INSTANT SYNC ACTIVE</span>
+                <span><span class="live-dot"></span> UTC CLOCK-ANCHORED SYNC</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO INSTANT PERIOD SYNC ENGINE</div>
+            <div class="sub-engine">WINGO EXACT TIME-SYNC ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -186,7 +186,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:8px; color:#888;">PERIOD SYNC</div>
-                <div style="font-size:9px; color:#ccc;">ZERO LAG ROLLOVER</div>
+                <div style="font-size:9px; color:#ccc;">UTC TIMER LOCKED</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
                 <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
@@ -270,7 +270,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Instant Period Sync Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">UTC Clock Anchor Active</b></p>
                 </div>
             </div>
         </div>
@@ -321,7 +321,7 @@ HTML_TEMPLATE = """
         let currentPredType = "WAITING";
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
-        let liveCurrentPeriod = null; // Instant client-side period anchor
+        let timeAnchoredPeriod = null; // Strict time-based clock anchor
 
         function switchTab(tabName, element) {
             playClickSound();
@@ -376,7 +376,7 @@ HTML_TEMPLATE = """
             btn.disabled = true;
             btn.style.opacity = "0.5";
 
-            inner.innerHTML = '<div class="analyzing-text">👑 INSTANT SYNC<br>ANALYSING...<br>[AI SCANNING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">👑 UTC SYNC<br>ANALYSING...<br>[AI SCANNING]</div>';
 
             setTimeout(() => {
                 isRevealed = true;
@@ -425,15 +425,14 @@ HTML_TEMPLATE = """
                         updateLogUI();
 
                         isRevealed = false;
-                        document.getElementById('radarInner').innerHTML = '<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>';
+                        document.getElementById('radarInner').innerHTML = `<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>`;
                     }
 
-                    // Calculate next active period from worker data and sync with anchor
+                    // Strict Time-Anchored Calculation based on worker latest issue
                     const workerNextPeriod = String(parseInt(actIssue, 10) + 1);
-                    if (!liveCurrentPeriod || parseInt(workerNextPeriod, 10) > parseInt(liveCurrentPeriod, 10)) {
-                        liveCurrentPeriod = workerNextPeriod;
+                    if (!timeAnchoredPeriod || parseInt(workerNextPeriod, 10) > parseInt(timeAnchoredPeriod, 10)) {
+                        timeAnchoredPeriod = workerNextPeriod;
                     }
-                    document.getElementById('periodVal').innerText = liveCurrentPeriod;
 
                     updateBdgChartUI(items);
 
@@ -610,13 +609,18 @@ HTML_TEMPLATE = """
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
             
-            // INSTANT PERIOD ROLLOVER: When seconds hit 59 or 00, instantly increment period to eliminate API lag
+            // STRICT CLOCK-ANCHORED ROLLOVER: The exact millisecond seconds hit 0 or 59, 
+            // instantly increment period locally so it never lags behind by even 1 second.
             if (remaining === 59 || remaining === 0) {
-                if (liveCurrentPeriod) {
-                    liveCurrentPeriod = String(parseInt(liveCurrentPeriod, 10) + 1);
-                    document.getElementById('periodVal').innerText = liveCurrentPeriod;
+                if (timeAnchoredPeriod) {
+                    timeAnchoredPeriod = String(parseInt(timeAnchoredPeriod, 10) + 1);
+                    document.getElementById('periodVal').innerText = timeAnchoredPeriod;
                 }
                 fetchLotteryData();
+            } else {
+                if (timeAnchoredPeriod) {
+                    document.getElementById('periodVal').innerText = timeAnchoredPeriod;
+                }
             }
         }
         setInterval(updateTimer, 1000);
