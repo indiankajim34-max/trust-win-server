@@ -117,18 +117,10 @@ HTML_TEMPLATE = """
         .period-box span { font-size: 14px; font-weight: bold; color: #fff; display: block; letter-spacing: 0.5px; }
         .countdown { font-size: 18px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
 
-        .guard-banner { background: rgba(212, 175, 55, 0.08); border: 1px dashed #d4af37; border-radius: 8px; padding: 6px; font-size: 11px; font-weight: bold; color: #d4af37; margin: 8px 0; letter-spacing: 0.5px; }
-
         .radar-box { background: #141414; border: 1px solid #333; border-radius: 14px; padding: 12px 10px; margin-top: 8px; position: relative; overflow: hidden; }
         .radar-title { font-size: 10px; color: #777; letter-spacing: 1px; }
         .radar-sub { font-size: 9px; color: #aaa; margin-top: 2px; }
         
-        /* Pattern Trend Grid Styling */
-        .pattern-grid { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
-        .pattern-pill { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #000; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
-        .pill-big { background: #00ff88; border: 1px solid #fff; }
-        .pill-small { background: #ff4444; border: 1px solid #fff; color: #fff; }
-
         .radar-circle-wrap { width: 130px; height: 130px; margin: 10px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
         .radar-circle-inner { width: 90px; height: 90px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5px; }
         .prediction-display { font-size: 18px; font-weight: bold; color: #00ff88; text-shadow: 0 0 12px rgba(0,255,136,0.6); }
@@ -140,6 +132,16 @@ HTML_TEMPLATE = """
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
+        /* Tiranga Style Pattern Table */
+        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
+        .tiranga-period { color: #aaa; font-family: monospace; font-size: 10px; text-align: left; }
+        .tiranga-nums { display: flex; gap: 3px; align-items: center; }
+        .t-num-circle { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; background: #222; color: #666; border: 1px solid #444; }
+        .t-num-circle.active { background: #00ff88; color: #000; border-color: #fff; box-shadow: 0 0 6px #00ff88; }
+        .tiranga-badge { padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 9px; }
+        .badge-big { background: #ffdf73; color: #000; }
+        .badge-small { background: #3498db; color: #fff; }
+
         .log-list { max-height: 280px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 10px; }
         .log-item { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
         .badge-win { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 2px 6px; border-radius: 4px; }
@@ -149,10 +151,11 @@ HTML_TEMPLATE = """
         .profile-card p { margin: 8px 0; color: #bbb; }
         .profile-card span { color: #fff; font-weight: bold; }
 
-        .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; display: grid; grid-template-columns: repeat(4, 1fr); padding: 8px 0; }
-        .nav-item { font-size: 10px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        /* 5 Bottom Nav Items */
+        .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 0; }
+        .nav-item { font-size: 9px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
         .nav-item.active { color: #d4af37; font-weight: bold; }
-        .nav-item div { font-size: 14px; margin-bottom: 2px; }
+        .nav-item div { font-size: 13px; margin-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -160,10 +163,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> LIVE SYNC ACTIVE</span>
+                <span><span class="live-dot"></span> 200-RESULT DEEP AI</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO SMART PATTERN ENGINE v2</div>
+            <div class="sub-engine">WINGO ADVANCED 200-SCAN ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -175,14 +178,14 @@ HTML_TEMPLATE = """
             <div class="huge-last-val" id="hugeResultVal">Connecting to Worker...</div>
         </div>
 
-        <div class="host-box">
-            <div class="host-left">
-                <div style="font-size:9px; color:#888;">ENGINE: PATTERN MAPPING</div>
-                <div style="font-size:10px; color:#ccc;">HIGH ACCURACY AI</div>
+        <div class="host-box" style="background: #161616; border: 1px solid #333; border-radius: 10px; padding: 8px 12px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div style="text-align: left;">
+                <div style="font-size:9px; color:#888;">SCAN DEPTH</div>
+                <div style="font-size:10px; color:#ccc;">UP TO 200 RESULTS</div>
             </div>
-            <div class="host-right">
-                <div style="font-size:9px; color:#888;">SYNC</div>
-                <div style="color:#00ff88;">REAL-TIME</div>
+            <div style="text-align: right; color:#00ff88; font-weight: bold;">
+                <div style="font-size:9px; color:#888;">STATUS</div>
+                <div>OPTIMIZED</div>
             </div>
         </div>
 
@@ -216,15 +219,11 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <div class="guard-banner">
-            🛡️ PATTERN & TREND AI SYNCHRONIZED
-        </div>
-
         <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
                 <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                <div class="radar-sub">MOMENTUM & PATTERN TRACKING</div>
+                <div class="radar-sub">200-RESULT FREQUENCY & PATTERN SCAN</div>
                 
                 <div class="radar-circle-wrap">
                     <div class="radar-circle-inner" id="radarInner">
@@ -236,13 +235,15 @@ HTML_TEMPLATE = """
 
                 <button type="button" class="reveal-btn" id="revealBtn" onclick="revealPrediction()">🎯 CHECK NEXT RESULT (REVEAL)</button>
             </div>
+        </div>
 
-            <!-- VISUAL PATTERN TRACKER BOX (AS REQUESTED) -->
-            <div class="radar-box" style="margin-top: 8px;">
-                <div class="radar-title">📈 LIVE PATTERN TREND TRACKER (LAST 10)</div>
-                <div class="radar-sub">VISUAL B/S MOMENTUM MAPPING</div>
-                <div class="pattern-grid" id="patternGridContainer">
-                    <span style="color:#666; font-size:11px; padding:5px;">Loading pattern history...</span>
+        <!-- PATTERN TAB (TIRANGA STYLE 0-9 HISTORY) -->
+        <div id="tab-pattern" class="tab-content">
+            <div class="radar-box" style="text-align: left;">
+                <div class="radar-title" style="text-align: center; margin-bottom: 6px;">🎯 TIRANGA PATTERN VIEW (0-9 HISTORICAL)</div>
+                <div class="radar-sub" style="text-align: center; margin-bottom: 10px;">LIVE 200-PERIOD DIGIT MAPPING</div>
+                <div class="log-list" id="tirangaPatternList" style="max-height: 310px;">
+                    <div style="text-align:center; color:#777; padding:20px;">Loading Tiranga Pattern Data...</div>
                 </div>
             </div>
         </div>
@@ -264,7 +265,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:10px; padding:12px; margin-top:10px; text-align:left; font-size:12px;">
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Pattern Tracker Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">200-Result Deep Scan Active</b></p>
                 </div>
             </div>
         </div>
@@ -283,10 +284,13 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- BOTTOM NAV -->
+        <!-- 5-ITEM BOTTOM NAV (TERMINAL | PATTERN | LOG | STATS | PROFILE) -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('terminal', this)">
                 <div>📈</div>TERMINAL
+            </div>
+            <div class="nav-item" onclick="switchTab('pattern', this)">
+                <div>🎯</div>PATTERN
             </div>
             <div class="nav-item" onclick="switchTab('log', this)">
                 <div>📜</div>LOG
@@ -366,7 +370,7 @@ HTML_TEMPLATE = """
             btn.disabled = true;
             btn.style.opacity = "0.5";
 
-            inner.innerHTML = '<div class="analyzing-text">👑 TRUST WIN<br>PATTERN SCAN...<br>[AI ANALYZING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">👑 200-SCAN<br>ANALYZING...<br>[AI SCANNING]</div>';
 
             setTimeout(() => {
                 isRevealed = true;
@@ -418,37 +422,55 @@ HTML_TEMPLATE = """
                         document.getElementById('radarInner').innerHTML = '<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>';
                     }
 
-                    // Accurate Next Period Sync based on Worker latest issue
+                    // Accurate Next Period Sync
                     const nextPeriod = String(parseInt(actIssue, 10) + 1);
                     document.getElementById('periodVal').innerText = nextPeriod;
 
-                    // Update Visual Pattern Grid (Last 10 results)
-                    updatePatternGrid(items);
+                    // Render Tiranga Pattern History View (0-9 grid per period)
+                    updateTirangaPatternUI(items);
 
-                    // SMART PATTERN AI ANALYSIS ENGINE
-                    const recentNumbers = items.slice(0, 15).map(x => parseInt(x.number, 10));
+                    // DEEP 200-RESULT AI SCAN & ANALYSIS
+                    const analysisPool = items.slice(0, 200);
+                    let digitFreq = {};
+                    for(let i=0; i<=9; i++) digitFreq[i] = 0;
+                    let bigCount = 0;
+                    let smallCount = 0;
+
+                    analysisPool.forEach(item => {
+                        let num = parseInt(item.number, 10);
+                        if (!isNaN(num)) {
+                            digitFreq[num]++;
+                            if(num >= 5) bigCount++;
+                            else smallCount++;
+                        }
+                    });
+
+                    // Momentum & Streak calculation from recent items
+                    const recentNumbers = analysisPool.slice(0, 15).map(x => parseInt(x.number, 10));
                     const recentTypes = recentNumbers.map(n => n >= 5 ? "BIG" : "SMALL");
                     
-                    // Pattern Trend Analysis: Check alternating vs streak
-                    let bigCount = recentTypes.filter(t => t === "BIG").length;
-                    let smallCount = recentTypes.filter(t => t === "SMALL").length;
-                    
+                    let streakCount = 1;
+                    for (let i = 1; i < recentTypes.length; i++) {
+                        if (recentTypes[i] === recentTypes[0]) streakCount++;
+                        else break;
+                    }
+
                     let lastType = recentTypes[0];
-                    let secondLastType = recentTypes[1] || lastType;
-                    
-                    // Pattern detection logic to maximize win rate
                     let predT = lastType;
-                    if (lastType === secondLastType) {
-                        // If there's a double streak, look for trend continuation or reversal based on balance
-                        predT = bigCount > smallCount + 3 ? "SMALL" : (smallCount > bigCount + 3 ? "BIG" : lastType);
+
+                    // Smart Reversal / Balance Check over 200 results to minimize losses
+                    if (streakCount >= 4) {
+                        predT = lastType === "BIG" ? "SMALL" : "BIG";
                     } else {
-                        // Alternating pattern detected, follow trend or revert
-                        predT = lastType;
+                        if (bigCount > smallCount + 12) predT = "SMALL";
+                        else if (smallCount > bigCount + 12) predT = "BIG";
+                        else predT = lastType;
                     }
 
                     let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
-                    let seedVal = (parseInt(actIssue, 10) + recentNumbers[0]) % subPool.length;
-                    let predN = subPool[seedVal];
+                    // Pick the least frequent number in the 200 pool for high accuracy prediction
+                    let sortedSubPool = subPool.sort((a, b) => digitFreq[a] - digitFreq[b]);
+                    let predN = sortedSubPool[0];
 
                     currentPredType = predT;
                     currentPredNum = predN;
@@ -468,17 +490,30 @@ HTML_TEMPLATE = """
             }
         }
 
-        function updatePatternGrid(items) {
-            const container = document.getElementById('patternGridContainer');
+        function updateTirangaPatternUI(items) {
+            const container = document.getElementById('tirangaPatternList');
             let html = '';
-            // Get last 10 items for visual pattern tracker
-            const recent = items.slice(0, 10);
-            recent.forEach(item => {
-                let num = parseInt(item.number, 10);
-                let isBig = num >= 5;
-                let label = isBig ? 'B' : 'S';
-                let cssClass = isBig ? 'pill-big' : 'pill-small';
-                html += `<div class="pattern-pill ${cssClass}" title="Period: ${item.issueNumber}, Num: ${num}">${label}</div>`;
+            const displayItems = items.slice(0, 50); // Show last 50 periods
+            displayItems.forEach(item => {
+                let issueNum = String(item.issueNumber);
+                let shortPeriod = issueNum;
+                let actualNum = parseInt(item.number, 10);
+                let isBig = actualNum >= 5;
+                let badgeClass = isBig ? 'badge-big' : 'badge-small';
+                let badgeText = isBig ? 'B' : 'S';
+
+                let circlesHtml = '';
+                for(let i=0; i<=9; i++) {
+                    let isActive = (i === actualNum) ? 'active' : '';
+                    circlesHtml += `<div class="t-num-circle ${isActive}">${i}</div>`;
+                }
+
+                html += `
+                <div class="tiranga-row">
+                    <div class="tiranga-period">${shortPeriod}</div>
+                    <div class="tiranga-nums">${circlesHtml}</div>
+                    <div class="tiranga-badge ${badgeClass}">${badgeText}</div>
+                </div>`;
             });
             container.innerHTML = html;
         }
@@ -539,7 +574,7 @@ HTML_TEMPLATE = """
         updateTimer();
 
         fetchLotteryData();
-        setInterval(fetchLotteryData, 4000); // Faster polling (every 4s) to keep period & sync rock solid
+        setInterval(fetchLotteryData, 4000);
     </script>
 </body>
 </html>
