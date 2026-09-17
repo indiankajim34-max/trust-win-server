@@ -530,11 +530,9 @@ def logout():
 
 @app.route('/reveal', methods=['POST'])
 def reveal():
-    @app.route('/reveal', methods=['POST'])
-    def reveal():
-        if session.get('authenticated'):
-            app_state["revealed"] = True
-        return redirect(url_for('home'))
+    if session.get('authenticated'):
+        app_state["revealed"] = True
+    return redirect(url_for('home'))
 
 @app.route('/set_tab')
 def set_tab():
