@@ -79,14 +79,14 @@ HTML_TEMPLATE = """
             100% { transform: scale(0.95); opacity: 0.8; }
         }
         @keyframes btn-glow {
-            0% { box-shadow: 0 0 10px rgba(0,255,136,0.3); }
-            50% { box-shadow: 0 0 25px rgba(0,255,136,0.8); }
-            100% { box-shadow: 0 0 10px rgba(0,255,136,0.3); }
+            0% { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
+            50% { box-shadow: 0 0 30px rgba(0,255,136,0.9); }
+            100% { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
         }
         @keyframes text-flash {
-            0% { opacity: 0.3; }
+            0% { opacity: 0.4; }
             50% { opacity: 1; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
-            100% { opacity: 0.3; }
+            100% { opacity: 0.4; }
         }
         * { box-sizing: border-box; }
         body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 6px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
@@ -119,22 +119,20 @@ HTML_TEMPLATE = """
         .countdown { font-size: 16px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
 
         .radar-box { background: #141414; border: 1px solid #333; border-radius: 12px; padding: 10px; margin-top: 6px; position: relative; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-        .radar-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-        .radar-title { font-size: 9px; color: #777; letter-spacing: 1px; text-align: left; }
         
-        /* Top-Left Red Check Result Button Inside Terminal */
-        .mini-check-btn { background: linear-gradient(45deg, #ff4444, #cc0000); color: #fff; border: none; padding: 3px 8px; font-size: 8px; font-weight: bold; border-radius: 4px; cursor: pointer; box-shadow: 0 0 8px rgba(255,68,68,0.5); transition: 0.2s; }
-        .mini-check-btn:active { transform: scale(0.95); }
+        /* Terminal Header with Left-Side Premium Round Button */
+        .radar-header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+        .premium-round-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(45deg, #00ff88, #00cc66); border: 2px solid #fff; color: #000; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px rgba(0,255,136,0.8); animation: btn-glow 2s infinite; transition: 0.2s; flex-shrink: 0; }
+        .premium-round-btn:active { transform: scale(0.92); }
 
-        .radar-sub { font-size: 8px; color: #aaa; margin-top: 2px; text-align: left; }
+        .radar-titles { text-align: left; flex-grow: 1; }
+        .radar-title { font-size: 9px; color: #777; letter-spacing: 1px; }
+        .radar-sub { font-size: 8px; color: #aaa; margin-top: 2px; }
         
-        .radar-circle-wrap { width: 100px; height: 100px; margin: 6px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
-        .radar-circle-inner { width: 70px; height: 70px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; }
-        .prediction-display { font-size: 15px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.6); }
-        .analyzing-text { font-size: 8px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; }
-
-        .reveal-btn { background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; border: none; width: 100%; padding: 8px; font-size: 11px; font-weight: bold; border-radius: 20px; cursor: pointer; margin-top: 6px; animation: btn-glow 2s infinite; transition: 0.2s; }
-        .reveal-btn:active { transform: scale(0.96); }
+        .radar-circle-wrap { width: 110px; height: 110px; margin: 6px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
+        .radar-circle-inner { width: 75px; height: 75px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; }
+        .prediction-display { font-size: 16px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.6); }
+        .analyzing-text { font-size: 9px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; }
 
         .tab-content { display: none; height: 100%; flex-direction: column; }
         .tab-content.active { display: flex; }
@@ -192,7 +190,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:8px; color:#888;">PERIOD SYNC</div>
-                <div style="font-size:9px; color:#ccc;">UTC CLOCK LOCKED</div>
+                <div style="font-size:9px; color:#ccc;">STRICT +1 ADVANCED</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
                 <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
@@ -233,13 +231,13 @@ HTML_TEMPLATE = """
         <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
+                <!-- Header with Left-Side Premium Animated Round Button -->
                 <div class="radar-header-row">
-                    <div>
+                    <button type="button" class="premium-round-btn" onclick="revealPrediction()" title="Check Result">🎯</button>
+                    <div class="radar-titles">
                         <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
                         <div class="radar-sub">200-RESULT FREQUENCY & PATTERN SCAN</div>
                     </div>
-                    <!-- Top-Left Red Check Result Button for Floating Window -->
-                    <button type="button" class="mini-check-btn" onclick="revealPrediction()">🔴 CHECK RESULT</button>
                 </div>
                 
                 <div class="radar-circle-wrap">
@@ -249,8 +247,6 @@ HTML_TEMPLATE = """
                         </div>
                     </div>
                 </div>
-
-                <button type="button" class="reveal-btn" id="revealBtn" onclick="revealPrediction()">🎯 CHECK NEXT RESULT (REVEAL)</button>
             </div>
         </div>
 
@@ -282,7 +278,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">UTC Timer & Floating Optimized</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">200-Scan & Strict +1 Period Active</b></p>
                 </div>
             </div>
         </div>
@@ -383,21 +379,15 @@ HTML_TEMPLATE = """
         function revealPrediction() {
             playAiSearchingSound();
             const inner = document.getElementById('radarInner');
-            const btn = document.getElementById('revealBtn');
-            btn.disabled = true;
-            btn.style.opacity = "0.5";
-
-            inner.innerHTML = '<div class="analyzing-text">👑 UTC SCAN<br>ANALYSING...<br>[AI SCANNING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">TRUST AI<br>ANALYSING...</div>';
 
             setTimeout(() => {
                 isRevealed = true;
                 inner.innerHTML = `<div class="prediction-display">${currentPredType} : ${currentPredNum}</div>`;
-                btn.style.opacity = "1";
-                btn.disabled = false;
             }, 2000);
         }
 
-        // Pure UTC Timer-based Period Generator (Zero Server Lag)
+        // Pure UTC Timer-based Period Generator with Strict +1 Advancement
         function getUTCPeriod() {
             const now = new Date();
             const yyyy = now.getUTCFullYear();
@@ -406,7 +396,7 @@ HTML_TEMPLATE = """
             const hours = now.getUTCHours();
             const mins = now.getUTCMinutes();
             const totalMins = hours * 60 + mins;
-            const serial = 10000 + totalMins;
+            const serial = 10000 + totalMins + 1; // Strict +1 ahead
             return `${yyyy}${mm}${dd}1000${serial}`;
         }
 
@@ -451,6 +441,10 @@ HTML_TEMPLATE = """
                         isRevealed = false;
                         document.getElementById('radarInner').innerHTML = `<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>`;
                     }
+
+                    // Strict +1 Period Calculation from latest worker issue
+                    let calculatedNextPeriod = String(parseInt(actIssue, 10) + 1);
+                    document.getElementById('periodVal').innerText = calculatedNextPeriod;
 
                     updateBdgChartUI(items);
 
@@ -627,9 +621,6 @@ HTML_TEMPLATE = """
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
             
-            // Immediate UTC Period Update
-            document.getElementById('periodVal').innerText = getUTCPeriod();
-
             if (remaining === 59 || remaining === 0) {
                 fetchLotteryData();
             }
@@ -638,7 +629,6 @@ HTML_TEMPLATE = """
         updateTimer();
 
         // Initial fetch
-        document.getElementById('periodVal').innerText = getUTCPeriod();
         fetchLotteryData();
         setInterval(fetchLotteryData, 3000);
     </script>
