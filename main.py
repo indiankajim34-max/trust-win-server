@@ -9,18 +9,8 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
 
-URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json"
-REFERER_URL = "https://bdgwinor.com/"
-
-HEADERS = {
-    "Host": "draw.ar-lottery01.com",
-    "Connection": "keep-alive",
-    "Accept": "application/json, text/plain, */*",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Origin": "https://bdgwinor.com",
-    "Referer": "https://bdgwinor.com/",
-    "Accept-Language": "en-US,en;q=0.9"
-}
+# Your Custom Cloudflare Worker Proxy URL (Bypasses Render IP Block)
+URL = "https://wild-block-7398.anishanisha143love.workers.dev/"
 
 app_state = {
     "total": 0,
@@ -30,7 +20,7 @@ app_state = {
     "period": "Syncing Live...",
     "prediction_type": "WAITING",
     "prediction_num": 0,
-    "last_result_display": "HYBRID CLOUD NODE ACTIVE",
+    "last_result_display": "CLOUD WORKER PROXY ACTIVE",
     "revealed": False,
     "analyzing": False,
     "history_log": [],
@@ -166,10 +156,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> HYBRID LIVE</span>
+                <span><span class="live-dot"></span> WORKER SYNC</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO 1M HYBRID CLOUD ENGINE</div>
+            <div class="sub-engine">WINGO 1M WORKER PROXY ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -184,7 +174,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:9px; color:#888;">HOST: CLOUD NODE</div>
-                <div style="font-size:10px; color:#ccc;">IP-SEC: HYBRID SYNC ACTIVE</div>
+                <div style="font-size:10px; color:#ccc;">IP-SEC: WORKER PROXY ACTIVE</div>
             </div>
             <div class="host-right">
                 <div style="font-size:9px; color:#888;">PING</div>
@@ -230,7 +220,7 @@ HTML_TEMPLATE = """
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
                 <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                <div class="radar-sub">MOMENTUM RIDER & HYBRID SYNC</div>
+                <div class="radar-sub">MOMENTUM RIDER & WORKER PROXY SYNC</div>
                 
                 <div class="radar-circle-wrap">
                     <div class="radar-circle-inner" id="radarInner">
@@ -285,7 +275,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:10px; padding:12px; margin-top:10px; text-align:left; font-size:12px;">
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Rounds:</span> <b style="color:#fff;">{{ state.total }}</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Real Accuracy:</span> <b style="color:#00ff88;">{{ "%.1f"|format((state.wins / state.total * 100) if state.total > 0 else 0.00) }}%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Hybrid Sync Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Worker Proxy Active</b></p>
                 </div>
             </div>
         </div>
@@ -432,15 +422,14 @@ def background_worker():
     while True:
         items = []
         try:
-            params = {"pageNo": 1, "pageSize": 200}
-            response = requests.get(URL, headers=HEADERS, params=params, timeout=4)
+            response = requests.get(URL, timeout=5)
             if response.status_code == 200:
                 data = response.json()
                 items = data.get('data', {}).get('list', [])
         except:
             pass
 
-        # 🛡️ HYBRID BRIDGE: If direct API is blocked by Cloudflare on Render, use time-synced real algorithmic calculation!
+        # Fallback sync if worker needs a moment
         if not items:
             ist_time = datetime.utcnow() + timedelta(hours=5, minutes=30)
             base_issue = int(ist_time.strftime("%Y%m%d")) * 10000 + (ist_time.hour * 60 + ist_time.minute)
