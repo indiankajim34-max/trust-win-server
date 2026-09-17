@@ -132,17 +132,20 @@ HTML_TEMPLATE = """
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Tiranga Style Pattern Table */
-        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
-        .tiranga-period { color: #aaa; font-family: monospace; font-size: 10px; text-align: left; }
+        /* BDG Win Chart Style Pattern Rows */
+        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 7px 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
+        .tiranga-period { color: #aaa; font-family: monospace; font-size: 9px; text-align: left; }
         .tiranga-nums { display: flex; gap: 3px; align-items: center; }
-        .t-num-circle { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; background: #222; color: #666; border: 1px solid #444; }
-        .t-num-circle.active { background: #00ff88; color: #000; border-color: #fff; box-shadow: 0 0 6px #00ff88; }
-        .tiranga-badge { padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 9px; }
-        .badge-big { background: #ffdf73; color: #000; }
-        .badge-small { background: #3498db; color: #fff; }
+        
+        .t-num-circle { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; background: #1f1f1f; color: #666; border: 1px solid #333; }
+        .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 6px #9b59b6; }
+        .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 6px #2ecc71; }
+        .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 6px #e74c3c; }
 
-        .log-list { max-height: 280px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 10px; }
+        .badge-big-bdg { background: #f1c40f; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 9px; }
+        .badge-small-bdg { background: #3498db; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 9px; }
+
+        .log-list { max-height: 290px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 10px; }
         .log-item { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
         .badge-win { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 2px 6px; border-radius: 4px; }
         .badge-loss { color: #ff4444; font-weight: bold; background: rgba(255,68,68,0.1); padding: 2px 6px; border-radius: 4px; }
@@ -151,7 +154,6 @@ HTML_TEMPLATE = """
         .profile-card p { margin: 8px 0; color: #bbb; }
         .profile-card span { color: #fff; font-weight: bold; }
 
-        /* 5 Bottom Nav Items */
         .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 0; }
         .nav-item { font-size: 9px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
         .nav-item.active { color: #d4af37; font-weight: bold; }
@@ -163,10 +165,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> 200-RESULT DEEP AI</span>
+                <span><span class="live-dot"></span> BDG CHART ACTIVE</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO ADVANCED 200-SCAN ENGINE</div>
+            <div class="sub-engine">WINGO BDG CHART & 200-SCAN ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -178,14 +180,14 @@ HTML_TEMPLATE = """
             <div class="huge-last-val" id="hugeResultVal">Connecting to Worker...</div>
         </div>
 
-        <div class="host-box" style="background: #161616; border: 1px solid #333; border-radius: 10px; padding: 8px 12px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-            <div style="text-align: left;">
-                <div style="font-size:9px; color:#888;">SCAN DEPTH</div>
-                <div style="font-size:10px; color:#ccc;">UP TO 200 RESULTS</div>
+        <div class="host-box">
+            <div class="host-left">
+                <div style="font-size:9px; color:#888;">CHART MODE</div>
+                <div style="font-size:10px; color:#ccc;">BDG & TIRANGA EXACT</div>
             </div>
-            <div style="text-align: right; color:#00ff88; font-weight: bold;">
-                <div style="font-size:9px; color:#888;">STATUS</div>
-                <div>OPTIMIZED</div>
+            <div class="host-right" style="color:#00ff88;">
+                <div style="font-size:9px; color:#888;">ZIGZAG LINE</div>
+                <div>ENABLED</div>
             </div>
         </div>
 
@@ -237,13 +239,13 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- PATTERN TAB (TIRANGA STYLE 0-9 HISTORY) -->
+        <!-- PATTERN TAB (BDG WIN EXACT STYLE WITH RED ZIGZAG LINE) -->
         <div id="tab-pattern" class="tab-content">
             <div class="radar-box" style="text-align: left;">
-                <div class="radar-title" style="text-align: center; margin-bottom: 6px;">🎯 TIRANGA PATTERN VIEW (0-9 HISTORICAL)</div>
-                <div class="radar-sub" style="text-align: center; margin-bottom: 10px;">LIVE 200-PERIOD DIGIT MAPPING</div>
-                <div class="log-list" id="tirangaPatternList" style="max-height: 310px;">
-                    <div style="text-align:center; color:#777; padding:20px;">Loading Tiranga Pattern Data...</div>
+                <div class="radar-title" style="text-align: center; margin-bottom: 4px;">📊 BDG CHART & ZIGZAG TREND</div>
+                <div class="radar-sub" style="text-align: center; margin-bottom: 10px;">EXACT COLOR MAPPING & CONNECTING LINE</div>
+                <div class="log-list" id="tirangaPatternList" style="max-height: 310px; position: relative;">
+                    <div style="text-align:center; color:#777; padding:20px;">Loading BDG Chart Data...</div>
                 </div>
             </div>
         </div>
@@ -265,7 +267,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:10px; padding:12px; margin-top:10px; text-align:left; font-size:12px;">
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">200-Result Deep Scan Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">200-Scan & BDG Chart Active</b></p>
                 </div>
             </div>
         </div>
@@ -284,13 +286,13 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- 5-ITEM BOTTOM NAV (TERMINAL | PATTERN | LOG | STATS | PROFILE) -->
+        <!-- 5-ITEM BOTTOM NAV -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('terminal', this)">
                 <div>📈</div>TERMINAL
             </div>
             <div class="nav-item" onclick="switchTab('pattern', this)">
-                <div>🎯</div>PATTERN
+                <div>📊</div>PATTERN
             </div>
             <div class="nav-item" onclick="switchTab('log', this)">
                 <div>📜</div>LOG
@@ -370,7 +372,7 @@ HTML_TEMPLATE = """
             btn.disabled = true;
             btn.style.opacity = "0.5";
 
-            inner.innerHTML = '<div class="analyzing-text">👑 200-SCAN<br>ANALYZING...<br>[AI SCANNING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">👑 200-SCAN<br>ANALYSING...<br>[AI SCANNING]</div>';
 
             setTimeout(() => {
                 isRevealed = true;
@@ -422,14 +424,12 @@ HTML_TEMPLATE = """
                         document.getElementById('radarInner').innerHTML = '<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>';
                     }
 
-                    // Accurate Next Period Sync
                     const nextPeriod = String(parseInt(actIssue, 10) + 1);
                     document.getElementById('periodVal').innerText = nextPeriod;
 
-                    // Render Tiranga Pattern History View (0-9 grid per period)
-                    updateTirangaPatternUI(items);
+                    updateBdgChartUI(items);
 
-                    // DEEP 200-RESULT AI SCAN & ANALYSIS
+                    # DEEP 200-RESULT AI SCAN & ANALYSIS
                     const analysisPool = items.slice(0, 200);
                     let digitFreq = {};
                     for(let i=0; i<=9; i++) digitFreq[i] = 0;
@@ -445,7 +445,6 @@ HTML_TEMPLATE = """
                         }
                     });
 
-                    // Momentum & Streak calculation from recent items
                     const recentNumbers = analysisPool.slice(0, 15).map(x => parseInt(x.number, 10));
                     const recentTypes = recentNumbers.map(n => n >= 5 ? "BIG" : "SMALL");
                     
@@ -458,7 +457,6 @@ HTML_TEMPLATE = """
                     let lastType = recentTypes[0];
                     let predT = lastType;
 
-                    // Smart Reversal / Balance Check over 200 results to minimize losses
                     if (streakCount >= 4) {
                         predT = lastType === "BIG" ? "SMALL" : "BIG";
                     } else {
@@ -468,7 +466,6 @@ HTML_TEMPLATE = """
                     }
 
                     let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
-                    // Pick the least frequent number in the 200 pool for high accuracy prediction
                     let sortedSubPool = subPool.sort((a, b) => digitFreq[a] - digitFreq[b]);
                     let predN = sortedSubPool[0];
 
@@ -490,32 +487,67 @@ HTML_TEMPLATE = """
             }
         }
 
-        function updateTirangaPatternUI(items) {
+        function updateBdgChartUI(items) {
             const container = document.getElementById('tirangaPatternList');
-            let html = '';
-            const displayItems = items.slice(0, 50); // Show last 50 periods
-            displayItems.forEach(item => {
+            let html = '<div style="position:relative;" id="chartWrapper"><svg id="zigzagSvg" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;"></svg>';
+            
+            const displayItems = items.slice(0, 40);
+            displayItems.forEach((item, index) => {
                 let issueNum = String(item.issueNumber);
-                let shortPeriod = issueNum;
                 let actualNum = parseInt(item.number, 10);
                 let isBig = actualNum >= 5;
-                let badgeClass = isBig ? 'badge-big' : 'badge-small';
+                let badgeClass = isBig ? 'badge-big-bdg' : 'badge-small-bdg';
                 let badgeText = isBig ? 'B' : 'S';
 
                 let circlesHtml = '';
                 for(let i=0; i<=9; i++) {
-                    let isActive = (i === actualNum) ? 'active' : '';
-                    circlesHtml += `<div class="t-num-circle ${isActive}">${i}</div>`;
+                    let isActive = (i === actualNum);
+                    let colorClass = '';
+                    if (isActive) {
+                        if (i === 0 || i === 5) colorClass = 'c-violet';
+                        else if ([1, 3, 7, 9].includes(i)) colorClass = 'c-green';
+                        else colorClass = 'c-red';
+                    }
+                    circlesHtml += `<div class="t-num-circle ${isActive ? 'active ' + colorClass : ''}" id="circle-${index}-${i}">${i}</div>`;
                 }
 
                 html += `
-                <div class="tiranga-row">
-                    <div class="tiranga-period">${shortPeriod}</div>
+                <div class="tiranga-row" style="position:relative; z-index:2;">
+                    <div class="tiranga-period">${issueNum}</div>
                     <div class="tiranga-nums">${circlesHtml}</div>
                     <div class="tiranga-badge ${badgeClass}">${badgeText}</div>
                 </div>`;
             });
+            html += '</div>';
             container.innerHTML = html;
+
+            setTimeout(() => {
+                drawZigzagLine();
+            }, 100);
+        }
+
+        function drawZigzagLine() {
+            const svg = document.getElementById('zigzagSvg');
+            const wrapper = document.getElementById('chartWrapper');
+            if (!svg || !wrapper) return;
+            
+            svg.setAttribute('width', wrapper.scrollWidth);
+            svg.setAttribute('height', wrapper.scrollHeight);
+            
+            let points = [];
+            const activeCircles = wrapper.querySelectorAll('.t-num-circle.active');
+            
+            activeCircles.forEach(circle => {
+                const rect = circle.getBoundingClientRect();
+                const wrapperRect = wrapper.getBoundingClientRect();
+                let x = rect.left + rect.width / 2 - wrapperRect.left + wrapper.scrollLeft;
+                let y = rect.top + rect.height / 2 - wrapperRect.top + wrapper.scrollTop;
+                points.push(`${x},${y}`);
+            });
+            
+            if (points.length > 1) {
+                svg.innerHTML = `<polyline points="${points.join(' ')}" fill="none" stroke="#e74c3c" stroke-width="2" stroke-linejoin="round" />`;
+            }
         }
 
         function updateLogUI() {
