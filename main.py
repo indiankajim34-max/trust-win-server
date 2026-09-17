@@ -120,7 +120,7 @@ HTML_TEMPLATE = """
 
         .radar-box { background: #141414; border: 1px solid #333; border-radius: 12px; padding: 10px; margin-top: 6px; position: relative; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
         
-        /* Terminal Header with Left-Side Premium Round Button */
+        /* Terminal Header with Left-Side Premium Animated Round Button */
         .radar-header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
         .premium-round-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(45deg, #00ff88, #00cc66); border: 2px solid #fff; color: #000; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px rgba(0,255,136,0.8); animation: btn-glow 2s infinite; transition: 0.2s; flex-shrink: 0; }
         .premium-round-btn:active { transform: scale(0.92); }
@@ -175,7 +175,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer">30d 00h</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO UTC TIMER-SYNC ENGINE</div>
+            <div class="sub-engine">WINGO UTC CLOCK-DRIVEN ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -190,7 +190,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:8px; color:#888;">PERIOD SYNC</div>
-                <div style="font-size:9px; color:#ccc;">STRICT +1 ADVANCED</div>
+                <div style="font-size:9px; color:#ccc;">LIVE CLOCK TICKS</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
                 <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
@@ -278,7 +278,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">200-Scan & Strict +1 Period Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">UTC Clock-Driven Active</b></p>
                 </div>
             </div>
         </div>
@@ -387,8 +387,8 @@ HTML_TEMPLATE = """
             }, 2000);
         }
 
-        // Pure UTC Timer-based Period Generator with Strict +1 Advancement
-        function getUTCPeriod() {
+        // 100% Live UTC Clock-Driven Period Generator (Never lags behind API)
+        function getLiveUTCPeriod() {
             const now = new Date();
             const yyyy = now.getUTCFullYear();
             const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
@@ -396,7 +396,7 @@ HTML_TEMPLATE = """
             const hours = now.getUTCHours();
             const mins = now.getUTCMinutes();
             const totalMins = hours * 60 + mins;
-            const serial = 10000 + totalMins + 1; // Strict +1 ahead
+            const serial = 10000 + totalMins + 1; // Always strictly 1 step ahead
             return `${yyyy}${mm}${dd}1000${serial}`;
         }
 
@@ -441,10 +441,6 @@ HTML_TEMPLATE = """
                         isRevealed = false;
                         document.getElementById('radarInner').innerHTML = `<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>`;
                     }
-
-                    // Strict +1 Period Calculation from latest worker issue
-                    let calculatedNextPeriod = String(parseInt(actIssue, 10) + 1);
-                    document.getElementById('periodVal').innerText = calculatedNextPeriod;
 
                     updateBdgChartUI(items);
 
@@ -621,6 +617,9 @@ HTML_TEMPLATE = """
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
             
+            // Period updates in real-time every second driven by live UTC clock
+            document.getElementById('periodVal').innerText = getLiveUTCPeriod();
+
             if (remaining === 59 || remaining === 0) {
                 fetchLotteryData();
             }
@@ -628,7 +627,8 @@ HTML_TEMPLATE = """
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Initial fetch
+        // Initial calls
+        document.getElementById('periodVal').innerText = getLiveUTCPeriod();
         fetchLotteryData();
         setInterval(fetchLotteryData, 3000);
     </script>
