@@ -1,5 +1,5 @@
 from flask import Flask, render_template_string, request, redirect, url_for, session
-from curl_cffi import requests
+import requests
 import threading
 import time
 import random
@@ -8,24 +8,16 @@ import os
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
 
+# Using alternative direct API endpoint gateway for cloud reliability
 URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json"
-REFERER_URL = "https://bdgwinor.com/"
 
 HEADERS = {
     "Host": "draw.ar-lottery01.com",
-    "Connection": "keep-alive",
-    "sec-ch-ua": "\"Chromium\";v=\"122\", \"Not(A:Brand\";v=\"8\", \"Google Chrome\";v=\"122\"",
     "Accept": "application/json, text/plain, */*",
-    "sec-ch-ua-mobile": "?1",
-    "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36",
-    "sec-ch-ua-platform": "\"Android\"",
-    "Origin": "https://bdgwinor.com",
-    "Sec-Fetch-Site": "cross-site",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Dest": "empty",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
     "Referer": "https://bdgwinor.com/",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "en-US,en;q=0.9,hi;q=0.8"
+    "Origin": "https://bdgwinor.com",
+    "Accept-Language": "en-US,en;q=0.9"
 }
 
 app_state = {
@@ -36,7 +28,7 @@ app_state = {
     "period": "Fetching...",
     "prediction_type": "WAITING",
     "prediction_num": 0,
-    "last_result_display": "CONNECTING TO CLOUD...",
+    "last_result_display": "SYNCING CLOUD NODE...",
     "revealed": False,
     "analyzing": False,
     "history_log": [],
@@ -119,7 +111,7 @@ HTML_TEMPLATE = """
 
         .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 12px; padding: 10px; margin: 8px 0; box-shadow: 0 0 15px rgba(255,223,115,0.2); }
         .huge-last-title { font-size: 10px; color: #ffdf73; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 4px; }
-        .huge-last-val { font-size: 15px; font-weight: bold; color: #ff4444; text-shadow: 0 0 10px rgba(255,68,68,0.3); letter-spacing: 0.5px; word-break: break-all; }
+        .huge-last-val { font-size: 18px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.5); letter-spacing: 0.5px; }
 
         .host-box { background: #161616; border: 1px solid #333; border-radius: 10px; padding: 8px 12px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
         .host-left { text-align: left; }
@@ -175,7 +167,7 @@ HTML_TEMPLATE = """
                 <span><span class="live-dot"></span> LIVE</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">CLOUD AI BROWSER-FINGERPRINT ENGINE</div>
+            <div class="sub-engine">CLOUD AI OPTIMIZED ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -190,7 +182,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:9px; color:#888;">HOST: CLOUD NODE</div>
-                <div style="font-size:10px; color:#ccc;">IP-SEC: SECURE TLS BYPASS (ACTIVE)</div>
+                <div style="font-size:10px; color:#ccc;">IP-SEC: SECURE DIRECT GATEWAY</div>
             </div>
             <div class="host-right">
                 <div style="font-size:9px; color:#888;">PING</div>
@@ -236,7 +228,7 @@ HTML_TEMPLATE = """
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
                 <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                <div class="radar-sub">MOMENTUM RIDER & CLOUD BYPASS</div>
+                <div class="radar-sub">MOMENTUM RIDER & CLOUD OPTIMIZED</div>
                 
                 <div class="radar-circle-wrap">
                     <div class="radar-circle-inner" id="radarInner">
@@ -292,7 +284,7 @@ HTML_TEMPLATE = """
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Analyzed:</span> <b style="color:#fff;">{{ state.total }}</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Accuracy Rate:</span> <b style="color:#00ff88;">{{ "%.1f"|format((state.wins / state.total * 100) if state.total > 0 else 0.00) }}%</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Loss Guard Efficiency:</span> <b style="color:#ffdf73;">99.9%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Cloud TLS Bypass Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Cloud Optimized Active</b></p>
                 </div>
             </div>
         </div>
@@ -440,7 +432,7 @@ def background_worker():
     while True:
         try:
             params = {"pageNo": 1, "pageSize": 200}
-            response = requests.get(URL, headers=HEADERS, params=params, impersonate="chrome", timeout=10)
+            response = requests.get(URL, headers=HEADERS, params=params, timeout=10)
             
             if response.status_code == 200:
                 data = response.json()
@@ -466,7 +458,7 @@ def background_worker():
                             status_res = "WIN"
                         else:
                             app_state["losses"] += 1
-                            status_res, status_res = "LOSS", "LOSS"
+                            status_res = "LOSS"
 
                         log_entry = {
                             "issue": act_issue,
@@ -515,8 +507,7 @@ def background_worker():
             else:
                 app_state["last_result_display"] = f"HTTP Error: {response.status_code}"
         except Exception as e:
-            # 🔍 Now displaying the FULL error message on screen to diagnose immediately
-            app_state["last_result_display"] = f"Error: {str(e)}"
+            app_state["last_result_display"] = f"Sync Error: {str(e)[:30]}"
         time.sleep(10)
 
 @app.route('/login', methods=['GET', 'POST'])
