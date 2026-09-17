@@ -168,10 +168,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> STABLE SYNC ACTIVE</span>
+                <span><span class="live-dot"></span> INSTANT SYNC ACTIVE</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO STABLE BDG CHART ENGINE</div>
+            <div class="sub-engine">WINGO INSTANT PERIOD SYNC ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -185,8 +185,8 @@ HTML_TEMPLATE = """
 
         <div class="host-box">
             <div class="host-left">
-                <div style="font-size:8px; color:#888;">UI LOCK</div>
-                <div style="font-size:9px; color:#ccc;">STABLE NO-SHAKE</div>
+                <div style="font-size:8px; color:#888;">PERIOD SYNC</div>
+                <div style="font-size:9px; color:#ccc;">ZERO LAG ROLLOVER</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
                 <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
@@ -270,7 +270,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Stable & Fast Sync Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Instant Period Sync Active</b></p>
                 </div>
             </div>
         </div>
@@ -321,6 +321,7 @@ HTML_TEMPLATE = """
         let currentPredType = "WAITING";
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
+        let liveCurrentPeriod = null; // Instant client-side period anchor
 
         function switchTab(tabName, element) {
             playClickSound();
@@ -375,7 +376,7 @@ HTML_TEMPLATE = """
             btn.disabled = true;
             btn.style.opacity = "0.5";
 
-            inner.innerHTML = '<div class="analyzing-text">👑 FAST SCAN<br>ANALYSING...<br>[AI SCANNING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">👑 INSTANT SYNC<br>ANALYSING...<br>[AI SCANNING]</div>';
 
             setTimeout(() => {
                 isRevealed = true;
@@ -427,9 +428,12 @@ HTML_TEMPLATE = """
                         document.getElementById('radarInner').innerHTML = '<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>';
                     }
 
-                    // Fast Sync Period Update
-                    const nextPeriod = String(parseInt(actIssue, 10) + 1);
-                    document.getElementById('periodVal').innerText = nextPeriod;
+                    // Calculate next active period from worker data and sync with anchor
+                    const workerNextPeriod = String(parseInt(actIssue, 10) + 1);
+                    if (!liveCurrentPeriod || parseInt(workerNextPeriod, 10) > parseInt(liveCurrentPeriod, 10)) {
+                        liveCurrentPeriod = workerNextPeriod;
+                    }
+                    document.getElementById('periodVal').innerText = liveCurrentPeriod;
 
                     updateBdgChartUI(items);
 
@@ -606,8 +610,12 @@ HTML_TEMPLATE = """
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
             
-            // Trigger immediate fetch when seconds roll to 59 or 00 for instant period rollover
+            // INSTANT PERIOD ROLLOVER: When seconds hit 59 or 00, instantly increment period to eliminate API lag
             if (remaining === 59 || remaining === 0) {
+                if (liveCurrentPeriod) {
+                    liveCurrentPeriod = String(parseInt(liveCurrentPeriod, 10) + 1);
+                    document.getElementById('periodVal').innerText = liveCurrentPeriod;
+                }
                 fetchLotteryData();
             }
         }
