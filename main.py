@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
 
-# Direct CodeTabs Proxy Gateway (Bypasses Cloudflare & Render IP Block Instantly)
-URL = "https://api.codetabs.com/v1/proxy?quest=https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json?pageNo=1&pageSize=200"
+# Direct Public Proxy (No Cloudflare Needed, Works Instantly)
+URL = "https://api.allorigins.win/raw?url=https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json?pageNo=1&pageSize=200"
 
 app_state = {
     "total": 0,
@@ -20,7 +20,7 @@ app_state = {
     "period": "Syncing Live...",
     "prediction_type": "WAITING",
     "prediction_num": 0,
-    "last_result_display": "DIRECT PROXY GATEWAY ACTIVE",
+    "last_result_display": "ALLORIGINS PROXY ACTIVE",
     "revealed": False,
     "analyzing": False,
     "history_log": [],
@@ -156,10 +156,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> LIVE SYNC</span>
+                <span><span class="live-dot"></span> PROXY LIVE</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO 1M DIRECT PROXY ENGINE</div>
+            <div class="sub-engine">WINGO 1M ALLORIGINS ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -174,7 +174,7 @@ HTML_TEMPLATE = """
         <div class="host-box">
             <div class="host-left">
                 <div style="font-size:9px; color:#888;">HOST: CLOUD NODE</div>
-                <div style="font-size:10px; color:#ccc;">IP-SEC: DIRECT PROXY ACTIVE</div>
+                <div style="font-size:10px; color:#ccc;">IP-SEC: PROXY ACTIVE</div>
             </div>
             <div class="host-right">
                 <div style="font-size:9px; color:#888;">PING</div>
@@ -220,7 +220,7 @@ HTML_TEMPLATE = """
         <div id="tab-terminal" class="tab-content active">
             <div class="radar-box">
                 <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                <div class="radar-sub">MOMENTUM RIDER & DIRECT PROXY SYNC</div>
+                <div class="radar-sub">MOMENTUM RIDER & PROXY SYNC</div>
                 
                 <div class="radar-circle-wrap">
                     <div class="radar-circle-inner" id="radarInner">
@@ -275,7 +275,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:10px; padding:12px; margin-top:10px; text-align:left; font-size:12px;">
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Rounds:</span> <b style="color:#fff;">{{ state.total }}</b></p>
                     <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Real Accuracy:</span> <b style="color:#00ff88;">{{ "%.1f"|format((state.wins / state.total * 100) if state.total > 0 else 0.00) }}%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Direct Proxy Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Proxy Active</b></p>
                 </div>
             </div>
         </div>
@@ -505,7 +505,7 @@ def background_worker():
 
         time.sleep(10)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'] )
 def login():
     error = None
     if request.method == 'POST':
@@ -525,7 +525,7 @@ def logout():
 
 @app.route('/reveal', methods=['POST'])
 def reveal():
-    if session.get('authenticated'):
+    if signin_check := session.get('authenticated'):
         app_state["revealed"] = True
     return redirect(url_for('home'))
 
