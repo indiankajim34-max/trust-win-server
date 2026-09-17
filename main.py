@@ -36,7 +36,7 @@ app_state = {
     "period": "Fetching...",
     "prediction_type": "WAITING",
     "prediction_num": 0,
-    "last_result_display": "WAITING FOR ROUND...",
+    "last_result_display": "CONNECTING TO CLOUD...",
     "revealed": False,
     "analyzing": False,
     "history_log": [],
@@ -119,7 +119,7 @@ HTML_TEMPLATE = """
 
         .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 12px; padding: 10px; margin: 8px 0; box-shadow: 0 0 15px rgba(255,223,115,0.2); }
         .huge-last-title { font-size: 10px; color: #ffdf73; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 4px; }
-        .huge-last-val { font-size: 20px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.5); letter-spacing: 1px; }
+        .huge-last-val { font-size: 15px; font-weight: bold; color: #ff4444; text-shadow: 0 0 10px rgba(255,68,68,0.3); letter-spacing: 0.5px; word-break: break-all; }
 
         .host-box { background: #161616; border: 1px solid #333; border-radius: 10px; padding: 8px 12px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
         .host-left { text-align: left; }
@@ -466,7 +466,7 @@ def background_worker():
                             status_res = "WIN"
                         else:
                             app_state["losses"] += 1
-                            status_res = "LOSS"
+                            status_res, status_res = "LOSS", "LOSS"
 
                         log_entry = {
                             "issue": act_issue,
@@ -513,9 +513,10 @@ def background_worker():
                 else:
                     app_state["last_result_display"] = "API List Empty!"
             else:
-                app_state["last_result_display"] = f"Error: HTTP {response.status_code}"
+                app_state["last_result_display"] = f"HTTP Error: {response.status_code}"
         except Exception as e:
-            app_state["last_result_display"] = f"Error: {str(e)[:15]}"
+            # 🔍 Now displaying the FULL error message on screen to diagnose immediately
+            app_state["last_result_display"] = f"Error: {str(e)}"
         time.sleep(10)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -554,7 +555,6 @@ def home():
         return redirect(url_for('login'))
     return render_template_string(HTML_TEMPLATE, state=app_state)
 
-# 🔥 Background worker starts automatically when imported (Fix for Gunicorn/Render)
 t = threading.Thread(target=background_worker, daemon=True)
 t.start()
 
