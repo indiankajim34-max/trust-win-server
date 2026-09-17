@@ -34,7 +34,7 @@ LOGIN_TEMPLATE = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trust Win VIP - License Login</title>
     <style>
-        body { background-color: #080808; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        body { background-color: #080808; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
         .login-card { background: linear-gradient(145deg, #121212, #1a1a1a); border: 2px solid #d4af37; border-radius: 20px; padding: 25px; width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
         .title { font-size: 18px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
         .sub { font-size: 11px; color: #888; margin-bottom: 20px; }
@@ -65,7 +65,7 @@ HTML_TEMPLATE = """
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Trust Win VIP Oracle Radar</title>
     <style>
         @keyframes glow {
@@ -88,76 +88,79 @@ HTML_TEMPLATE = """
             50% { opacity: 1; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
             100% { opacity: 0.3; }
         }
-        body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 8px; }
-        .container { max-width: 410px; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 20px; padding: 12px; animation: glow 4s infinite ease-in-out; position: relative; padding-bottom: 75px; min-height: 600px; box-sizing: border-box; }
+        * { box-sizing: border-box; }
+        body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 6px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
+        .container { max-width: 410px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 10px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
         
-        .top-banner { background: #181818; border: 1px solid #333; border-radius: 14px; padding: 10px; margin-bottom: 8px; }
-        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 6px; margin-bottom: 6px; }
-        .live-dot { height: 8px; width: 8px; background-color: #00ff88; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #00ff88; }
+        .top-banner { background: #181818; border: 1px solid #333; border-radius: 12px; padding: 8px; margin-bottom: 6px; flex-shrink: 0; }
+        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 4px; margin-bottom: 4px; }
+        .live-dot { height: 7px; width: 7px; background-color: #00ff88; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px #00ff88; }
         
-        .main-title { font-size: 16px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
-        .sub-engine { font-size: 10px; color: #888; margin-top: 2px; letter-spacing: 0.5px; }
-        .time-row { display: flex; justify-content: space-between; font-size: 11px; color: #aaa; margin-top: 6px; padding: 0 4px; }
+        .main-title { font-size: 15px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+        .sub-engine { font-size: 9px; color: #888; margin-top: 2px; letter-spacing: 0.5px; }
+        .time-row { display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 4px; padding: 0 4px; }
 
-        .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 12px; padding: 10px; margin: 8px 0; box-shadow: 0 0 15px rgba(255,223,115,0.2); }
-        .huge-last-title { font-size: 10px; color: #ffdf73; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 4px; }
-        .huge-last-val { font-size: 18px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.5); letter-spacing: 0.5px; }
+        .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 10px; padding: 8px; margin: 6px 0; box-shadow: 0 0 12px rgba(255,223,115,0.2); flex-shrink: 0; }
+        .huge-last-title { font-size: 9px; color: #ffdf73; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 2px; }
+        .huge-last-val { font-size: 16px; font-weight: bold; color: #00ff88; text-shadow: 0 0 8px rgba(0,255,136,0.5); }
 
-        .host-box { background: #161616; border: 1px solid #333; border-radius: 10px; padding: 8px 12px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+        .host-box { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; margin: 6px 0; display: flex; justify-content: space-between; align-items: center; font-size: 10px; flex-shrink: 0; }
         .host-left { text-align: left; }
         .host-right { text-align: right; color: #00ff88; font-weight: bold; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0; }
-        .stat-card { background: #181818; border: 1px solid #333; padding: 8px 4px; border-radius: 10px; }
-        .stat-card .lbl { font-size: 9px; color: #888; }
-        .stat-card .val { font-size: 15px; font-weight: bold; color: #fff; margin-top: 2px; display: block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 6px 0; flex-shrink: 0; }
+        .stat-card { background: #181818; border: 1px solid #333; padding: 6px 2px; border-radius: 8px; }
+        .stat-card .lbl { font-size: 8px; color: #888; }
+        .stat-card .val { font-size: 13px; font-weight: bold; color: #fff; margin-top: 2px; display: block; }
 
-        .period-box { background: #161616; border: 1px solid #333; border-radius: 10px; padding: 10px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; }
-        .period-box div { text-align: left; font-size: 11px; color: #aaa; }
-        .period-box span { font-size: 14px; font-weight: bold; color: #fff; display: block; letter-spacing: 0.5px; }
-        .countdown { font-size: 18px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
+        .period-box { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px; margin: 6px 0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .period-box div { text-align: left; font-size: 10px; color: #aaa; }
+        .period-box span { font-size: 13px; font-weight: bold; color: #fff; display: block; }
+        .countdown { font-size: 16px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
 
-        .radar-box { background: #141414; border: 1px solid #333; border-radius: 14px; padding: 12px 10px; margin-top: 8px; position: relative; overflow: hidden; }
-        .radar-title { font-size: 10px; color: #777; letter-spacing: 1px; }
-        .radar-sub { font-size: 9px; color: #aaa; margin-top: 2px; }
+        .radar-box { background: #141414; border: 1px solid #333; border-radius: 12px; padding: 10px; margin-top: 6px; position: relative; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .radar-title { font-size: 9px; color: #777; letter-spacing: 1px; }
+        .radar-sub { font-size: 8px; color: #aaa; margin-top: 2px; }
         
-        .radar-circle-wrap { width: 130px; height: 130px; margin: 10px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
-        .radar-circle-inner { width: 90px; height: 90px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5px; }
-        .prediction-display { font-size: 18px; font-weight: bold; color: #00ff88; text-shadow: 0 0 12px rgba(0,255,136,0.6); }
-        .analyzing-text { font-size: 10px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.3; }
+        .radar-circle-wrap { width: 110px; height: 110px; margin: 8px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
+        .radar-circle-inner { width: 75px; height: 75px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; }
+        .prediction-display { font-size: 16px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.6); }
+        .analyzing-text { font-size: 9px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; }
 
-        .reveal-btn { background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; border: none; width: 100%; padding: 12px; font-size: 13px; font-weight: bold; border-radius: 30px; cursor: pointer; margin-top: 10px; animation: btn-glow 2s infinite; transition: 0.2s; }
+        .reveal-btn { background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; border: none; width: 100%; padding: 10px; font-size: 12px; font-weight: bold; border-radius: 25px; cursor: pointer; margin-top: 8px; animation: btn-glow 2s infinite; transition: 0.2s; }
         .reveal-btn:active { transform: scale(0.96); }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content { display: none; height: 100%; flex-direction: column; }
+        .tab-content.active { display: flex; }
 
-        /* BDG Chart Style Pattern Rows */
-        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 7px 8px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
-        .tiranga-period { color: #aaa; font-family: monospace; font-size: 9px; text-align: left; }
-        .tiranga-nums { display: flex; gap: 3px; align-items: center; }
+        /* BDG Chart Exact Layout Styles */
+        .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 270px); position: relative; padding-right: 2px; margin-top: 6px; }
+        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 5px 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; }
+        .tiranga-period { color: #aaa; font-family: monospace; font-size: 8px; text-align: left; width: 70px; flex-shrink: 0; }
+        .tiranga-nums { display: flex; gap: 2px; align-items: center; justify-content: space-between; flex-grow: 1; padding: 0 4px; }
         
-        .t-num-circle { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; background: #1f1f1f; color: #666; border: 1px solid #333; }
-        .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 6px #9b59b6; }
-        .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 6px #2ecc71; }
-        .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 6px #e74c3c; }
+        .t-num-circle { width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold; background: #1f1f1f; color: #555; border: 1px solid #333; }
+        .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 5px #9b59b6; }
+        .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 5px #2ecc71; }
+        .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 5px #e74c3c; }
 
-        .badge-big-bdg { background: #f1c40f; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 9px; }
-        .badge-small-bdg { background: #3498db; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 9px; }
+        .badge-big-bdg { background: #f1c40f; color: #000; padding: 1px 4px; border-radius: 3px; font-weight: bold; font-size: 8px; width: 18px; text-align: center; flex-shrink: 0; }
+        .badge-small-bdg { background: #3498db; color: #fff; padding: 1px 4px; border-radius: 3px; font-weight: bold; font-size: 8px; width: 18px; text-align: center; flex-shrink: 0; }
 
-        .log-list { max-height: 290px; overflow-y: auto; text-align: left; font-size: 11px; margin-top: 10px; }
-        .log-item { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
-        .badge-win { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 2px 6px; border-radius: 4px; }
-        .badge-loss { color: #ff4444; font-weight: bold; background: rgba(255,68,68,0.1); padding: 2px 6px; border-radius: 4px; }
+        .log-list { flex-grow: 1; overflow-y: auto; text-align: left; font-size: 10px; margin-top: 6px; }
+        .log-item { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 6px 8px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .badge-win { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 2px 5px; border-radius: 3px; }
+        .badge-loss { color: #ff4444; font-weight: bold; background: rgba(255,68,68,0.1); padding: 2px 5px; border-radius: 3px; }
 
-        .profile-card { background: #161616; border: 1px solid #333; border-radius: 12px; padding: 15px; margin-top: 15px; text-align: left; font-size: 12px; }
-        .profile-card p { margin: 8px 0; color: #bbb; }
+        .profile-card { background: #161616; border: 1px solid #333; border-radius: 10px; padding: 12px; margin-top: 10px; text-align: left; font-size: 11px; }
+        .profile-card p { margin: 6px 0; color: #bbb; }
         .profile-card span { color: #fff; font-weight: bold; }
 
-        .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 0; }
-        .nav-item { font-size: 9px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        /* Fixed Bottom Navigation Bar */
+        .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 5px 0; z-index: 10; }
+        .nav-item { font-size: 8px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
         .nav-item.active { color: #d4af37; font-weight: bold; }
-        .nav-item div { font-size: 13px; margin-bottom: 2px; }
+        .nav-item div { font-size: 12px; margin-bottom: 1px; }
     </style>
 </head>
 <body>
@@ -165,10 +168,10 @@ HTML_TEMPLATE = """
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
-                <span><span class="live-dot"></span> BDG CHART ACTIVE</span>
+                <span><span class="live-dot"></span> STABLE SYNC ACTIVE</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO BDG CHART & 200-SCAN ENGINE</div>
+            <div class="sub-engine">WINGO STABLE BDG CHART ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -182,12 +185,12 @@ HTML_TEMPLATE = """
 
         <div class="host-box">
             <div class="host-left">
-                <div style="font-size:9px; color:#888;">CHART MODE</div>
-                <div style="font-size:10px; color:#ccc;">BDG & TIRANGA EXACT</div>
+                <div style="font-size:8px; color:#888;">UI LOCK</div>
+                <div style="font-size:9px; color:#ccc;">STABLE NO-SHAKE</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
-                <div style="font-size:9px; color:#888;">ZIGZAG LINE</div>
-                <div>ENABLED</div>
+                <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
+                <div>PERFECT</div>
             </div>
         </div>
 
@@ -213,7 +216,7 @@ HTML_TEMPLATE = """
         <div class="period-box">
             <div>
                 <span>CURRENT PERIOD</span>
-                <b id="periodVal" style="color:#fff; font-size:12px;">Syncing...</b>
+                <b id="periodVal" style="color:#fff; font-size:11px;">Syncing...</b>
             </div>
             <div style="text-align: right;">
                 <span>NEXT SIGNAL IN</span>
@@ -239,12 +242,12 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- PATTERN TAB (BDG WIN EXACT STYLE WITH RED ZIGZAG LINE) -->
+        <!-- PATTERN TAB (BDG WIN EXACT STYLE WITH PERFECT ZIGZAG LINE) -->
         <div id="tab-pattern" class="tab-content">
-            <div class="radar-box" style="text-align: left;">
-                <div class="radar-title" style="text-align: center; margin-bottom: 4px;">📊 BDG CHART & ZIGZAG TREND</div>
-                <div class="radar-sub" style="text-align: center; margin-bottom: 10px;">EXACT COLOR MAPPING & CONNECTING LINE</div>
-                <div class="log-list" id="tirangaPatternList" style="max-height: 310px; position: relative;">
+            <div class="radar-box" style="text-align: left; padding: 8px; display: block;">
+                <div class="radar-title" style="text-align: center; margin-bottom: 2px;">📊 BDG CHART & ZIGZAG TREND</div>
+                <div class="radar-sub" style="text-align: center; margin-bottom: 6px;">EXACT COLOR MAPPING & ALIGNED LINE</div>
+                <div class="chart-scroll-area" id="tirangaPatternList">
                     <div style="text-align:center; color:#777; padding:20px;">Loading BDG Chart Data...</div>
                 </div>
             </div>
@@ -252,8 +255,8 @@ HTML_TEMPLATE = """
 
         <!-- LOG TAB -->
         <div id="tab-log" class="tab-content">
-            <div class="radar-box" style="text-align: left;">
-                <div class="radar-title" style="text-align: center; margin-bottom: 8px;">📜 REAL HISTORY LOG</div>
+            <div class="radar-box" style="text-align: left; display: block;">
+                <div class="radar-title" style="text-align: center; margin-bottom: 6px;">📜 REAL HISTORY LOG</div>
                 <div class="log-list" id="logList">
                     <div style="text-align:center; color:#777; padding:20px;">Waiting for real round completion...</div>
                 </div>
@@ -262,26 +265,26 @@ HTML_TEMPLATE = """
 
         <!-- STATS TAB -->
         <div id="tab-stats" class="tab-content">
-            <div class="radar-box">
+            <div class="radar-box" style="display: block;">
                 <div class="radar-title">📊 PERFORMANCE METRICS</div>
-                <div style="background:#161616; border-radius:10px; padding:12px; margin-top:10px; text-align:left; font-size:12px;">
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:6px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">200-Scan & BDG Chart Active</b></p>
+                <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Stable & Fast Sync Active</b></p>
                 </div>
             </div>
         </div>
 
         <!-- PROFILE TAB -->
         <div id="tab-profile" class="tab-content">
-            <div class="radar-box" style="text-align: left;">
+            <div class="radar-box" style="text-align: left; display: block;">
                 <div class="radar-title" style="text-align: center;">👑 USER PROFILE</div>
                 <div class="profile-card">
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Server Connected: <span>Cloud Dedicated Node</span></p>
                     <br>
-                    <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:10px; border-radius:8px; font-weight:bold;">LOGOUT ACCOUNT</a>
+                    <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:8px; border-radius:6px; font-weight:bold;">LOGOUT ACCOUNT</a>
                 </div>
             </div>
         </div>
@@ -372,14 +375,14 @@ HTML_TEMPLATE = """
             btn.disabled = true;
             btn.style.opacity = "0.5";
 
-            inner.innerHTML = '<div class="analyzing-text">👑 200-SCAN<br>ANALYSING...<br>[AI SCANNING]</div>';
+            inner.innerHTML = '<div class="analyzing-text">👑 FAST SCAN<br>ANALYSING...<br>[AI SCANNING]</div>';
 
             setTimeout(() => {
                 isRevealed = true;
                 inner.innerHTML = `<div class="prediction-display">${currentPredType} : ${currentPredNum}</div>`;
                 btn.style.opacity = "1";
                 btn.disabled = false;
-            }, 2500);
+            }, 2000);
         }
 
         async function fetchLotteryData() {
@@ -424,6 +427,7 @@ HTML_TEMPLATE = """
                         document.getElementById('radarInner').innerHTML = '<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>';
                     }
 
+                    // Fast Sync Period Update
                     const nextPeriod = String(parseInt(actIssue, 10) + 1);
                     document.getElementById('periodVal').innerText = nextPeriod;
 
@@ -513,7 +517,7 @@ HTML_TEMPLATE = """
 
                 html += `
                 <div class="tiranga-row" style="position:relative; z-index:2;">
-                    <div class="tiranga-period">${issueNum}</div>
+                    <div class="tiranga-period">${issueNum.slice(-4)}</div>
                     <div class="tiranga-nums">${circlesHtml}</div>
                     <div class="tiranga-badge ${badgeClass}">${badgeText}</div>
                 </div>`;
@@ -523,7 +527,7 @@ HTML_TEMPLATE = """
 
             setTimeout(() => {
                 drawZigzagLine();
-            }, 100);
+            }, 50);
         }
 
         function drawZigzagLine() {
@@ -565,7 +569,7 @@ HTML_TEMPLATE = """
                 html += `
                 <div class="log-item">
                     <div>
-                        <div style="color:#aaa; font-size:10px;">Period: ${log.issue}</div>
+                        <div style="color:#aaa; font-size:9px;">Period: ${log.issue}</div>
                         <div style="color:#fff; font-weight:bold;">Pred: ${log.pred} | Actual: <span style="color:${actColor}">${log.act_type} (${log.act_num})</span></div>
                     </div>
                     <div>${badge}</div>
@@ -601,12 +605,17 @@ HTML_TEMPLATE = """
             if (remaining > 60) remaining = 60;
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
+            
+            // Trigger immediate fetch when seconds roll to 59 or 00 for instant period rollover
+            if (remaining === 59 || remaining === 0) {
+                fetchLotteryData();
+            }
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
         fetchLotteryData();
-        setInterval(fetchLotteryData, 4000);
+        setInterval(fetchLotteryData, 3000);
     </script>
 </body>
 </html>
