@@ -1,8 +1,23 @@
 from flask import Flask, render_template_string, request, redirect, url_for, session
 import os
+import firebase_admin
+from firebase_admin import credentials, firestore
+import time
 
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
+
+# Initialize Firebase Admin
+if not firebase_admin._apps:
+    try:
+        # सुनिश्चित करें कि serviceAccountKey.json फाइल आपके प्रोजेक्ट फोल्डर में मौजूद है
+        cred = credentials.Certificate('serviceAccountKey.json')
+        firebase_admin.initialize_app(cred)
+        print("Firebase Admin initialized successfully in Python.")
+    except Exception as e:
+        print(f"Firebase initialization error: {e}")
+
+db = firestore.client() if firebase_admin._apps else None
 
 LOGIN_TEMPLATE = """
 <!DOCTYPE html>
@@ -10,13 +25,13 @@ LOGIN_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trust Win VIP - Login</title>
+    <title>Trust Win VIP - License Login</title>
     <style>
         body { background-color: #080808; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; height: 100vh; }
         .login-card { background: linear-gradient(145deg, #121212, #1a1a1a); border: 2px solid #d4af37; border-radius: 20px; padding: 25px; width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
         .title { font-size: 18px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
         .sub { font-size: 11px; color: #888; margin-bottom: 20px; }
-        .input-box { width: 100%; padding: 12px; background: #161616; border: 1px solid #444; border-radius: 10px; color: #fff; font-size: 14px; text-align: center; margin-bottom: 15px; box-sizing: border-box; outline: none; }
+        .input-box { width: 100%; padding: 12px; background: #161616; border: 1px solid #444; border-radius: 10px; color: #fff; font-size: 14px; text-align: center; margin-bottom: 15px; box-sizing: border-box; outline: none; text-transform: uppercase; font-weight: bold; }
         .input-box:focus { border-color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
         .btn { background: linear-gradient(45deg, #d4af37, #ffdf73); color: #000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
         .error { color: #ff4444; font-size: 12px; margin-top: 10px; }
@@ -25,11 +40,10 @@ LOGIN_TEMPLATE = """
 <body>
     <div class="login-card">
         <div class="title">👑 TRUST WIN VIP 👑</div>
-        <div class="sub">ENTER CREDENTIALS TO UNLOCK</div>
+        <div class="sub">ENTER TRUST WIN LICENSE KEY</div>
         <form method="POST">
-            <input type="text" name="username" class="input-box" placeholder="Username (trustwin)" required autocomplete="off">
-            <input type="password" name="password" class="input-box" placeholder="Password (trust143)" required autocomplete="off">
-            <button type="submit" class="btn">LOGIN TO RADAR</button>
+            <input type="text" name="license_key" class="input-box" placeholder="TRUSTWIN-XXXX-XXXX" required autocomplete="off">
+            <button type="submit" class="btn">VERIFY & UNLOCK</button>
         </form>
         {% if error %}
         <div class="error">{{ error }}</div>
@@ -238,8 +252,8 @@ HTML_TEMPLATE = """
             <div class="radar-box" style="text-align: left;">
                 <div class="radar-title" style="text-align: center;">👑 USER PROFILE</div>
                 <div class="profile-card">
-                    <p>Username: <span>trustwin</span></p>
-                    <p>License Status: <span style="color:#00ff88;">Active VIP (Lifetime)</span></p>
+                    <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key') }}</span></p>
+                    <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Server Connected: <span>Cloud Dedicated Node</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:10px; border-radius:8px; font-weight:bold;">LOGOUT ACCOUNT</a>
@@ -483,18 +497,35 @@ HTML_TEMPLATE = """
 def login():
     error = None
     if request.method == 'POST':
-        user = request.form.get('username')
-        pwd = request.form.get('password')
-        if user == 'trustwin' and pwd == 'trust143':
-            session['authenticated'] = True
-            return redirect(url_for('home'))
+        key = request.form.get('license_key', '').strip().upper()
+        if not key:
+            error = 'Please enter a valid License Key!'
         else:
-            error = 'Invalid Username or Password!'
+            if db:
+                try:
+                    # Firestore से trustwin_keys कलेक्शन में की चेक करें
+                    doc_ref = db.collection('trustwin_keys').document(key)
+                    doc = doc_ref.get()
+                    if doc.exists:
+                        data = doc.to_dict()
+                        if data.get('isExpired', False):
+                            error = '❌ Ye Trust Win Key Expire ho chuki hai!'
+                        else:
+                            session['authenticated'] = True
+                            session['active_key'] = key
+                            return redirect(url_for('home'))
+                    else:
+                        error = '❌ Trust Win ki galat Key hai!'
+                except Exception as e:
+                    error = f'Database Error: {str(e)}'
+            else:
+                error = 'Database connection error on server.'
     return render_template_string(LOGIN_TEMPLATE, error=error)
 
 @app.route('/logout')
 def logout():
     session.pop('authenticated', None)
+    session.pop('active_key', None)
     return redirect(url_for('login'))
 
 @app.route('/')
