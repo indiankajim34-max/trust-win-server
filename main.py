@@ -175,7 +175,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer">30d 00h</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">WINGO UTC CLOCK-DRIVEN ENGINE</div>
+            <div class="sub-engine">WINGO SEQUENTIAL PATTERN ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -236,7 +236,7 @@ HTML_TEMPLATE = """
                     <button type="button" class="premium-round-btn" onclick="revealPrediction()" title="Check Result">🎯</button>
                     <div class="radar-titles">
                         <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                        <div class="radar-sub">200-RESULT FREQUENCY & PATTERN SCAN</div>
+                        <div class="radar-sub">200-RESULT SEQUENTIAL TRANSITION SCAN</div>
                     </div>
                 </div>
                 
@@ -278,7 +278,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">UTC Clock-Driven Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">Sequential Transition Engine Active</b></p>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@ HTML_TEMPLATE = """
             }, 2000);
         }
 
-        // 100% Live UTC Clock-Driven Period Generator (Never lags behind API)
+        // Live UTC Clock-Driven Period Generator (Strictly +1 step ahead)
         function getLiveUTCPeriod() {
             const now = new Date();
             const yyyy = now.getUTCFullYear();
@@ -396,7 +396,7 @@ HTML_TEMPLATE = """
             const hours = now.getUTCHours();
             const mins = now.getUTCMinutes();
             const totalMins = hours * 60 + mins;
-            const serial = 10000 + totalMins + 1; // Always strictly 1 step ahead
+            const serial = 10000 + totalMins + 1;
             return `${yyyy}${mm}${dd}1000${serial}`;
         }
 
@@ -444,45 +444,72 @@ HTML_TEMPLATE = """
 
                     updateBdgChartUI(items);
 
-                    // DEEP 200-RESULT AI SCAN & ANALYSIS
+                    // ==============================================================
+                    // DEEP 200-RESULT SEQUENTIAL TRANSITION PATTERN ANALYSIS
+                    // ==============================================================
                     const analysisPool = items.slice(0, 200);
-                    let digitFreq = {};
-                    for(let i=0; i<=9; i++) digitFreq[i] = 0;
-                    let bigCount = 0;
-                    let smallCount = 0;
+                    const lastNum = parseInt(items[0].number, 10);
+                    const lastType = lastNum >= 5 ? "BIG" : "SMALL";
 
-                    analysisPool.forEach(item => {
-                        let num = parseInt(item.number, 10);
-                        if (!isNaN(num)) {
-                            digitFreq[num]++;
-                            if(num >= 5) bigCount++;
-                            else smallCount++;
+                    let nextNumFreq = {};
+                    for (let i = 0; i <= 9; i++) nextNumFreq[i] = 0;
+                    let nextBigCount = 0;
+                    let nextSmallCount = 0;
+                    let transitionMatches = 0;
+
+                    // Scan the last 200 results to find every instance where 'lastNum' occurred in history
+                    for (let i = 0; i < analysisPool.length - 1; i++) {
+                        let histPrevNum = parseInt(analysisPool[i + 1].number, 10);
+                        let histNextNum = parseInt(analysisPool[i].number, 10);
+                        
+                        if (histPrevNum === lastNum) {
+                            transitionMatches++;
+                            nextNumFreq[histNextNum]++;
+                            if (histNextNum >= 5) nextBigCount++;
+                            else nextSmallCount++;
                         }
-                    });
-
-                    const recentNumbers = analysisPool.slice(0, 15).map(x => parseInt(x.number, 10));
-                    const recentTypes = recentNumbers.map(n => n >= 5 ? "BIG" : "SMALL");
-                    
-                    let streakCount = 1;
-                    for (let i = 1; i < recentTypes.length; i++) {
-                        if (recentTypes[i] === recentTypes[0]) streakCount++;
-                        else break;
                     }
 
-                    let lastType = recentTypes[0];
                     let predT = lastType;
+                    let predN = 0;
 
-                    if (streakCount >= 4) {
-                        predT = lastType === "BIG" ? "SMALL" : "BIG";
+                    if (transitionMatches >= 2) {
+                        // High Confidence Transition Matrix derived from exact historical sequence
+                        predT = nextBigCount >= nextSmallCount ? "BIG" : "SMALL";
+                        let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
+                        subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
+                        predN = subPool[0];
                     } else {
-                        if (bigCount > smallCount + 12) predT = "SMALL";
-                        else if (smallCount > bigCount + 12) predT = "BIG";
-                        else predT = lastType;
-                    }
+                        // Fallback: Overall pattern & frequency analysis
+                        let overallBig = 0, overallSmall = 0;
+                        let overallDigitFreq = {};
+                        for(let i=0; i<=9; i++) overallDigitFreq[i] = 0;
 
-                    let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
-                    let sortedSubPool = subPool.sort((a, b) => digitFreq[a] - digitFreq[b]);
-                    let predN = sortedSubPool[0];
+                        analysisPool.forEach(item => {
+                            let n = parseInt(item.number, 10);
+                            if (!isNaN(n)) {
+                                overallDigitFreq[n]++;
+                                if (n >= 5) overallBig++; else overallSmall++;
+                            }
+                        });
+
+                        const recentTypes = analysisPool.slice(0, 10).map(x => parseInt(x.number, 10) >= 5 ? "BIG" : "SMALL");
+                        let streak = 1;
+                        for (let k = 1; k < recentTypes.length; k++) {
+                            if (recentTypes[k] === recentTypes[0]) streak++; else break;
+                        }
+
+                        if (streak >= 4) {
+                            predT = lastType === "BIG" ? "SMALL" : "BIG";
+                        } else {
+                            if (overallBig > overallSmall + 10) predT = "SMALL";
+                            else if (overallSmall > overallBig + 10) predT = "BIG";
+                            else predT = lastType;
+                        }
+                        let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
+                        subPool.sort((a, b) => overallDigitFreq[a] - overallDigitFreq[b]);
+                        predN = subPool[0];
+                    }
 
                     currentPredType = predT;
                     currentPredNum = predN;
@@ -617,7 +644,7 @@ HTML_TEMPLATE = """
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
             
-            // Period updates in real-time every second driven by live UTC clock
+            // Period updates in real-time driven by UTC clock
             document.getElementById('periodVal').innerText = getLiveUTCPeriod();
 
             if (remaining === 59 || remaining === 0) {
@@ -669,6 +696,10 @@ def logout():
     session.pop('authenticated', None)
     session.pop('active_key', None)
     return redirect(url_for('login'))
+
+@app.route('/keepalive')
+def keepalive():
+    return "I am awake!", 200
 
 @app.route('/')
 def home():
