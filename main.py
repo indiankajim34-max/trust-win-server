@@ -415,11 +415,12 @@ HTML_TEMPLATE = """
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
 
-        // CALCULATOR & BET / WIN TRACKER LOGIC
+        // CALCULATOR & BET / WIN TRACKER LOGIC (CORRECTED MATH)
         let calcExpr = "";
-        let currentBetAccumulator = 0; // Accumulates bet amount during losses
-        let lastRoundBet = 0;          // Stores current round bet
-        let netWinAmount = 0;          // Net Profit (+) or Net Loss (-)
+        let totalInvested = 0;         // कुल लगाया गया पैसा (Total Invested Amount)
+        let totalPayout = 0;           // कुल मिला रिटर्न (Total Return Amount)
+        let lastRoundBet = 0;          // वर्तमान राउंड की बेत राशि (Current Round Bet)
+        let netWinAmount = 0;          // शुद्ध लाभ / हानि (Net Profit / Loss)
 
         function pressCalc(val) {
             if (calcExpr === "0") calcExpr = "";
@@ -435,9 +436,8 @@ HTML_TEMPLATE = """
         function saveInvestAmount() {
             let amt = parseFloat(calcExpr);
             if (!isNaN(amt) && amt > 0) {
-                currentBetAccumulator += amt;
-                lastRoundBet += amt;
-                document.getElementById('betAmountVal').innerText = `₹ ${Math.round(currentBetAccumulator)}`;
+                lastRoundBet = amt;
+                document.getElementById('betAmountVal').innerText = `₹ ${Math.round(lastRoundBet)}`;
                 clearCalc();
             }
         }
@@ -458,7 +458,8 @@ HTML_TEMPLATE = """
         }
 
         function resetSummary() {
-            currentBetAccumulator = 0;
+            totalInvested = 0;
+            totalPayout = 0;
             lastRoundBet = 0;
             netWinAmount = 0;
             document.getElementById('betAmountVal').innerText = "₹ 0";
@@ -627,21 +628,19 @@ HTML_TEMPLATE = """
                             lossesCount++; statusRes = "LOSS";
                         }
 
-                        // BET & WIN AMOUNT LOGIC EVALUATION
+                        // BET & WIN AMOUNT LOGIC EVALUATION (ACCURATE PROFIT MATH)
                         if (lastRoundBet > 0) {
+                            totalInvested += lastRoundBet;
                             if (statusRes === "WIN" || statusRes === "JACKPOT") {
                                 let totalReturnVal = lastRoundBet * 1.96;
-                                let netProfitThisRound = totalReturnVal - currentBetAccumulator;
-                                netWinAmount += netProfitThisRound;
-                                
-                                // Reset Bet Accumulator on Win
-                                currentBetAccumulator = 0;
-                                document.getElementById('betAmountVal').innerText = "₹ 0";
-                            } else {
-                                // Loss logic
-                                netWinAmount -= lastRoundBet;
+                                totalPayout += totalReturnVal;
                             }
+                            
+                            // Net Profit Calculation: Total Returns - Total Invested
+                            netWinAmount = totalPayout - totalInvested;
+
                             lastRoundBet = 0;
+                            document.getElementById('betAmountVal').innerText = "₹ 0";
                             updateWinCardUI();
                         }
 
