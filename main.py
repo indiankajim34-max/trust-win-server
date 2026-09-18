@@ -78,6 +78,11 @@ HTML_TEMPLATE = """
             50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 30px #00ff88, inset 0 0 20px #00ff88; }
             100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #00ff88, inset 0 0 10px #00ff88; }
         }
+        @keyframes bg-glow-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         @keyframes text-flash {
             0% { opacity: 0.4; }
             50% { opacity: 1; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
@@ -85,7 +90,7 @@ HTML_TEMPLATE = """
         }
         * { box-sizing: border-box; }
         body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 4px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
-        .container { max-width: 420px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 6px 6px 48px 6px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .container { max-width: 420px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 6px 6px 52px 6px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
         
         .top-banner { background: #181818; border: 1px solid #333; border-radius: 10px; padding: 5px; margin-bottom: 3px; flex-shrink: 0; }
         .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 2px; margin-bottom: 2px; }
@@ -118,35 +123,62 @@ HTML_TEMPLATE = """
 
         .terminal-split-container { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 3px; flex-grow: 1; min-height: 0; }
         
-        /* LEFT VIP PREDICTOR CARD (As Per Screenshot) */
-        .predictor-box { background: #080e0a; border: 1px solid #00ff8866; border-radius: 10px; padding: 5px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; position: relative; box-shadow: 0 0 15px rgba(0,255,136,0.12); }
-        .wings-banner { background: linear-gradient(90deg, transparent, #00ff8822, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 6px; color: #ffcc00; font-size: 8px; font-weight: bold; letter-spacing: 1px; width: 92%; margin-top: 1px; }
+        /* LEFT VIP PREDICTOR CARD WITH MULTI-COLOR ANIMATED BACKGROUND */
+        .predictor-box { 
+            background: linear-gradient(135deg, #071510, #130026, #001f18, #180d00);
+            background-size: 400% 400%;
+            animation: bg-glow-shift 10s infinite ease;
+            border: 1px solid #00ff88aa; 
+            border-radius: 10px; 
+            padding: 5px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: space-between; 
+            position: relative; 
+            box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); 
+        }
+        .wings-banner { background: linear-gradient(90deg, transparent, #00ff8833, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 6px; color: #ffcc00; font-size: 8px; font-weight: bold; letter-spacing: 1px; width: 92%; margin-top: 1px; }
         
-        .glowing-pedestal { width: 115px; height: 115px; border-radius: 50%; border: 3px solid #00ff88; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,255,136,0.25) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; }
+        .glowing-pedestal { width: 115px; height: 115px; border-radius: 50%; border: 3px solid #00ff88; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,255,136,0.35) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; }
         .leaf-icon { font-size: 18px; color: #00ff88; margin-bottom: 2px; }
         .prediction-display { font-size: 15px; font-weight: 900; color: #00ff88; text-shadow: 0 0 10px #00ff88; text-align: center; }
         .analyzing-text { font-size: 8px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; text-align: center; }
         .winner-badge { background: linear-gradient(45deg, #111, #222); border: 1px solid #ffcc00; color: #ffcc00; border-radius: 8px; padding: 3px 8px; font-size: 8px; font-weight: bold; width: 85%; margin-bottom: 2px; }
 
-        /* RIGHT CALCULATOR CARD (Simplified Numpad + Save Invest) */
+        /* RIGHT CALCULATOR CARD (Vibrant Colors & Big Buttons) */
         .calc-box { background: #0a0d12; border: 1px solid #00a2ff66; border-radius: 10px; padding: 5px; display: flex; flex-direction: column; justify-content: space-between; font-size: 9px; }
         .calc-header { display: flex; justify-content: space-between; align-items: center; color: #00a2ff; font-weight: bold; font-size: 8px; margin-bottom: 2px; }
-        .calc-display { background: #000; border: 1px solid #333; border-radius: 4px; color: #00ff88; font-size: 12px; font-weight: bold; text-align: right; padding: 3px 6px; margin-bottom: 3px; min-height: 22px; word-break: break-all; }
+        .calc-display { background: #000; border: 1px solid #333; border-radius: 4px; color: #00ff88; font-size: 13px; font-weight: bold; text-align: right; padding: 4px 6px; margin-bottom: 4px; min-height: 24px; word-break: break-all; }
         
-        .calc-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 3px; }
-        .calc-btn { background: #141922; border: 1px solid #222c3a; color: #fff; border-radius: 3px; padding: 4px 0; font-size: 9px; font-weight: bold; cursor: pointer; }
-        .calc-btn:active { background: #00a2ff; color: #000; }
-        .calc-btn.clr { background: #ff444422; color: #ff4444; border-color: #ff444488; }
+        /* Vibrant Color-Coded Numpad Buttons */
+        .calc-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 4px; }
+        .calc-btn { border-radius: 4px; padding: 6px 0; font-size: 11px; font-weight: 900; cursor: pointer; border: 1px solid #333; transition: 0.1s; }
+        .calc-btn:active { transform: scale(0.92); }
+        .calc-btn.n1 { background: #ff336622; border-color: #ff3366; color: #ff6688; }
+        .calc-btn.n2 { background: #00e5ff22; border-color: #00e5ff; color: #33efff; }
+        .calc-btn.n3 { background: #ffcc0022; border-color: #ffcc00; color: #ffdd33; }
+        .calc-btn.n4 { background: #a855f722; border-color: #a855f7; color: #c084fc; }
+        .calc-btn.n5 { background: #22c55e22; border-color: #22c55e; color: #4ade80; }
+        .calc-btn.n6 { background: #f9731622; border-color: #f97316; color: #fb923c; }
+        .calc-btn.n7 { background: #ec489922; border-color: #ec4899; color: #f472b6; }
+        .calc-btn.n8 { background: #3b82f622; border-color: #3b82f6; color: #60a5fa; }
+        .calc-btn.n9 { background: #eab30822; border-color: #eab308; color: #fde047; }
+        .calc-btn.n0 { background: #06b6d422; border-color: #06b6d4; color: #22d3ee; }
+        .calc-btn.dot { background: #64748b22; border-color: #64748b; color: #94a3b8; }
+        .calc-btn.clr { background: #ef444422; border-color: #ef4444; color: #f87171; }
         
-        .save-invest-btn { background: linear-gradient(90deg, #00cc66, #00ff88); color: #000; border: none; border-radius: 4px; padding: 4px; font-size: 9px; font-weight: 900; cursor: pointer; margin-bottom: 3px; width: 100%; box-shadow: 0 0 8px rgba(0,255,136,0.4); }
+        .save-invest-btn { background: linear-gradient(90deg, #00cc66, #00ff88); color: #000; border: none; border-radius: 5px; padding: 5px; font-size: 10px; font-weight: 900; cursor: pointer; margin-bottom: 4px; width: 100%; box-shadow: 0 0 10px rgba(0,255,136,0.5); }
 
-        .summary-title { font-size: 7px; font-weight: bold; color: #aaa; text-align: left; margin-bottom: 2px; }
-        .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
-        .sum-card { background: #10141c; border: 1px solid #1a2230; border-radius: 3px; padding: 2px; text-align: center; }
-        .sum-lbl { font-size: 6px; color: #888; display: block; }
-        .sum-val { font-size: 8px; font-weight: bold; color: #fff; }
+        /* TWO LARGE SUMMARY BUTTONS (BET AMOUNT & WIN AMOUNT) */
+        .summary-two-grid { display: flex; flex-direction: column; gap: 4px; width: 100%; margin-top: 2px; }
+        .big-summary-btn { background: #0b1522; border: 1.5px solid #00a2ff; border-radius: 6px; padding: 4px 6px; text-align: center; box-shadow: 0 0 8px rgba(0,162,255,0.25); }
+        .big-summary-btn.win-card { border-color: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.25); }
+        .big-summary-btn.loss-card { border-color: #ff4444; box-shadow: 0 0 8px rgba(255,68,68,0.25); }
+        .big-sum-title { font-size: 7px; font-weight: 900; color: #aaa; letter-spacing: 0.5px; }
+        .big-sum-val { font-size: 12px; font-weight: 900; color: #fff; margin-top: 1px; }
 
-        .reset-btn { background: #1a2230; color: #00a2ff; border: 1px solid #00a2ff66; border-radius: 4px; padding: 3px; font-size: 8px; font-weight: bold; cursor: pointer; margin-top: 2px; width: 100%; }
+        .reset-btn { background: #161e2b; color: #00a2ff; border: 1px solid #00a2ff66; border-radius: 4px; padding: 3px; font-size: 8px; font-weight: bold; cursor: pointer; margin-top: 3px; width: 100%; }
 
         /* BDG CHART STYLES */
         .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 270px); position: relative; padding-right: 2px; margin-top: 3px; }
@@ -171,8 +203,8 @@ HTML_TEMPLATE = """
         .profile-card p { margin: 4px 0; color: #bbb; }
         .profile-card span { color: #fff; font-weight: bold; }
 
-        /* FIXED & RAISED BOTTOM NAVIGATION BAR (Shifted UP to avoid back/home gesture bar) */
-        .bottom-nav { position: absolute; bottom: 12px; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 5px 0 8px 0; z-index: 20; box-shadow: 0 -4px 10px rgba(0,0,0,0.8); }
+        /* FIXED & RAISED BOTTOM NAVIGATION BAR (No Collision with Phone Back Button) */
+        .bottom-nav { position: absolute; bottom: 14px; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 0 10px 0; z-index: 25; box-shadow: 0 -5px 12px rgba(0,0,0,0.85); }
         .nav-item { font-size: 7px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
         .nav-item.active { color: #d4af37; font-weight: bold; }
         .nav-item div { font-size: 11px; margin-bottom: 1px; }
@@ -242,7 +274,7 @@ HTML_TEMPLATE = """
         <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="terminal-split-container">
-                <!-- LEFT VIP PREDICTOR CARD -->
+                <!-- LEFT VIP PREDICTOR CARD WITH ANIMATED MULTI-COLOR BACKGROUND -->
                 <div class="predictor-box">
                     <div class="wings-banner">👑 CHECK RESULT 👑</div>
                     
@@ -254,7 +286,7 @@ HTML_TEMPLATE = """
                     <div class="winner-badge">👑 WINNER 👑</div>
                 </div>
 
-                <!-- RIGHT CALCULATOR & INVEST SUMMARY CARD -->
+                <!-- RIGHT CALCULATOR & BET/WIN AMOUNT TRACKER -->
                 <div class="calc-box">
                     <div class="calc-header">
                         <span>🧮 AMOUNT CALCULATOR</span>
@@ -262,32 +294,38 @@ HTML_TEMPLATE = """
                     </div>
                     <div class="calc-display" id="calcDisplay">0</div>
 
+                    <!-- COLORFUL NUMPAD BUTTONS -->
                     <div class="calc-pad">
-                        <button class="calc-btn" onclick="pressCalc('7')">7</button>
-                        <button class="calc-btn" onclick="pressCalc('8')">8</button>
-                        <button class="calc-btn" onclick="pressCalc('9')">9</button>
+                        <button class="calc-btn n7" onclick="pressCalc('7')">7</button>
+                        <button class="calc-btn n8" onclick="pressCalc('8')">8</button>
+                        <button class="calc-btn n9" onclick="pressCalc('9')">9</button>
 
-                        <button class="calc-btn" onclick="pressCalc('4')">4</button>
-                        <button class="calc-btn" onclick="pressCalc('5')">5</button>
-                        <button class="calc-btn" onclick="pressCalc('6')">6</button>
+                        <button class="calc-btn n4" onclick="pressCalc('4')">4</button>
+                        <button class="calc-btn n5" onclick="pressCalc('5')">5</button>
+                        <button class="calc-btn n6" onclick="pressCalc('6')">6</button>
 
-                        <button class="calc-btn" onclick="pressCalc('1')">1</button>
-                        <button class="calc-btn" onclick="pressCalc('2')">2</button>
-                        <button class="calc-btn" onclick="pressCalc('3')">3</button>
+                        <button class="calc-btn n1" onclick="pressCalc('1')">1</button>
+                        <button class="calc-btn n2" onclick="pressCalc('2')">2</button>
+                        <button class="calc-btn n3" onclick="pressCalc('3')">3</button>
 
-                        <button class="calc-btn" onclick="pressCalc('0')">0</button>
-                        <button class="calc-btn" onclick="pressCalc('.')">.</button>
+                        <button class="calc-btn n0" onclick="pressCalc('0')">0</button>
+                        <button class="calc-btn dot" onclick="pressCalc('.')">.</button>
                         <button class="calc-btn clr" onclick="clearCalc()">⌫</button>
                     </div>
 
                     <button class="save-invest-btn" onclick="saveInvestAmount()">💾 SAVE INVEST AMOUNT</button>
 
-                    <div class="summary-title">📊 PROFIT / LOSS SUMMARY</div>
-                    <div class="summary-grid">
-                        <div class="sum-card"><span class="sum-lbl">TOTAL INVEST</span><span class="sum-val" style="color:#00a2ff;" id="totInvest">₹ 0</span></div>
-                        <div class="sum-card"><span class="sum-lbl">TOTAL RETURN</span><span class="sum-val" style="color:#00ff88;" id="totReturn">₹ 0</span></div>
-                        <div class="sum-card"><span class="sum-lbl">TOTAL PROFIT</span><span class="sum-val" style="color:#00ff88;" id="totProfit">₹ 0</span></div>
-                        <div class="sum-card"><span class="sum-lbl">TOTAL LOSS</span><span class="sum-val" style="color:#ff4444;" id="totLoss">₹ 0</span></div>
+                    <!-- 2 LARGE SUMMARY BUTTONS (BET AMOUNT & WIN AMOUNT) -->
+                    <div class="summary-two-grid">
+                        <div class="big-summary-btn">
+                            <span class="big-sum-title">🎰 BET AMOUNT</span>
+                            <div class="big-sum-val" style="color:#00a2ff;" id="betAmountVal">₹ 0</div>
+                        </div>
+
+                        <div class="big-summary-btn win-card" id="winCardBox">
+                            <span class="big-sum-title" id="winCardTitle">🏆 WIN AMOUNT (NET)</span>
+                            <div class="big-sum-val" style="color:#00ff88;" id="winAmountVal">₹ 0</div>
+                        </div>
                     </div>
 
                     <button class="reset-btn" onclick="resetSummary()">🔄 RESET STATS</button>
@@ -343,7 +381,7 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- 5-ITEM RAISED BOTTOM NAV (NO OVERLAP WITH BACK BUTTON) -->
+        <!-- 5-ITEM RAISED BOTTOM NAV BAR -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('terminal', this)">
                 <div>📈</div>TERMINAL
@@ -377,13 +415,11 @@ HTML_TEMPLATE = """
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
 
-        // CALCULATOR & INVEST TRACKER LOGIC
+        // CALCULATOR & BET / WIN TRACKER LOGIC
         let calcExpr = "";
-        let pendingBetAmount = 0;
-        let totalInvest = 0;
-        let totalReturn = 0;
-        let totalProfit = 0;
-        let totalLoss = 0;
+        let currentBetAccumulator = 0; // Accumulates bet amount during losses
+        let lastRoundBet = 0;          // Stores current round bet
+        let netWinAmount = 0;          // Net Profit (+) or Net Loss (-)
 
         function pressCalc(val) {
             if (calcExpr === "0") calcExpr = "";
@@ -399,23 +435,34 @@ HTML_TEMPLATE = """
         function saveInvestAmount() {
             let amt = parseFloat(calcExpr);
             if (!isNaN(amt) && amt > 0) {
-                pendingBetAmount += amt;
-                totalInvest += amt;
-                document.getElementById('totInvest').innerText = `₹ ${totalInvest}`;
+                currentBetAccumulator += amt;
+                lastRoundBet += amt;
+                document.getElementById('betAmountVal').innerText = `₹ ${Math.round(currentBetAccumulator)}`;
                 clearCalc();
             }
         }
 
+        function updateWinCardUI() {
+            const cardBox = document.getElementById('winCardBox');
+            const cardVal = document.getElementById('winAmountVal');
+            
+            if (netWinAmount < 0) {
+                cardBox.className = "big-summary-btn loss-card";
+                cardVal.style.color = "#ff4444";
+                cardVal.innerText = `- ₹ ${Math.abs(Math.round(netWinAmount))}`;
+            } else {
+                cardBox.className = "big-summary-btn win-card";
+                cardVal.style.color = "#00ff88";
+                cardVal.innerText = `+ ₹ ${Math.round(netWinAmount)}`;
+            }
+        }
+
         function resetSummary() {
-            pendingBetAmount = 0;
-            totalInvest = 0;
-            totalReturn = 0;
-            totalProfit = 0;
-            totalLoss = 0;
-            document.getElementById('totInvest').innerText = "₹ 0";
-            document.getElementById('totReturn').innerText = "₹ 0";
-            document.getElementById('totProfit').innerText = "₹ 0";
-            document.getElementById('totLoss').innerText = "₹ 0";
+            currentBetAccumulator = 0;
+            lastRoundBet = 0;
+            netWinAmount = 0;
+            document.getElementById('betAmountVal').innerText = "₹ 0";
+            updateWinCardUI();
             clearCalc();
         }
 
@@ -580,19 +627,22 @@ HTML_TEMPLATE = """
                             lossesCount++; statusRes = "LOSS";
                         }
 
-                        // INVEST PROFIT/LOSS CALCULATION ON ROUND RESULT
-                        if (pendingBetAmount > 0) {
+                        // BET & WIN AMOUNT LOGIC EVALUATION
+                        if (lastRoundBet > 0) {
                             if (statusRes === "WIN" || statusRes === "JACKPOT") {
-                                let retVal = pendingBetAmount * 1.96;
-                                totalReturn += retVal;
-                                totalProfit += (retVal - pendingBetAmount);
+                                let totalReturnVal = lastRoundBet * 1.96;
+                                let netProfitThisRound = totalReturnVal - currentBetAccumulator;
+                                netWinAmount += netProfitThisRound;
+                                
+                                // Reset Bet Accumulator on Win
+                                currentBetAccumulator = 0;
+                                document.getElementById('betAmountVal').innerText = "₹ 0";
                             } else {
-                                totalLoss += pendingBetAmount;
+                                // Loss logic
+                                netWinAmount -= lastRoundBet;
                             }
-                            pendingBetAmount = 0;
-                            document.getElementById('totReturn').innerText = `₹ ${Math.round(totalReturn)}`;
-                            document.getElementById('totProfit').innerText = `₹ ${Math.round(totalProfit)}`;
-                            document.getElementById('totLoss').innerText = `₹ ${Math.round(totalLoss)}`;
+                            lastRoundBet = 0;
+                            updateWinCardUI();
                         }
 
                         historyLogs.unshift({
