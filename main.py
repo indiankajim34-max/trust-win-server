@@ -3,7 +3,7 @@ import os
 import json
 import firebase_admin
 from firebase_admin import credentials, firestore
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
 app.secret_key = 'trustwin_ultimate_secret_key_2026'
@@ -74,14 +74,9 @@ HTML_TEMPLATE = """
             100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
         }
         @keyframes radar-pulse {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.8; }
-        }
-        @keyframes btn-glow {
-            0% { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
-            50% { box-shadow: 0 0 30px rgba(0,255,136,0.9); }
-            100% { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
+            0% { transform: scale(0.95); opacity: 0.85; }
+            50% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.85; }
         }
         @keyframes text-flash {
             0% { opacity: 0.4; }
@@ -90,81 +85,96 @@ HTML_TEMPLATE = """
         }
         * { box-sizing: border-box; }
         body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 6px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
-        .container { max-width: 410px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 10px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .container { max-width: 420px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 8px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
         
-        .top-banner { background: #181818; border: 1px solid #333; border-radius: 12px; padding: 8px; margin-bottom: 6px; flex-shrink: 0; }
-        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 4px; margin-bottom: 4px; }
-        .live-dot { height: 7px; width: 7px; background-color: #00ff88; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px #00ff88; }
+        .top-banner { background: #181818; border: 1px solid #333; border-radius: 12px; padding: 6px; margin-bottom: 4px; flex-shrink: 0; }
+        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 3px; margin-bottom: 3px; }
         
         .main-title { font-size: 15px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
-        .sub-engine { font-size: 9px; color: #888; margin-top: 2px; letter-spacing: 0.5px; }
-        .time-row { display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 4px; padding: 0 4px; }
+        .sub-engine { font-size: 8px; color: #888; margin-top: 1px; }
+        .time-row { display: flex; justify-content: space-between; font-size: 9px; color: #aaa; margin-top: 3px; padding: 0 4px; }
 
-        .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 10px; padding: 8px; margin: 6px 0; box-shadow: 0 0 12px rgba(255,223,115,0.2); flex-shrink: 0; }
-        .huge-last-title { font-size: 9px; color: #ffdf73; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 2px; }
-        .huge-last-val { font-size: 16px; font-weight: bold; color: #00ff88; text-shadow: 0 0 8px rgba(0,255,136,0.5); }
+        .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 10px; padding: 6px; margin: 4px 0; box-shadow: 0 0 10px rgba(255,223,115,0.2); flex-shrink: 0; }
+        .huge-last-title { font-size: 8px; color: #ffdf73; font-weight: bold; letter-spacing: 1px; }
+        .huge-last-val { font-size: 15px; font-weight: bold; color: #00ff88; text-shadow: 0 0 8px rgba(0,255,136,0.5); }
 
-        .host-box { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 6px 10px; margin: 6px 0; display: flex; justify-content: space-between; align-items: center; font-size: 10px; flex-shrink: 0; }
+        .host-box { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 4px 8px; margin: 3px 0; display: flex; justify-content: space-between; align-items: center; font-size: 9px; flex-shrink: 0; }
         .host-left { text-align: left; }
         .host-right { text-align: right; color: #00ff88; font-weight: bold; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 6px 0; flex-shrink: 0; }
-        .stat-card { background: #181818; border: 1px solid #333; padding: 6px 2px; border-radius: 8px; }
-        .stat-card .lbl { font-size: 8px; color: #888; }
-        .stat-card .val { font-size: 13px; font-weight: bold; color: #fff; margin-top: 2px; display: block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 3px 0; flex-shrink: 0; }
+        .stat-card { background: #181818; border: 1px solid #333; padding: 4px 2px; border-radius: 8px; }
+        .stat-card .lbl { font-size: 7px; color: #888; }
+        .stat-card .val { font-size: 12px; font-weight: bold; color: #fff; margin-top: 1px; display: block; }
 
-        .period-box { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px; margin: 6px 0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .period-box div { text-align: left; font-size: 10px; color: #aaa; }
-        .period-box span { font-size: 13px; font-weight: bold; color: #fff; display: block; }
-        .countdown { font-size: 16px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
+        .period-box { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 6px; margin: 3px 0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .period-box div { text-align: left; font-size: 9px; color: #aaa; }
+        .period-box span { font-size: 12px; font-weight: bold; color: #fff; display: block; }
+        .countdown { font-size: 15px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
 
-        .radar-box { background: #141414; border: 1px solid #333; border-radius: 12px; padding: 10px; margin-top: 6px; position: relative; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-        
-        /* Terminal Header with Left-Side Premium Animated Round Button */
-        .radar-header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-        .premium-round-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(45deg, #00ff88, #00cc66); border: 2px solid #fff; color: #000; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px rgba(0,255,136,0.8); animation: btn-glow 2s infinite; transition: 0.2s; flex-shrink: 0; }
-        .premium-round-btn:active { transform: scale(0.92); }
-
-        .radar-titles { text-align: left; flex-grow: 1; }
-        .radar-title { font-size: 9px; color: #777; letter-spacing: 1px; }
-        .radar-sub { font-size: 8px; color: #aaa; margin-top: 2px; }
-        
-        .radar-circle-wrap { width: 110px; height: 110px; margin: 6px auto; border: 1px dashed rgba(212,175,55,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; animation: radar-pulse 3s infinite ease-in-out; }
-        .radar-circle-inner { width: 75px; height: 75px; border: 1px solid rgba(212,175,55,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; }
-        .prediction-display { font-size: 16px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.6); }
-        .analyzing-text { font-size: 9px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; }
-
-        .tab-content { display: none; height: 100%; flex-direction: column; }
+        /* TAB CONTENT & SPLIT CONTAINER */
+        .tab-content { display: none; height: 100%; flex-direction: column; flex-grow: 1; overflow: hidden; }
         .tab-content.active { display: flex; }
 
-        /* BDG Chart Exact Layout Styles */
-        .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 270px); position: relative; padding-right: 2px; margin-top: 6px; }
-        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 5px 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; }
-        .tiranga-period { color: #aaa; font-family: monospace; font-size: 8px; text-align: left; width: 70px; flex-shrink: 0; }
+        .terminal-split-container { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; flex-grow: 1; min-height: 0; }
+        
+        /* LEFT VIP PREDICTOR CARD (As Per Screenshot) */
+        .predictor-box { background: #0e1211; border: 1px solid #00ff8866; border-radius: 12px; padding: 6px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; position: relative; box-shadow: 0 0 15px rgba(0,255,136,0.15); }
+        .wings-banner { background: linear-gradient(90deg, transparent, #00ff8822, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 8px; color: #ffcc00; font-size: 9px; font-weight: bold; letter-spacing: 1px; width: 90%; margin-top: 2px; }
+        
+        .glowing-pedestal { width: 115px; height: 115px; border-radius: 50%; border: 3px solid #00ff88; box-shadow: 0 0 20px #00ff88, inset 0 0 15px #00ff88; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,255,136,0.2) 0%, transparent 70%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; }
+        .leaf-icon { font-size: 18px; color: #00ff88; margin-bottom: 2px; }
+        .prediction-display { font-size: 15px; font-weight: 900; color: #00ff88; text-shadow: 0 0 10px #00ff88; text-align: center; }
+        .analyzing-text { font-size: 9px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; text-align: center; }
+        .winner-badge { background: linear-gradient(45deg, #111, #222); border: 1px solid #ffcc00; color: #ffcc00; border-radius: 10px; padding: 3px 10px; font-size: 9px; font-weight: bold; width: 85%; margin-bottom: 2px; }
+
+        /* RIGHT CALCULATOR & SUMMARY CARD (As Per Screenshot) */
+        .calc-box { background: #0c1015; border: 1px solid #00a2ff66; border-radius: 12px; padding: 6px; display: flex; flex-direction: column; justify-content: space-between; font-size: 10px; }
+        .calc-header { display: flex; justify-content: space-between; align-items: center; color: #00a2ff; font-weight: bold; font-size: 9px; margin-bottom: 4px; }
+        .calc-display { background: #000; border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 13px; font-weight: bold; text-align: right; padding: 4px 8px; margin-bottom: 4px; min-height: 24px; word-break: break-all; }
+        
+        .calc-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-bottom: 4px; }
+        .calc-btn { background: #161c24; border: 1px solid #2a3442; color: #fff; border-radius: 4px; padding: 4px 0; font-size: 10px; font-weight: bold; cursor: pointer; }
+        .calc-btn:active { background: #00a2ff; color: #000; }
+        .calc-btn.op { background: #00a2ff22; color: #00a2ff; border-color: #00a2ff88; }
+        .calc-btn.eq { background: #ffaa00; color: #000; font-weight: bold; }
+
+        .summary-title { font-size: 8px; font-weight: bold; color: #aaa; text-align: left; margin-bottom: 2px; }
+        .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .sum-card { background: #121820; border: 1px solid #222; border-radius: 4px; padding: 3px; text-align: center; }
+        .sum-lbl { font-size: 6px; color: #888; display: block; }
+        .sum-val { font-size: 9px; font-weight: bold; color: #fff; }
+
+        .reset-btn { background: linear-gradient(90deg, #0055ff, #00a2ff); color: #fff; border: none; border-radius: 6px; padding: 4px; font-size: 9px; font-weight: bold; cursor: pointer; margin-top: 3px; width: 100%; }
+
+        /* BDG CHART & EXACT ZIGZAG GRAPH STYLES */
+        .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 270px); position: relative; padding-right: 2px; margin-top: 4px; }
+        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 4px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; }
+        .tiranga-period { color: #aaa; font-family: monospace; font-size: 8px; text-align: left; width: 65px; flex-shrink: 0; }
         .tiranga-nums { display: flex; gap: 2px; align-items: center; justify-content: space-between; flex-grow: 1; padding: 0 4px; }
         
-        .t-num-circle { width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold; background: #1f1f1f; color: #555; border: 1px solid #333; }
-        .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 5px #9b59b6; }
-        .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 5px #2ecc71; }
-        .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 5px #e74c3c; }
+        .t-num-circle { width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: bold; background: #1f1f1f; color: #555; border: 1px solid #333; }
+        .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 4px #9b59b6; }
+        .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 4px #2ecc71; }
+        .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 4px #e74c3c; }
 
-        .badge-big-bdg { background: #f1c40f; color: #000; padding: 1px 4px; border-radius: 3px; font-weight: bold; font-size: 8px; width: 18px; text-align: center; flex-shrink: 0; }
-        .badge-small-bdg { background: #3498db; color: #fff; padding: 1px 4px; border-radius: 3px; font-weight: bold; font-size: 8px; width: 18px; text-align: center; flex-shrink: 0; }
+        .badge-big-bdg { background: #f1c40f; color: #000; padding: 1px 3px; border-radius: 3px; font-weight: bold; font-size: 7px; width: 16px; text-align: center; flex-shrink: 0; }
+        .badge-small-bdg { background: #3498db; color: #fff; padding: 1px 3px; border-radius: 3px; font-weight: bold; font-size: 7px; width: 16px; text-align: center; flex-shrink: 0; }
 
-        .log-list { flex-grow: 1; overflow-y: auto; text-align: left; font-size: 10px; margin-top: 6px; }
-        .log-item { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 6px 8px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .badge-win { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 2px 5px; border-radius: 3px; }
-        .badge-loss { color: #ff4444; font-weight: bold; background: rgba(255,68,68,0.1); padding: 2px 5px; border-radius: 3px; }
+        .log-list { flex-grow: 1; overflow-y: auto; text-align: left; font-size: 9px; margin-top: 4px; }
+        .log-item { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 5px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .badge-win { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 2px 4px; border-radius: 3px; }
+        .badge-loss { color: #ff4444; font-weight: bold; background: rgba(255,68,68,0.1); padding: 2px 4px; border-radius: 3px; }
 
-        .profile-card { background: #161616; border: 1px solid #333; border-radius: 10px; padding: 12px; margin-top: 10px; text-align: left; font-size: 11px; }
-        .profile-card p { margin: 6px 0; color: #bbb; }
+        .profile-card { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 10px; margin-top: 8px; text-align: left; font-size: 10px; }
+        .profile-card p { margin: 5px 0; color: #bbb; }
         .profile-card span { color: #fff; font-weight: bold; }
 
-        /* Fixed Bottom Navigation Bar */
-        .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 5px 0; z-index: 10; }
-        .nav-item { font-size: 8px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        /* FIXED BOTTOM NAV BAR */
+        .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 4px 0; z-index: 10; }
+        .nav-item { font-size: 7px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
         .nav-item.active { color: #d4af37; font-weight: bold; }
-        .nav-item div { font-size: 12px; margin-bottom: 1px; }
+        .nav-item div { font-size: 11px; margin-bottom: 1px; }
     </style>
 </head>
 <body>
@@ -189,11 +199,11 @@ HTML_TEMPLATE = """
 
         <div class="host-box">
             <div class="host-left">
-                <div style="font-size:8px; color:#888;">PERIOD SYNC</div>
-                <div style="font-size:9px; color:#ccc;">UTC CLOCK STRICT +1</div>
+                <div style="font-size:7px; color:#888;">PERIOD SYNC</div>
+                <div style="font-size:8px; color:#ccc;">UTC CLOCK STRICT +1</div>
             </div>
             <div class="host-right" style="color:#00ff88;">
-                <div style="font-size:8px; color:#888;">ZIGZAG LINE</div>
+                <div style="font-size:7px; color:#888;">ZIGZAG LINE</div>
                 <div>PERFECT</div>
             </div>
         </div>
@@ -220,7 +230,7 @@ HTML_TEMPLATE = """
         <div class="period-box">
             <div>
                 <span>CURRENT PERIOD</span>
-                <b id="periodVal" style="color:#fff; font-size:11px;">Syncing...</b>
+                <b id="periodVal" style="color:#fff; font-size:10px;">Syncing...</b>
             </div>
             <div style="text-align: right;">
                 <span>NEXT SIGNAL IN</span>
@@ -228,33 +238,69 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- TERMINAL TAB -->
+        <!-- TERMINAL TAB (2-COLUMN SPLIT UI AS PER SCREENSHOT) -->
         <div id="tab-terminal" class="tab-content active">
-            <div class="radar-box">
-                <!-- Header with Left-Side Premium Animated Round Button -->
-                <div class="radar-header-row">
-                    <button type="button" class="premium-round-btn" onclick="revealPrediction()" title="Check Result">🎯</button>
-                    <div class="radar-titles">
-                        <div class="radar-title">AI ORACLE RADAR TERMINAL</div>
-                        <div class="radar-sub">300-RESULT SEQUENTIAL TRANSITION SCAN</div>
+            <div class="terminal-split-container">
+                <!-- LEFT VIP PREDICTOR CARD -->
+                <div class="predictor-box">
+                    <div class="wings-banner">👑 CHECK RESULT 👑</div>
+                    
+                    <div class="glowing-pedestal" onclick="revealPrediction()">
+                        <div class="leaf-icon">🍁</div>
+                        <div class="prediction-display" id="predDisplay">🔒 LOCKED</div>
                     </div>
+
+                    <div class="winner-badge">👑 WINNER 👑</div>
                 </div>
-                
-                <div class="radar-circle-wrap">
-                    <div class="radar-circle-inner" id="radarInner">
-                        <div class="prediction-display" id="predDisplay">
-                            🔒 LOCKED
-                        </div>
+
+                <!-- RIGHT CALCULATOR & SUMMARY CARD -->
+                <div class="calc-box">
+                    <div class="calc-header">
+                        <span>🧮 CALCULATOR</span>
+                        <span style="cursor:pointer;" onclick="clearCalc()" title="Clear">🔄</span>
                     </div>
+                    <div class="calc-display" id="calcDisplay">0</div>
+
+                    <div class="calc-pad">
+                        <button class="calc-btn" onclick="pressCalc('7')">7</button>
+                        <button class="calc-btn" onclick="pressCalc('8')">8</button>
+                        <button class="calc-btn" onclick="pressCalc('9')">9</button>
+                        <button class="calc-btn op" onclick="pressCalc('/')">÷</button>
+
+                        <button class="calc-btn" onclick="pressCalc('4')">4</button>
+                        <button class="calc-btn" onclick="pressCalc('5')">5</button>
+                        <button class="calc-btn" onclick="pressCalc('6')">6</button>
+                        <button class="calc-btn op" onclick="pressCalc('*')">×</button>
+
+                        <button class="calc-btn" onclick="pressCalc('1')">1</button>
+                        <button class="calc-btn" onclick="pressCalc('2')">2</button>
+                        <button class="calc-btn" onclick="pressCalc('3')">3</button>
+                        <button class="calc-btn op" onclick="pressCalc('-')">-</button>
+
+                        <button class="calc-btn" onclick="pressCalc('0')">0</button>
+                        <button class="calc-btn" onclick="pressCalc('.')">.</button>
+                        <button class="calc-btn op" onclick="pressCalc('+')">+</button>
+                        <button class="calc-btn eq" onclick="evalCalc()">=</button>
+                    </div>
+
+                    <div class="summary-title">📊 PROFIT / LOSS SUMMARY</div>
+                    <div class="summary-grid">
+                        <div class="sum-card"><span class="sum-lbl">TOTAL INVEST</span><span class="sum-val" style="color:#00a2ff;" id="totInvest">₹ 0</span></div>
+                        <div class="sum-card"><span class="sum-lbl">TOTAL RETURN</span><span class="sum-val" style="color:#00ff88;" id="totReturn">₹ 0</span></div>
+                        <div class="sum-card"><span class="sum-lbl">TOTAL PROFIT</span><span class="sum-val" style="color:#00ff88;" id="totProfit">₹ 0</span></div>
+                        <div class="sum-card"><span class="sum-lbl">TOTAL LOSS</span><span class="sum-val" style="color:#ff4444;" id="totLoss">₹ 0</span></div>
+                    </div>
+
+                    <button class="reset-btn" onclick="resetSummary()">🔄 RESET</button>
                 </div>
             </div>
         </div>
 
-        <!-- PATTERN TAB (BDG WIN EXACT STYLE WITH PERFECT ZIGZAG LINE) -->
+        <!-- PATTERN TAB (BDG WIN EXACT STYLE WITH PERFECT SVG ZIGZAG LINE) -->
         <div id="tab-pattern" class="tab-content">
-            <div class="radar-box" style="text-align: left; padding: 8px; display: block;">
-                <div class="radar-title" style="text-align: center; margin-bottom: 2px;">📊 BDG CHART & ZIGZAG TREND</div>
-                <div class="radar-sub" style="text-align: center; margin-bottom: 6px;">EXACT COLOR MAPPING & ALIGNED LINE</div>
+            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:6px; display:block; height:100%;">
+                <div style="font-size:9px; color:#aaa; text-align:center; margin-bottom:2px;">📊 BDG CHART & ZIGZAG TREND</div>
+                <div style="font-size:8px; color:#777; text-align:center; margin-bottom:4px;">EXACT COLOR MAPPING & ALIGNED LINE</div>
                 <div class="chart-scroll-area" id="tirangaPatternList">
                     <div style="text-align:center; color:#777; padding:20px;">Loading BDG Chart Data...</div>
                 </div>
@@ -263,8 +309,8 @@ HTML_TEMPLATE = """
 
         <!-- LOG TAB -->
         <div id="tab-log" class="tab-content">
-            <div class="radar-box" style="text-align: left; display: block;">
-                <div class="radar-title" style="text-align: center; margin-bottom: 6px;">📜 REAL HISTORY LOG</div>
+            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:6px; display:block; height:100%;">
+                <div style="font-size:9px; color:#aaa; text-align:center; margin-bottom:4px;">📜 REAL HISTORY LOG</div>
                 <div class="log-list" id="logList">
                     <div style="text-align:center; color:#777; padding:20px;">Waiting for real round completion...</div>
                 </div>
@@ -273,27 +319,27 @@ HTML_TEMPLATE = """
 
         <!-- STATS TAB -->
         <div id="tab-stats" class="tab-content">
-            <div class="radar-box" style="display: block;">
-                <div class="radar-title">📊 PERFORMANCE METRICS</div>
-                <div style="background:#161616; border-radius:8px; padding:10px; margin-top:8px; text-align:left; font-size:11px;">
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">300-Result Transition Engine Active</b></p>
+            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:8px; display:block;">
+                <div style="font-size:9px; color:#aaa; margin-bottom:6px;">📊 PERFORMANCE METRICS</div>
+                <div style="background:#161616; border-radius:6px; padding:8px; text-align:left; font-size:10px;">
+                    <p style="display:flex; justify-content:space-between; margin:4px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:4px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:4px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">300-Result Transition Engine Active</b></p>
                 </div>
             </div>
         </div>
 
         <!-- PROFILE TAB -->
         <div id="tab-profile" class="tab-content">
-            <div class="radar-box" style="text-align: left; display: block;">
-                <div class="radar-title" style="text-align: center;">👑 USER PROFILE</div>
+            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:8px; text-align:left;">
+                <div style="font-size:9px; color:#aaa; text-align:center; margin-bottom:6px;">👑 USER PROFILE</div>
                 <div class="profile-card">
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
                     <p>Server Connected: <span>Cloud Dedicated Node</span></p>
                     <br>
-                    <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:8px; border-radius:6px; font-weight:bold;">LOGOUT ACCOUNT</a>
+                    <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:6px; border-radius:4px; font-weight:bold;">LOGOUT ACCOUNT</a>
                 </div>
             </div>
         </div>
@@ -332,7 +378,7 @@ HTML_TEMPLATE = """
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
 
-        // Dynamic Real-Time License Countdown Timer Calculation
+        // Dynamic License Countdown Timer with INSTANT AUTO-LOGOUT
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
@@ -342,6 +388,10 @@ HTML_TEMPLATE = """
 
                 if (diffMs <= 0) {
                     labelText = "EXPIRED";
+                    document.getElementById('keyTimer').innerText = labelText;
+                    // Auto-Logout Trigger when Key Expires
+                    window.location.href = '/logout';
+                    return;
                 } else {
                     const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -366,6 +416,34 @@ HTML_TEMPLATE = """
         setInterval(updateRealKeyTimer, 1000);
         updateRealKeyTimer();
 
+        // CALCULATOR & SUMMARY LOGIC
+        let calcExpr = "";
+        function pressCalc(val) {
+            calcExpr += val;
+            document.getElementById('calcDisplay').innerText = calcExpr;
+        }
+        function clearCalc() {
+            calcExpr = "";
+            document.getElementById('calcDisplay').innerText = "0";
+        }
+        function evalCalc() {
+            try {
+                let res = eval(calcExpr);
+                document.getElementById('calcDisplay').innerText = res;
+                calcExpr = String(res);
+            } catch(e) {
+                document.getElementById('calcDisplay').innerText = "Error";
+                calcExpr = "";
+            }
+        }
+        function resetSummary() {
+            document.getElementById('totInvest').innerText = "₹ 0";
+            document.getElementById('totReturn').innerText = "₹ 0";
+            document.getElementById('totProfit').innerText = "₹ 0";
+            document.getElementById('totLoss').innerText = "₹ 0";
+            clearCalc();
+        }
+
         function switchTab(tabName, element) {
             playClickSound();
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -374,6 +452,7 @@ HTML_TEMPLATE = """
             element.classList.add('active');
         }
 
+        // ORIGINAL AI AUDIO EFFECTS
         function playAiSearchingSound() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -412,18 +491,19 @@ HTML_TEMPLATE = """
             } catch(e) {}
         }
 
+        // ORIGINAL REVEAL ANIMATION
         function revealPrediction() {
             playAiSearchingSound();
-            const inner = document.getElementById('radarInner');
+            const inner = document.getElementById('predDisplay');
             inner.innerHTML = '<div class="analyzing-text">TRUST AI<br>ANALYSING...</div>';
 
             setTimeout(() => {
                 isRevealed = true;
-                inner.innerHTML = `<div class="prediction-display">${currentPredType} : ${currentPredNum}</div>`;
+                inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
             }, 2000);
         }
 
-        // Live UTC Clock-Driven Period Generator (Strictly +1 step ahead)
+        // LIVE UTC CLOCK-DRIVEN PERIOD (+1 STRICT)
         function getLiveUTCPeriod() {
             const now = new Date();
             const yyyy = now.getUTCFullYear();
@@ -436,7 +516,7 @@ HTML_TEMPLATE = """
             return `${yyyy}${mm}${dd}1000${serial}`;
         }
 
-        // Safe Multi-Page Data Retrieval for 300 Results
+        // SAFE MULTI-PAGE 300 DATA FETCHING
         async function fetch300Results() {
             let combinedList = [];
             try {
@@ -457,7 +537,6 @@ HTML_TEMPLATE = """
                 } catch(e) {}
             }
 
-            // Fetch Page 2 & 3 if worker supports pagination
             if (combinedList.length > 0 && combinedList.length < 300) {
                 try {
                     const res2 = await fetch(WORKER_URL + "?pageSize=100&pageNo=2");
@@ -512,13 +591,13 @@ HTML_TEMPLATE = """
                         updateLogUI();
 
                         isRevealed = false;
-                        document.getElementById('radarInner').innerHTML = `<div class="prediction-display" id="predDisplay">🔒 LOCKED</div>`;
+                        document.getElementById('predDisplay').innerHTML = `🔒 LOCKED`;
                     }
 
                     updateBdgChartUI(items);
 
                     // ==============================================================
-                    // DEEP 300-RESULT SEQUENTIAL TRANSITION PATTERN ANALYSIS
+                    // ORIGINAL 300-RESULT SEQUENTIAL TRANSITION + DEEP FALLBACK ENGINE
                     // ==============================================================
                     const analysisPool = items.slice(0, 300);
                     const lastNum = parseInt(items[0].number, 10);
@@ -553,7 +632,7 @@ HTML_TEMPLATE = """
                         subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
                         predN = subPool[0];
                     } else {
-                        // Fallback: Overall frequency analysis over 300 results
+                        // FULL DEEP FALLBACK LOGIC (INTACT)
                         let overallBig = 0, overallSmall = 0;
                         let overallDigitFreq = {};
                         for(let i=0; i<=9; i++) overallDigitFreq[i] = 0;
@@ -602,6 +681,7 @@ HTML_TEMPLATE = """
             }
         }
 
+        // ORIGINAL BDG CHART & SVG ZIGZAG GRAPH
         function updateBdgChartUI(items) {
             const container = document.getElementById('tirangaPatternList');
             let html = '<div style="position:relative;" id="chartWrapper"><svg id="zigzagSvg" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;"></svg>';
@@ -680,7 +760,7 @@ HTML_TEMPLATE = """
                 html += `
                 <div class="log-item">
                     <div>
-                        <div style="color:#aaa; font-size:9px;">Period: ${log.issue}</div>
+                        <div style="color:#aaa; font-size:8px;">Period: ${log.issue}</div>
                         <div style="color:#fff; font-weight:bold;">Pred: ${log.pred} | Actual: <span style="color:${actColor}">${log.act_type} (${log.act_num})</span></div>
                     </div>
                     <div>${badge}</div>
@@ -717,7 +797,6 @@ HTML_TEMPLATE = """
             let formatted = remaining < 10 ? '0' + remaining : remaining;
             document.getElementById('timer').innerText = `00:${formatted}`;
             
-            // Period updates in real-time driven by UTC clock
             document.getElementById('periodVal').innerText = getLiveUTCPeriod();
 
             if (remaining === 59 || remaining === 0) {
@@ -753,8 +832,8 @@ def login():
                         if data.get('isExpired', False):
                             error = '❌ Ye Trust Win Key Expire ho chuki hai!'
                         else:
-                            # Calculate or extract exact expiry timestamp
                             expire_iso = None
+                            # DYNAMIC EXPIRY PARSING (Minutes, Hours, Days)
                             if 'expiresAt' in data and data['expiresAt']:
                                 exp_val = data['expiresAt']
                                 if hasattr(exp_val, 'isoformat'):
@@ -763,13 +842,19 @@ def login():
                                     expire_iso = str(exp_val)
                             elif 'expire_time' in data and data['expire_time']:
                                 expire_iso = str(data['expire_time'])
-                            elif 'createdAt' in data and data['createdAt']:
-                                # If validDays or duration exists
-                                valid_days = int(data.get('validDays', data.get('durationDays', 30)))
-                                created_val = data['createdAt']
+                            elif 'durationMinutes' in data or 'durationHours' in data or 'validDays' in data or 'createdAt' in data:
+                                created_val = data.get('createdAt', datetime.now(timezone.utc))
                                 if hasattr(created_val, 'timestamp'):
-                                    ts = created_val.timestamp() + (valid_days * 86400)
-                                    expire_iso = datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+                                    base_ts = created_val.timestamp()
+                                else:
+                                    base_ts = datetime.now(timezone.utc).timestamp()
+                                
+                                add_secs = 0
+                                if 'durationMinutes' in data: add_secs += int(data['durationMinutes']) * 60
+                                elif 'durationHours' in data: add_secs += int(data['durationHours']) * 3600
+                                else: add_secs += int(data.get('validDays', 30)) * 86400
+                                
+                                expire_iso = datetime.fromtimestamp(base_ts + add_secs, tz=timezone.utc).isoformat()
 
                             session['authenticated'] = True
                             session['active_key'] = key
