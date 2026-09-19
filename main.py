@@ -79,7 +79,7 @@ LOGIN_TEMPLATE = """
         <div class="error">{{ error }}</div>
         {% endif %}
 
-        <!-- ANIMATED BUY NEW KEY BUTTON REDIRECTING TO ADMIN PANEL -->
+        <!-- ANIMATED BUY NEW KEY BUTTON REDIRECTING TO ADMIN DASHBOARD -->
         <a href="https://admin-panel-0mra.onrender.com/" target="_blank" class="buy-btn">
             🛒 BUY NEW VIP KEY 🔑
         </a>
@@ -106,6 +106,19 @@ HTML_TEMPLATE = """
             50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 30px #00ff88, inset 0 0 20px #00ff88; }
             100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #00ff88, inset 0 0 10px #00ff88; }
         }
+        /* REAL TIGER ROAR FIRE SHAKE ANIMATION */
+        @keyframes tiger-roar-anim {
+            0% { transform: scale(1) rotate(0deg); box-shadow: 0 0 25px #ff3300, inset 0 0 20px #ff6600; border-color: #ff3300; }
+            20% { transform: scale(1.08) rotate(-3deg); box-shadow: 0 0 40px #ff6600, inset 0 0 30px #ff3300; border-color: #ff6600; }
+            40% { transform: scale(0.95) rotate(3deg); box-shadow: 0 0 50px #ff0000, inset 0 0 40px #ffcc00; border-color: #ff0000; }
+            60% { transform: scale(1.05) rotate(-2deg); box-shadow: 0 0 45px #ff6600, inset 0 0 30px #ff0000; border-color: #ff6600; }
+            80% { transform: scale(0.98) rotate(2deg); box-shadow: 0 0 35px #ffcc00, inset 0 0 25px #ff3300; border-color: #ffcc00; }
+            100% { transform: scale(1) rotate(0deg); box-shadow: 0 0 25px #ff3300, inset 0 0 20px #ff6600; border-color: #ff3300; }
+        }
+        .pedestal-active-roar {
+            animation: tiger-roar-anim 0.3s infinite ease-in-out !important;
+        }
+
         @keyframes bg-glow-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -113,7 +126,7 @@ HTML_TEMPLATE = """
         }
         @keyframes text-flash {
             0% { opacity: 0.4; }
-            50% { opacity: 1; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
+            50% { opacity: 1; color: #ff3300; text-shadow: 0 0 15px #ff3300; }
             100% { opacity: 0.4; }
         }
         * { box-sizing: border-box; }
@@ -168,10 +181,10 @@ HTML_TEMPLATE = """
         }
         .wings-banner { background: linear-gradient(90deg, transparent, #00ff8833, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 6px; color: #ffcc00; font-size: 8px; font-weight: bold; letter-spacing: 1px; width: 92%; margin-top: 1px; }
         
-        .glowing-pedestal { width: 115px; height: 115px; border-radius: 50%; border: 3px solid #00ff88; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,255,136,0.35) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; }
+        .glowing-pedestal { width: 115px; height: 115px; border-radius: 50%; border: 3px solid #00ff88; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,255,136,0.35) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; transition: 0.2s; }
         .leaf-icon { font-size: 18px; color: #00ff88; margin-bottom: 2px; }
         .prediction-display { font-size: 15px; font-weight: 900; color: #00ff88; text-shadow: 0 0 10px #00ff88; text-align: center; }
-        .analyzing-text { font-size: 8px; font-weight: bold; color: #00ff88; animation: text-flash 1s infinite; line-height: 1.2; text-align: center; }
+        .analyzing-text { font-size: 8px; font-weight: bold; color: #ff3300; animation: text-flash 0.5s infinite; line-height: 1.2; text-align: center; }
         .winner-badge { background: linear-gradient(45deg, #111, #222); border: 1px solid #ffcc00; color: #ffcc00; border-radius: 8px; padding: 3px 8px; font-size: 8px; font-weight: bold; width: 85%; margin-bottom: 2px; }
 
         /* RIGHT CALCULATOR CARD (Vibrant Colors & Big Buttons) */
@@ -495,7 +508,7 @@ HTML_TEMPLATE = """
             clearCalc();
         }
 
-        // FIXED LICENSE KEY TIMER WITH ACCURATE ISO PARSING & BUFFER
+        // FIXED LICENSE KEY TIMER WITH SAFE PARSING & BUFFER
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
@@ -553,27 +566,6 @@ HTML_TEMPLATE = """
             element.classList.add('active');
         }
 
-        function playAiSearchingSound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let startTime = audioCtx.currentTime;
-                for(let i = 0; i < 5; i++) {
-                    let osc = audioCtx.createOscillator();
-                    let gain = audioCtx.createGain();
-                    osc.type = 'sawtooth';
-                    let freq = 400 + (i * 250);
-                    osc.frequency.setValueAtTime(freq, startTime + (i * 0.1));
-                    osc.frequency.exponentialRampToValueAtTime(freq + 300, startTime + (i * 0.1) + 0.08);
-                    gain.gain.setValueAtTime(0.08, startTime + (i * 0.1));
-                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + (i * 0.1) + 0.09);
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    osc.start(startTime + (i * 0.1));
-                    osc.stop(startTime + (i * 0.1) + 0.09);
-                }
-            } catch(e) {}
-        }
-
         function playClickSound() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -591,12 +583,25 @@ HTML_TEMPLATE = """
             } catch(e) {}
         }
 
+        // REAL TIGER ROAR AUDIO + FIRE SHAKE ANIMATION LOGIC
         function revealPrediction() {
-            playAiSearchingSound();
+            const pedestal = document.querySelector('.glowing-pedestal');
             const inner = document.getElementById('predDisplay');
-            inner.innerHTML = '<div class="analyzing-text">TRUST AI<br>ANALYSING...</div>';
+
+            // Play Real High-Quality Cinematic Tiger Roar Sound from Fast Online Link
+            try {
+                const tigerAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2288/2288-preview.mp3");
+                tigerAudio.volume = 1.0;
+                tigerAudio.play().catch(e => console.log("Audio play deferred by browser policy:", e));
+            } catch(e) {}
+
+            // Trigger Fire Flame Glow & 3D Vibration Animation
+            if (pedestal) pedestal.classList.add('pedestal-active-roar');
+
+            inner.innerHTML = '<div class="analyzing-text">🐅 TRUST AI<br>ANALYSING...</div>';
 
             setTimeout(() => {
+                if (pedestal) pedestal.classList.remove('pedestal-active-roar');
                 isRevealed = true;
                 inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
             }, 2000);
@@ -913,14 +918,24 @@ HTML_TEMPLATE = """
 def login():
     error = None
     if request.method == 'POST':
-        key = request.form.get('license_key', '').strip().upper()
+        key = request.form.get('license_key', '').strip()
         if not key:
             error = 'Please enter a valid License Key!'
         else:
             if db:
                 try:
-                    doc_ref = db.collection('trustwin_keys').document(key)
+                    # Case-Insensitive Document Lookup Logic
+                    doc_ref = db.collection('trustwin_keys').document(key.upper())
                     doc = doc_ref.get()
+
+                    if not doc.exists:
+                        doc_ref = db.collection('trustwin_keys').document(key.lower())
+                        doc = doc_ref.get()
+
+                    if not doc.exists:
+                        doc_ref = db.collection('trustwin_keys').document(key)
+                        doc = doc_ref.get()
+
                     if doc.exists:
                         data = doc.to_dict()
                         if data.get('isExpired', False):
@@ -953,7 +968,8 @@ def login():
                                 except Exception:
                                     expire_dt = None
 
-                            elif 'durationMinutes' in data or 'durationHours' in data or 'validDays' in data or 'createdAt' in data:
+                            # ACCURATE DECIMAL DURATION CALCULATOR (float() conversion fixes 10m/20m/30m bug)
+                            elif 'durationHours' in data or 'durationMinutes' in data or 'validDays' in data or 'createdAt' in data:
                                 created_val = data.get('createdAt', now_utc)
                                 if hasattr(created_val, 'astimezone'):
                                     created_dt = created_val.astimezone(timezone.utc)
@@ -962,10 +978,13 @@ def login():
                                 else:
                                     created_dt = now_utc
 
-                                add_secs = 0
-                                if 'durationMinutes' in data: add_secs += int(data['durationMinutes']) * 60
-                                elif 'durationHours' in data: add_secs += int(data['durationHours']) * 3600
-                                else: add_secs += int(data.get('validDays', 30)) * 86400
+                                add_secs = 0.0
+                                if 'durationMinutes' in data and data['durationMinutes']:
+                                    add_secs += float(data['durationMinutes']) * 60.0
+                                elif 'durationHours' in data and data['durationHours']:
+                                    add_secs += float(data['durationHours']) * 3600.0
+                                else:
+                                    add_secs += float(data.get('validDays', 30)) * 86400.0
 
                                 expire_dt = created_dt + timedelta(seconds=add_secs)
 
@@ -976,7 +995,7 @@ def login():
                                 expire_iso = expire_dt.strftime('%Y-%m-%dT%H:%M:%SZ') if expire_dt else None
 
                                 session['authenticated'] = True
-                                session['active_key'] = key
+                                session['active_key'] = key.upper()
                                 session['key_expire_iso'] = expire_iso
                                 return redirect(url_for('home'))
                     else:
