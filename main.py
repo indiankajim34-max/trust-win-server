@@ -106,17 +106,15 @@ HTML_TEMPLATE = """
             50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 30px #00ff88, inset 0 0 20px #00ff88; }
             100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #00ff88, inset 0 0 10px #00ff88; }
         }
-        /* REAL TIGER ROAR FIRE SHAKE ANIMATION */
-        @keyframes tiger-roar-anim {
-            0% { transform: scale(1) rotate(0deg); box-shadow: 0 0 25px #ff3300, inset 0 0 20px #ff6600; border-color: #ff3300; }
-            20% { transform: scale(1.08) rotate(-3deg); box-shadow: 0 0 40px #ff6600, inset 0 0 30px #ff3300; border-color: #ff6600; }
-            40% { transform: scale(0.95) rotate(3deg); box-shadow: 0 0 50px #ff0000, inset 0 0 40px #ffcc00; border-color: #ff0000; }
-            60% { transform: scale(1.05) rotate(-2deg); box-shadow: 0 0 45px #ff6600, inset 0 0 30px #ff0000; border-color: #ff6600; }
-            80% { transform: scale(0.98) rotate(2deg); box-shadow: 0 0 35px #ffcc00, inset 0 0 25px #ff3300; border-color: #ffcc00; }
-            100% { transform: scale(1) rotate(0deg); box-shadow: 0 0 25px #ff3300, inset 0 0 20px #ff6600; border-color: #ff3300; }
+        /* CASINO DRAGON TIGER POWER SHAKE ANIMATION */
+        @keyframes casino-power-anim {
+            0% { transform: scale(1); box-shadow: 0 0 20px #00ff88; border-color: #00ff88; }
+            30% { transform: scale(1.08); box-shadow: 0 0 35px #ffcc00; border-color: #ffcc00; }
+            60% { transform: scale(0.96); box-shadow: 0 0 45px #00e5ff; border-color: #00e5ff; }
+            100% { transform: scale(1); box-shadow: 0 0 20px #00ff88; border-color: #00ff88; }
         }
-        .pedestal-active-roar {
-            animation: tiger-roar-anim 0.3s infinite ease-in-out !important;
+        .pedestal-active-power {
+            animation: casino-power-anim 0.25s infinite ease-in-out !important;
         }
 
         @keyframes bg-glow-shift {
@@ -126,7 +124,7 @@ HTML_TEMPLATE = """
         }
         @keyframes text-flash {
             0% { opacity: 0.4; }
-            50% { opacity: 1; color: #ff3300; text-shadow: 0 0 15px #ff3300; }
+            50% { opacity: 1; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
             100% { opacity: 0.4; }
         }
         * { box-sizing: border-box; }
@@ -184,7 +182,7 @@ HTML_TEMPLATE = """
         .glowing-pedestal { width: 115px; height: 115px; border-radius: 50%; border: 3px solid #00ff88; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,255,136,0.35) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; transition: 0.2s; }
         .leaf-icon { font-size: 18px; color: #00ff88; margin-bottom: 2px; }
         .prediction-display { font-size: 15px; font-weight: 900; color: #00ff88; text-shadow: 0 0 10px #00ff88; text-align: center; }
-        .analyzing-text { font-size: 8px; font-weight: bold; color: #ff3300; animation: text-flash 0.5s infinite; line-height: 1.2; text-align: center; }
+        .analyzing-text { font-size: 8px; font-weight: bold; color: #00ff88; animation: text-flash 0.5s infinite; line-height: 1.2; text-align: center; }
         .winner-badge { background: linear-gradient(45deg, #111, #222); border: 1px solid #ffcc00; color: #ffcc00; border-radius: 8px; padding: 3px 8px; font-size: 8px; font-weight: bold; width: 85%; margin-bottom: 2px; }
 
         /* RIGHT CALCULATOR CARD (Vibrant Colors & Big Buttons) */
@@ -583,28 +581,28 @@ HTML_TEMPLATE = """
             } catch(e) {}
         }
 
-        // REAL TIGER ROAR AUDIO + FIRE SHAKE ANIMATION LOGIC
+        // PROFESSIONAL DRAGON TIGER STYLE CASINO UNLOCK SOUND
         function revealPrediction() {
             const pedestal = document.querySelector('.glowing-pedestal');
             const inner = document.getElementById('predDisplay');
 
-            // Play Real High-Quality Cinematic Tiger Roar Sound from Fast Online Link
+            // Play Fast, High-Energy Dragon-Tiger Casino Reveal Sound
             try {
-                const tigerAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2288/2288-preview.mp3");
-                tigerAudio.volume = 1.0;
-                tigerAudio.play().catch(e => console.log("Audio play deferred by browser policy:", e));
+                const dtAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
+                dtAudio.volume = 1.0;
+                dtAudio.play().catch(e => console.log("Audio play deferred:", e));
             } catch(e) {}
 
-            // Trigger Fire Flame Glow & 3D Vibration Animation
-            if (pedestal) pedestal.classList.add('pedestal-active-roar');
+            // Trigger Fast Casino Power Animation
+            if (pedestal) pedestal.classList.add('pedestal-active-power');
 
-            inner.innerHTML = '<div class="analyzing-text">🐅 TRUST AI<br>ANALYSING...</div>';
+            inner.innerHTML = '<div class="analyzing-text">TRUST AI<br>ANALYSING...</div>';
 
             setTimeout(() => {
-                if (pedestal) pedestal.classList.remove('pedestal-active-roar');
+                if (pedestal) pedestal.classList.remove('pedestal-active-power');
                 isRevealed = true;
                 inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
-            }, 2000);
+            }, 1000);
         }
 
         function getLiveUTCPeriod() {
