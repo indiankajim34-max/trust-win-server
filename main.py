@@ -34,6 +34,11 @@ LOGIN_TEMPLATE = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trust Win VIP - License Login</title>
     <style>
+        @keyframes pulse-btn {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 136, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(0, 255, 136, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 136, 0.4); }
+        }
         body { background-color: #080808; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
         .login-card { background: linear-gradient(145deg, #121212, #1a1a1a); border: 2px solid #d4af37; border-radius: 20px; padding: 25px; width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
         .title { font-size: 18px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
@@ -41,6 +46,24 @@ LOGIN_TEMPLATE = """
         .input-box { width: 100%; padding: 12px; background: #161616; border: 1px solid #444; border-radius: 10px; color: #fff; font-size: 14px; text-align: center; margin-bottom: 15px; box-sizing: border-box; outline: none; text-transform: uppercase; font-weight: bold; }
         .input-box:focus { border-color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
         .btn { background: linear-gradient(45deg, #d4af37, #ffdf73); color: #000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
+        .buy-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 6px; 
+            margin-top: 18px; 
+            padding: 12px; 
+            width: 100%; 
+            background: linear-gradient(45deg, #00c853, #00ff88); 
+            color: #000; 
+            font-size: 13px; 
+            font-weight: 900; 
+            text-decoration: none; 
+            border-radius: 10px; 
+            box-sizing: border-box; 
+            animation: pulse-btn 2s infinite ease-in-out; 
+            letter-spacing: 0.5px;
+        }
         .error { color: #ff4444; font-size: 12px; margin-top: 10px; }
     </style>
 </head>
@@ -55,6 +78,11 @@ LOGIN_TEMPLATE = """
         {% if error %}
         <div class="error">{{ error }}</div>
         {% endif %}
+
+        <!-- ANIMATED BUY NEW KEY BUTTON REDIRECTING TO ADMIN PANEL -->
+        <a href="https://admin-panel-0mra.onrender.com/" target="_blank" class="buy-btn">
+            🛒 BUY NEW VIP KEY 🔑
+        </a>
     </div>
 </body>
 </html>
@@ -203,7 +231,7 @@ HTML_TEMPLATE = """
         .profile-card p { margin: 4px 0; color: #bbb; }
         .profile-card span { color: #fff; font-weight: bold; }
 
-        /* FIXED & RAISED BOTTOM NAVIGATION BAR (No Collision with Phone Back Button) */
+        /* FIXED & RAISED BOTTOM NAVIGATION BAR */
         .bottom-nav { position: absolute; bottom: 14px; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 0 10px 0; z-index: 25; box-shadow: 0 -5px 12px rgba(0,0,0,0.85); }
         .nav-item { font-size: 7px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
         .nav-item.active { color: #d4af37; font-weight: bold; }
@@ -415,12 +443,12 @@ HTML_TEMPLATE = """
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
 
-        // CALCULATOR & BET / WIN TRACKER LOGIC (CORRECTED MATH)
+        // CALCULATOR & BET / WIN TRACKER LOGIC
         let calcExpr = "";
-        let totalInvested = 0;         // कुल लगाया गया पैसा (Total Invested Amount)
-        let totalPayout = 0;           // कुल मिला रिटर्न (Total Return Amount)
-        let lastRoundBet = 0;          // वर्तमान राउंड की बेत राशि (Current Round Bet)
-        let netWinAmount = 0;          // शुद्ध लाभ / हानि (Net Profit / Loss)
+        let totalInvested = 0;
+        let totalPayout = 0;
+        let lastRoundBet = 0;
+        let netWinAmount = 0;
 
         function pressCalc(val) {
             if (calcExpr === "0") calcExpr = "";
@@ -467,19 +495,32 @@ HTML_TEMPLATE = """
             clearCalc();
         }
 
-        // DYNAMIC LICENSE KEY TIMER WITH AUTO-LOGOUT
+        // FIXED LICENSE KEY TIMER WITH ACCURATE ISO PARSING & BUFFER
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
-                const expireDate = new Date(KEY_EXPIRE_ISO);
-                const now = new Date();
-                const diffMs = expireDate - now;
+                let formattedIso = KEY_EXPIRE_ISO.replace(" ", "T");
+                if (!formattedIso.endsWith("Z") && !formattedIso.includes("+")) {
+                    formattedIso += "Z";
+                }
+                const expireDate = new Date(formattedIso);
+                
+                if (isNaN(expireDate.getTime())) {
+                    document.getElementById('keyTimer').innerText = labelText;
+                    return;
+                }
 
-                if (diffMs <= 0) {
+                const now = new Date();
+                const diffMs = expireDate.getTime() - now.getTime();
+
+                // 10-second grace buffer to prevent instant logout on tiny clock drift
+                if (diffMs <= -10000) {
                     labelText = "EXPIRED";
                     document.getElementById('keyTimer').innerText = labelText;
                     window.location.href = '/logout';
                     return;
+                } else if (diffMs <= 0) {
+                    labelText = "00m 00s";
                 } else {
                     const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -628,15 +669,12 @@ HTML_TEMPLATE = """
                             lossesCount++; statusRes = "LOSS";
                         }
 
-                        // BET & WIN AMOUNT LOGIC EVALUATION (ACCURATE PROFIT MATH)
                         if (lastRoundBet > 0) {
                             totalInvested += lastRoundBet;
                             if (statusRes === "WIN" || statusRes === "JACKPOT") {
                                 let totalReturnVal = lastRoundBet * 1.96;
                                 totalPayout += totalReturnVal;
                             }
-                            
-                            // Net Profit Calculation: Total Returns - Total Invested
                             netWinAmount = totalPayout - totalInvested;
 
                             lastRoundBet = 0;
@@ -660,7 +698,6 @@ HTML_TEMPLATE = """
 
                     updateBdgChartUI(items);
 
-                    // 300-RESULT SEQUENTIAL TRANSITION + FULL DEEP FALLBACK ENGINE
                     const analysisPool = items.slice(0, 300);
                     const lastNum = parseInt(items[0].number, 10);
                     const lastType = lastNum >= 5 ? "BIG" : "SMALL";
@@ -864,7 +901,6 @@ HTML_TEMPLATE = """
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Initial calls
         document.getElementById('periodVal').innerText = getLiveUTCPeriod();
         fetchLotteryData();
         setInterval(fetchLotteryData, 3000);
@@ -890,33 +926,59 @@ def login():
                         if data.get('isExpired', False):
                             error = '❌ Ye Trust Win Key Expire ho chuki hai!'
                         else:
-                            expire_iso = None
+                            now_utc = datetime.now(timezone.utc)
+                            expire_dt = None
+
                             if 'expiresAt' in data and data['expiresAt']:
                                 exp_val = data['expiresAt']
-                                if hasattr(exp_val, 'isoformat'):
-                                    expire_iso = exp_val.isoformat()
+                                if hasattr(exp_val, 'astimezone'):
+                                    expire_dt = exp_val.astimezone(timezone.utc)
+                                elif isinstance(exp_val, datetime):
+                                    expire_dt = exp_val.replace(tzinfo=timezone.utc) if exp_val.tzinfo is None else exp_val.astimezone(timezone.utc)
                                 else:
-                                    expire_iso = str(exp_val)
+                                    try:
+                                        s_str = str(exp_val).replace(' ', 'T')
+                                        if not s_str.endswith('Z') and '+' not in s_str:
+                                            s_str += 'Z'
+                                        expire_dt = datetime.fromisoformat(s_str.replace('Z', '+00:00'))
+                                    except Exception:
+                                        expire_dt = None
+
                             elif 'expire_time' in data and data['expire_time']:
-                                expire_iso = str(data['expire_time'])
+                                try:
+                                    s_str = str(data['expire_time']).replace(' ', 'T')
+                                    if not s_str.endswith('Z') and '+' not in s_str:
+                                        s_str += 'Z'
+                                    expire_dt = datetime.fromisoformat(s_str.replace('Z', '+00:00'))
+                                except Exception:
+                                    expire_dt = None
+
                             elif 'durationMinutes' in data or 'durationHours' in data or 'validDays' in data or 'createdAt' in data:
-                                created_val = data.get('createdAt', datetime.now(timezone.utc))
-                                if hasattr(created_val, 'timestamp'):
-                                    base_ts = created_val.timestamp()
+                                created_val = data.get('createdAt', now_utc)
+                                if hasattr(created_val, 'astimezone'):
+                                    created_dt = created_val.astimezone(timezone.utc)
+                                elif isinstance(created_val, datetime):
+                                    created_dt = created_val.replace(tzinfo=timezone.utc) if created_val.tzinfo is None else created_val.astimezone(timezone.utc)
                                 else:
-                                    base_ts = datetime.now(timezone.utc).timestamp()
-                                
+                                    created_dt = now_utc
+
                                 add_secs = 0
                                 if 'durationMinutes' in data: add_secs += int(data['durationMinutes']) * 60
                                 elif 'durationHours' in data: add_secs += int(data['durationHours']) * 3600
                                 else: add_secs += int(data.get('validDays', 30)) * 86400
-                                
-                                expire_iso = datetime.fromtimestamp(base_ts + add_secs, tz=timezone.utc).isoformat()
 
-                            session['authenticated'] = True
-                            session['active_key'] = key
-                            session['key_expire_iso'] = expire_iso
-                            return redirect(url_for('home'))
+                                expire_dt = created_dt + timedelta(seconds=add_secs)
+
+                            # STRICT BACKEND EXPIRE CHECK BEFORE SETTING SESSION
+                            if expire_dt and now_utc >= expire_dt:
+                                error = '❌ Ye Trust Win Key Expire ho chuki hai!'
+                            else:
+                                expire_iso = expire_dt.strftime('%Y-%m-%dT%H:%M:%SZ') if expire_dt else None
+
+                                session['authenticated'] = True
+                                session['active_key'] = key
+                                session['key_expire_iso'] = expire_iso
+                                return redirect(url_for('home'))
                     else:
                         error = '❌ Trust Win ki galat Key hai!'
                 except Exception as e:
