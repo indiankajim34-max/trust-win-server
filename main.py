@@ -117,6 +117,18 @@ HTML_TEMPLATE = """
             animation: casino-power-anim 0.25s infinite ease-in-out !important;
         }
 
+        /* WIN FLASH CELEBRATION ANIMATION */
+        @keyframes win-flash-anim {
+            0% { box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); border-color: #00ff88aa; }
+            20% { box-shadow: 0 0 50px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; transform: scale(1.02); }
+            40% { box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); border-color: #00ff88aa; transform: scale(1); }
+            60% { box-shadow: 0 0 50px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; transform: scale(1.02); }
+            100% { box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); border-color: #00ff88aa; transform: scale(1); }
+        }
+        .win-flash-active {
+            animation: win-flash-anim 1.5s ease-in-out !important;
+        }
+
         @keyframes bg-glow-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -176,6 +188,7 @@ HTML_TEMPLATE = """
             justify-content: space-between; 
             position: relative; 
             box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); 
+            transition: all 0.3s ease;
         }
         .wings-banner { background: linear-gradient(90deg, transparent, #00ff8833, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 6px; color: #ffcc00; font-size: 8px; font-weight: bold; letter-spacing: 1px; width: 92%; margin-top: 1px; }
         
@@ -257,7 +270,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">300-RESULTS SEQUENTIAL PATTERN ENGINE</div>
+            <div class="sub-engine" id="engineStatusMsg" style="font-weight:bold; color:#00ff88;">300-RESULTS SEQUENTIAL PATTERN ENGINE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -314,7 +327,7 @@ HTML_TEMPLATE = """
         <div id="tab-terminal" class="tab-content active">
             <div class="terminal-split-container">
                 <!-- LEFT VIP PREDICTOR CARD WITH ANIMATED MULTI-COLOR BACKGROUND -->
-                <div class="predictor-box">
+                <div class="predictor-box" id="predictorBox">
                     <div class="wings-banner">👑 CHECK RESULT 👑</div>
                     
                     <div class="glowing-pedestal" onclick="revealPrediction()">
@@ -400,7 +413,7 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:6px; padding:6px; text-align:left; font-size:9px;">
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Engine Status:</span> <b style="color:#00ff88;">300-Result Transition Engine Active</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Loss Chain Trigger:</span> <b id="statLossChain" style="color:#ffcc00;">0 (Safe)</b></p>
                 </div>
             </div>
         </div>
@@ -453,6 +466,9 @@ HTML_TEMPLATE = """
         let currentPredType = "WAITING";
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
+
+        // ADAPTIVE LOSS TRACKER
+        let consecutiveLosses = 0;
 
         // CALCULATOR & BET / WIN TRACKER LOGIC
         let calcExpr = "";
@@ -524,7 +540,6 @@ HTML_TEMPLATE = """
                 const now = new Date();
                 const diffMs = expireDate.getTime() - now.getTime();
 
-                // 10-second grace buffer to prevent instant logout on tiny clock drift
                 if (diffMs <= -10000) {
                     labelText = "EXPIRED";
                     document.getElementById('keyTimer').innerText = labelText;
@@ -581,19 +596,33 @@ HTML_TEMPLATE = """
             } catch(e) {}
         }
 
+        // WIN EFFECT TRIGGER (SOUND & ANIMATION)
+        function triggerWinEffect() {
+            try {
+                // Clapping Crowd / Casino Win Sound
+                const winAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
+                winAudio.volume = 1.0;
+                winAudio.play().catch(e => console.log("Audio play deferred"));
+            } catch(e) {}
+
+            const pBox = document.getElementById('predictorBox');
+            if (pBox) {
+                pBox.classList.add('win-flash-active');
+                setTimeout(() => pBox.classList.remove('win-flash-active'), 1500);
+            }
+        }
+
         // PROFESSIONAL DRAGON TIGER STYLE CASINO UNLOCK SOUND
         function revealPrediction() {
             const pedestal = document.querySelector('.glowing-pedestal');
             const inner = document.getElementById('predDisplay');
 
-            // Play Fast, High-Energy Dragon-Tiger Casino Reveal Sound
             try {
                 const dtAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
                 dtAudio.volume = 1.0;
                 dtAudio.play().catch(e => console.log("Audio play deferred:", e));
             } catch(e) {}
 
-            // Trigger Fast Casino Power Animation
             if (pedestal) pedestal.classList.add('pedestal-active-power');
 
             inner.innerHTML = '<div class="analyzing-text">TRUST AI<br>ANALYSING...</div>';
@@ -622,18 +651,14 @@ HTML_TEMPLATE = """
             try {
                 const res1 = await fetch(WORKER_URL + "?pageSize=100&pageNo=1");
                 const data1 = await res1.json();
-                if (data1 && data1.data && data1.data.list) {
-                    combinedList = combinedList.concat(data1.data.list);
-                }
+                if (data1 && data1.data && data1.data.list) combinedList = combinedList.concat(data1.data.list);
             } catch(e) {}
 
             if (combinedList.length === 0) {
                 try {
                     const resDef = await fetch(WORKER_URL);
                     const dataDef = await resDef.json();
-                    if (dataDef && dataDef.data && dataDef.data.list) {
-                        combinedList = dataDef.data.list;
-                    }
+                    if (dataDef && dataDef.data && dataDef.data.list) combinedList = dataDef.data.list;
                 } catch(e) {}
             }
 
@@ -664,12 +689,20 @@ HTML_TEMPLATE = """
                     if (lastEvaluatedIssue && lastEvaluatedIssue !== actIssue) {
                         totalRounds++;
                         let statusRes = "LOSS";
+                        
+                        // WIN/LOSS EVALUATION & ADAPTIVE TRACKER
                         if (currentPredType === actType && currentPredNum === actNum) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
+                            consecutiveLosses = 0;
+                            triggerWinEffect(); // TRIGGER CHEER & GREEN LIGHT
                         } else if (currentPredType === actType) {
                             winsCount++; statusRes = "WIN";
+                            consecutiveLosses = 0;
+                            triggerWinEffect(); // TRIGGER CHEER & GREEN LIGHT
                         } else {
                             lossesCount++; statusRes = "LOSS";
+                            consecutiveLosses++;
+                            // No Sound/Effect on Loss
                         }
 
                         if (lastRoundBet > 0) {
@@ -701,6 +734,9 @@ HTML_TEMPLATE = """
 
                     updateBdgChartUI(items);
 
+                    // ==========================================
+                    // PREDICTION ENGINE LOGIC (WITH 2-LOSS FILTER)
+                    // ==========================================
                     const analysisPool = items.slice(0, 300);
                     const lastNum = parseInt(items[0].number, 10);
                     const lastType = lastNum >= 5 ? "BIG" : "SMALL";
@@ -714,58 +750,76 @@ HTML_TEMPLATE = """
                     for (let i = 0; i < analysisPool.length - 1; i++) {
                         let histPrevNum = parseInt(analysisPool[i + 1].number, 10);
                         let histNextNum = parseInt(analysisPool[i].number, 10);
-                        
                         if (histPrevNum === lastNum) {
                             transitionMatches++;
                             nextNumFreq[histNextNum]++;
-                            if (histNextNum >= 5) nextBigCount++;
-                            else nextSmallCount++;
+                            if (histNextNum >= 5) nextBigCount++; else nextSmallCount++;
                         }
                     }
 
-                    let predT = lastType;
-                    let predN = 0;
-
+                    let basePredT = lastType;
+                    
+                    // Standard 300-Result Logic
                     if (transitionMatches >= 2) {
-                        predT = nextBigCount >= nextSmallCount ? "BIG" : "SMALL";
-                        let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
-                        subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
-                        predN = subPool[0];
+                        basePredT = nextBigCount >= nextSmallCount ? "BIG" : "SMALL";
                     } else {
                         let overallBig = 0, overallSmall = 0;
-                        let overallDigitFreq = {};
-                        for(let i=0; i<=9; i++) overallDigitFreq[i] = 0;
-
                         analysisPool.forEach(item => {
                             let n = parseInt(item.number, 10);
-                            if (!isNaN(n)) {
-                                overallDigitFreq[n]++;
-                                if (n >= 5) overallBig++; else overallSmall++;
-                            }
+                            if (!isNaN(n)) { if (n >= 5) overallBig++; else overallSmall++; }
                         });
+                        if (overallBig > overallSmall + 10) basePredT = "SMALL";
+                        else if (overallSmall > overallBig + 10) basePredT = "BIG";
+                        else basePredT = lastType;
+                    }
 
-                        const recentTypes = analysisPool.slice(0, 10).map(x => parseInt(x.number, 10) >= 5 ? "BIG" : "SMALL");
+                    let predT = basePredT;
+                    let engineStatusEl = document.getElementById('engineStatusMsg');
+                    let statLossChainEl = document.getElementById('statLossChain');
+
+                    // ⚡ ADAPTIVE 2-LOSS BYPASS FILTER ⚡
+                    if (consecutiveLosses >= 2) {
+                        if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE ADAPTIVE FILTER (2-LOSS BYPASS) ACTIVE";
+                        if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Engine Flipped)`;
+                        
+                        const recentTypes = analysisPool.slice(0, 6).map(x => parseInt(x.number, 10) >= 5 ? "BIG" : "SMALL");
+                        
+                        // Check Streak (Dragon)
                         let streak = 1;
                         for (let k = 1; k < recentTypes.length; k++) {
                             if (recentTypes[k] === recentTypes[0]) streak++; else break;
                         }
+                        
+                        // Check Zigzag (Alternate)
+                        let isZigzag = (recentTypes[0] !== recentTypes[1] && recentTypes[1] !== recentTypes[2]);
 
-                        if (streak >= 4) {
-                            predT = lastType === "BIG" ? "SMALL" : "BIG";
+                        if (streak >= 3) {
+                            predT = recentTypes[0]; // Follow the Dragon
+                        } else if (isZigzag) {
+                            predT = recentTypes[0] === "BIG" ? "SMALL" : "BIG"; // Follow the Zigzag
                         } else {
-                            if (overallBig > overallSmall + 10) predT = "SMALL";
-                            else if (overallSmall > overallBig + 10) predT = "BIG";
-                            else predT = lastType;
+                            predT = basePredT === "BIG" ? "SMALL" : "BIG"; // Direct Flip
                         }
-                        let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
-                        subPool.sort((a, b) => overallDigitFreq[a] - overallDigitFreq[b]);
-                        predN = subPool[0];
+                    } else {
+                        if (engineStatusEl) engineStatusEl.innerHTML = "300-RESULTS SEQUENTIAL PATTERN ENGINE";
+                        if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Safe)`;
+                        predT = basePredT;
                     }
+
+                    // Assign Final Number
+                    let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
+                    if (consecutiveLosses < 2 && transitionMatches >= 2) {
+                        subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
+                    } else {
+                        subPool.sort(() => Math.random() - 0.5);
+                    }
+                    let predN = subPool[0];
 
                     currentPredType = predT;
                     currentPredNum = predN;
                     lastEvaluatedIssue = actIssue;
 
+                    // Update UI Stats
                     document.getElementById('statTotal').innerText = totalRounds;
                     document.getElementById('statWins').innerText = winsCount;
                     document.getElementById('statLosses').innerText = lossesCount;
@@ -966,7 +1020,6 @@ def login():
                                 except Exception:
                                     expire_dt = None
 
-                            # ACCURATE DECIMAL DURATION CALCULATOR (float() conversion fixes 10m/20m/30m bug)
                             elif 'durationHours' in data or 'durationMinutes' in data or 'validDays' in data or 'createdAt' in data:
                                 created_val = data.get('createdAt', now_utc)
                                 if hasattr(created_val, 'astimezone'):
@@ -986,7 +1039,6 @@ def login():
 
                                 expire_dt = created_dt + timedelta(seconds=add_secs)
 
-                            # STRICT BACKEND EXPIRE CHECK BEFORE SETTING SESSION
                             if expire_dt and now_utc >= expire_dt:
                                 error = '❌ Ye Trust Win Key Expire ho chuki hai!'
                             else:
