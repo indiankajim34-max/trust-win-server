@@ -484,7 +484,7 @@ HTML_TEMPLATE = """
         let lastRoundBet = 0;
         let netWinAmount = 0;
 
-        // BROWSER AUDIO UNLOCK LOGIC (Unlocks background audio on first user touch/click)
+        // BROWSER AUDIO UNLOCK LOGIC
         let audioUnlocked = false;
         function unlockAudio() {
             if (audioUnlocked) return;
@@ -493,7 +493,6 @@ HTML_TEMPLATE = """
                 dummyAudio.volume = 0.01;
                 dummyAudio.play().then(() => {
                     audioUnlocked = true;
-                    console.log("Audio Unlocked Successfully!");
                 }).catch(e => console.log("Audio unlock catch:", e));
 
                 if ('speechSynthesis' in window) {
@@ -550,7 +549,7 @@ HTML_TEMPLATE = """
             clearCalc();
         }
 
-        // MP3 ALARM & VOICE ALERTS
+        // MP3 CHIME & TEXT-TO-SPEECH VOICE ALERT
         function playWarningBeep() {
             try {
                 const alertAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
@@ -564,7 +563,7 @@ HTML_TEMPLATE = """
                 try {
                     window.speechSynthesis.cancel();
                     const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = 0.95;
+                    utterance.rate = 0.90;
                     utterance.pitch = 1.0;
                     utterance.lang = 'en-US';
                     window.speechSynthesis.speak(utterance);
@@ -586,7 +585,9 @@ HTML_TEMPLATE = """
             playWarningBeep();
 
             if (speakMsg) {
-                speakText(speakMsg);
+                setTimeout(() => {
+                    speakText(speakMsg);
+                }, 400);
             }
         }
 
@@ -825,6 +826,9 @@ HTML_TEMPLATE = """
 
                     updateBdgChartUI(items);
 
+                    // ==========================================
+                    // SMART HYBRID PREDICTION ENGINE (300-RESULTS PRIORITY)
+                    // ==========================================
                     const analysisPool = items.slice(0, 300);
                     const lastNum = parseInt(items[0].number, 10);
                     const lastType = lastNum >= 5 ? "BIG" : "SMALL";
@@ -864,26 +868,27 @@ HTML_TEMPLATE = """
                     let engineStatusEl = document.getElementById('engineStatusMsg');
                     let statLossChainEl = document.getElementById('statLossChain');
 
+                    // BALANCED SHORT-TERM TREND OVERRIDE
                     if (consecutiveLosses >= 2) {
-                        if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE ADAPTIVE FILTER (2-LOSS BYPASS) ACTIVE";
-                        if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Engine Flipped)`;
-                        
                         const recentTypes = analysisPool.slice(0, 6).map(x => parseInt(x.number, 10) >= 5 ? "BIG" : "SMALL");
                         
                         let streak = 1;
                         for (let k = 1; k < recentTypes.length; k++) {
                             if (recentTypes[k] === recentTypes[0]) streak++; else break;
                         }
-                        
                         let isZigzag = (recentTypes[0] !== recentTypes[1] && recentTypes[1] !== recentTypes[2]);
 
                         if (streak >= 3) {
-                            predT = recentTypes[0];
+                            predT = recentTypes[0]; // Dragon Follow
+                            if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE DRAGON TREND DETECTED";
                         } else if (isZigzag) {
-                            predT = recentTypes[0] === "BIG" ? "SMALL" : "BIG";
+                            predT = recentTypes[0] === "BIG" ? "SMALL" : "BIG"; // Zigzag Follow
+                            if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE ZIGZAG TREND DETECTED";
                         } else {
-                            predT = basePredT === "BIG" ? "SMALL" : "BIG";
+                            predT = basePredT; // Keep Primary 300-Result
+                            if (engineStatusEl) engineStatusEl.innerHTML = "300-RESULTS SEQUENTIAL PATTERN ENGINE";
                         }
+                        if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Balanced)`;
                     } else {
                         if (engineStatusEl) engineStatusEl.innerHTML = "300-RESULTS SEQUENTIAL PATTERN ENGINE";
                         if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Safe)`;
@@ -891,7 +896,7 @@ HTML_TEMPLATE = """
                     }
 
                     let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
-                    if (consecutiveLosses < 2 && transitionMatches >= 2) {
+                    if (transitionMatches >= 2) {
                         subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
                     } else {
                         subPool.sort(() => Math.random() - 0.5);
