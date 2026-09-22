@@ -129,6 +129,12 @@ HTML_TEMPLATE = """
             animation: win-flash-anim 1.5s ease-in-out !important;
         }
 
+        @keyframes pulse-warn {
+            0% { transform: scale(1); box-shadow: 0 0 20px #ff3300; }
+            50% { transform: scale(1.03); box-shadow: 0 0 40px #ff6600; }
+            100% { transform: scale(1); box-shadow: 0 0 20px #ff3300; }
+        }
+
         @keyframes bg-glow-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -263,6 +269,16 @@ HTML_TEMPLATE = """
     </style>
 </head>
 <body>
+    <!-- KEY EXPIRY WARNING MODAL OVERLAY -->
+    <div id="keyWarnModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); z-index:9999; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
+        <div style="background:linear-gradient(145deg, #220000, #3d0000); border:3px solid #ff3300; border-radius:20px; padding:20px; text-align:center; max-width:320px; box-shadow:0 0 35px #ff3300; animation:pulse-warn 1.5s infinite;">
+            <div style="font-size:38px; margin-bottom:5px;">⚠️</div>
+            <div style="font-size:15px; font-weight:900; color:#ff3300; letter-spacing:1px; margin-bottom:8px;" id="warnTitle">VIP KEY EXPIRING SOON</div>
+            <div style="font-size:12px; color:#fff; font-weight:bold; margin-bottom:15px; line-height:1.4;" id="warnBody">Your VIP key will expire shortly!</div>
+            <button onclick="dismissWarnModal()" style="background:linear-gradient(45deg, #ff3300, #ff6600); color:#fff; border:none; padding:10px 20px; font-weight:900; border-radius:8px; cursor:pointer; font-size:12px; width:100%; letter-spacing:0.5px;">OK, UNDERSTOOD</button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="top-banner">
             <div class="vip-header">
@@ -467,8 +483,18 @@ HTML_TEMPLATE = """
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
 
+        // LOCKED PREDICTION VARIABLES (Prevents Background Overwrite & Fake Jackpot Bug)
+        let lockedPredType = null;
+        let lockedPredNum = null;
+
         // ADAPTIVE LOSS TRACKER
         let consecutiveLosses = 0;
+
+        // KEY WARNING TRIGGER FLAGS
+        let warnTriggered120 = false;
+        let warnTriggered90 = false;
+        let warnTriggered60 = false;
+        let warnTriggered30 = false;
 
         // CALCULATOR & BET / WIN TRACKER LOGIC
         let calcExpr = "";
@@ -522,7 +548,41 @@ HTML_TEMPLATE = """
             clearCalc();
         }
 
-        // FIXED LICENSE KEY TIMER WITH SAFE PARSING & BUFFER
+        // WEB SPEECH VOICE ANNOUNCEMENT
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                try {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 0.95;
+                    utterance.pitch = 1.0;
+                    utterance.lang = 'en-US';
+                    window.speechSynthesis.speak(utterance);
+                } catch(e) {}
+            }
+        }
+
+        function showWarnModal(msg, speakMsg) {
+            const modal = document.getElementById('keyWarnModal');
+            const body = document.getElementById('warnBody');
+            if (modal && body) {
+                body.innerText = msg;
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    dismissWarnModal();
+                }, 4500);
+            }
+            if (speakMsg) {
+                speakText(speakMsg);
+            }
+        }
+
+        function dismissWarnModal() {
+            const modal = document.getElementById('keyWarnModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        // FIXED LICENSE KEY TIMER WITH SAFE PARSING, BUFFER & 4-STEP VOICE/UI WARNINGS
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
@@ -539,6 +599,22 @@ HTML_TEMPLATE = """
 
                 const now = new Date();
                 const diffMs = expireDate.getTime() - now.getTime();
+                const diffSecs = Math.floor(diffMs / 1000);
+
+                // 4-STEP EXPIRY WARNING & VOICE ALERTS
+                if (diffSecs <= 120 && diffSecs > 105 && !warnTriggered120) {
+                    warnTriggered120 = true;
+                    showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 2 MINUTES!", "Warning! Your VIP key expires in 2 minutes.");
+                } else if (diffSecs <= 90 && diffSecs > 75 && !warnTriggered90) {
+                    warnTriggered90 = true;
+                    showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 1 MINUTE 30 SECONDS!", "Warning! Your VIP key expires in 1 minute 30 seconds.");
+                } else if (diffSecs <= 60 && diffSecs > 45 && !warnTriggered60) {
+                    warnTriggered60 = true;
+                    showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 1 MINUTE!", "Warning! Your VIP key expires in 1 minute.");
+                } else if (diffSecs <= 30 && diffSecs > 0 && !warnTriggered30) {
+                    warnTriggered30 = true;
+                    showWarnModal("🚨 FINAL WARNING: YOUR VIP KEY EXPIRES IN 30 SECONDS!", "Alert! Final warning, your VIP key expires in 30 seconds.");
+                }
 
                 if (diffMs <= -10000) {
                     labelText = "EXPIRED";
@@ -596,10 +672,8 @@ HTML_TEMPLATE = """
             } catch(e) {}
         }
 
-        // WIN EFFECT TRIGGER (SOUND & ANIMATION)
         function triggerWinEffect() {
             try {
-                // Clapping Crowd / Casino Win Sound
                 const winAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
                 winAudio.volume = 1.0;
                 winAudio.play().catch(e => console.log("Audio play deferred"));
@@ -612,7 +686,6 @@ HTML_TEMPLATE = """
             }
         }
 
-        // PROFESSIONAL DRAGON TIGER STYLE CASINO UNLOCK SOUND
         function revealPrediction() {
             const pedestal = document.querySelector('.glowing-pedestal');
             const inner = document.getElementById('predDisplay');
@@ -630,7 +703,12 @@ HTML_TEMPLATE = """
             setTimeout(() => {
                 if (pedestal) pedestal.classList.remove('pedestal-active-power');
                 isRevealed = true;
-                inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
+                
+                // LOCK PREDICTION FOR CURRENT ROUND (Prevents overwrite bug!)
+                lockedPredType = currentPredType;
+                lockedPredNum = currentPredNum;
+
+                inner.innerHTML = `${lockedPredType} : ${lockedPredNum}`;
             }, 1000);
         }
 
@@ -690,19 +768,21 @@ HTML_TEMPLATE = """
                         totalRounds++;
                         let statusRes = "LOSS";
                         
-                        // WIN/LOSS EVALUATION & ADAPTIVE TRACKER
-                        if (currentPredType === actType && currentPredNum === actNum) {
+                        // USE LOCKED PREDICTION FOR STRICT ACCURATE EVALUATION
+                        let evalType = lockedPredType || currentPredType;
+                        let evalNum = (lockedPredNum !== null) ? lockedPredNum : currentPredNum;
+
+                        if (evalType === actType && evalNum === actNum) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
                             consecutiveLosses = 0;
-                            triggerWinEffect(); // TRIGGER CHEER & GREEN LIGHT
-                        } else if (currentPredType === actType) {
+                            triggerWinEffect();
+                        } else if (evalType === actType) {
                             winsCount++; statusRes = "WIN";
                             consecutiveLosses = 0;
-                            triggerWinEffect(); // TRIGGER CHEER & GREEN LIGHT
+                            triggerWinEffect();
                         } else {
                             lossesCount++; statusRes = "LOSS";
                             consecutiveLosses++;
-                            // No Sound/Effect on Loss
                         }
 
                         if (lastRoundBet > 0) {
@@ -720,7 +800,7 @@ HTML_TEMPLATE = """
 
                         historyLogs.unshift({
                             issue: actIssue,
-                            pred: `${currentPredType} : ${currentPredNum}`,
+                            pred: `${evalType} : ${evalNum}`,
                             act_type: actType,
                             act_num: actNum,
                             status: statusRes
@@ -728,6 +808,9 @@ HTML_TEMPLATE = """
                         if (historyLogs.length > 50) historyLogs.pop();
                         updateLogUI();
 
+                        // RESET LOCKS FOR NEXT UPCOMING ROUND
+                        lockedPredType = null;
+                        lockedPredNum = null;
                         isRevealed = false;
                         document.getElementById('predDisplay').innerHTML = `🔒 LOCKED`;
                     }
@@ -759,7 +842,6 @@ HTML_TEMPLATE = """
 
                     let basePredT = lastType;
                     
-                    // Standard 300-Result Logic
                     if (transitionMatches >= 2) {
                         basePredT = nextBigCount >= nextSmallCount ? "BIG" : "SMALL";
                     } else {
@@ -777,28 +859,26 @@ HTML_TEMPLATE = """
                     let engineStatusEl = document.getElementById('engineStatusMsg');
                     let statLossChainEl = document.getElementById('statLossChain');
 
-                    // ⚡ ADAPTIVE 2-LOSS BYPASS FILTER ⚡
+                    // ADAPTIVE 2-LOSS BYPASS FILTER
                     if (consecutiveLosses >= 2) {
                         if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE ADAPTIVE FILTER (2-LOSS BYPASS) ACTIVE";
                         if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Engine Flipped)`;
                         
                         const recentTypes = analysisPool.slice(0, 6).map(x => parseInt(x.number, 10) >= 5 ? "BIG" : "SMALL");
                         
-                        // Check Streak (Dragon)
                         let streak = 1;
                         for (let k = 1; k < recentTypes.length; k++) {
                             if (recentTypes[k] === recentTypes[0]) streak++; else break;
                         }
                         
-                        // Check Zigzag (Alternate)
                         let isZigzag = (recentTypes[0] !== recentTypes[1] && recentTypes[1] !== recentTypes[2]);
 
                         if (streak >= 3) {
-                            predT = recentTypes[0]; // Follow the Dragon
+                            predT = recentTypes[0];
                         } else if (isZigzag) {
-                            predT = recentTypes[0] === "BIG" ? "SMALL" : "BIG"; // Follow the Zigzag
+                            predT = recentTypes[0] === "BIG" ? "SMALL" : "BIG";
                         } else {
-                            predT = basePredT === "BIG" ? "SMALL" : "BIG"; // Direct Flip
+                            predT = basePredT === "BIG" ? "SMALL" : "BIG";
                         }
                     } else {
                         if (engineStatusEl) engineStatusEl.innerHTML = "300-RESULTS SEQUENTIAL PATTERN ENGINE";
@@ -806,7 +886,6 @@ HTML_TEMPLATE = """
                         predT = basePredT;
                     }
 
-                    // Assign Final Number
                     let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
                     if (consecutiveLosses < 2 && transitionMatches >= 2) {
                         subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
@@ -819,7 +898,6 @@ HTML_TEMPLATE = """
                     currentPredNum = predN;
                     lastEvaluatedIssue = actIssue;
 
-                    // Update UI Stats
                     document.getElementById('statTotal').innerText = totalRounds;
                     document.getElementById('statWins').innerText = winsCount;
                     document.getElementById('statLosses').innerText = lossesCount;
@@ -887,7 +965,7 @@ HTML_TEMPLATE = """
             activeCircles.forEach(circle => {
                 const rect = circle.getBoundingClientRect();
                 const wrapperRect = wrapper.getBoundingClientRect();
-                let x = rect.left + rect.width / 2 - wrapperRect.left + wrapper.scrollLeft;
+                let x = rect.left + rect.width / 2 - wrapperRect.left + wrapper.scrollTop;
                 let y = rect.top + rect.height / 2 - wrapperRect.top + wrapper.scrollTop;
                 points.push(`${x},${y}`);
             });
