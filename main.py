@@ -79,7 +79,6 @@ LOGIN_TEMPLATE = """
         <div class="error">{{ error }}</div>
         {% endif %}
 
-        <!-- ANIMATED BUY NEW KEY BUTTON REDIRECTING TO ADMIN DASHBOARD -->
         <a href="https://admin-panel-0mra.onrender.com/" target="_blank" class="buy-btn">
             🛒 BUY NEW VIP KEY 🔑
         </a>
@@ -106,7 +105,6 @@ HTML_TEMPLATE = """
             50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 30px #00ff88, inset 0 0 20px #00ff88; }
             100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #00ff88, inset 0 0 10px #00ff88; }
         }
-        /* CASINO DRAGON TIGER POWER SHAKE ANIMATION */
         @keyframes casino-power-anim {
             0% { transform: scale(1); box-shadow: 0 0 20px #00ff88; border-color: #00ff88; }
             30% { transform: scale(1.08); box-shadow: 0 0 35px #ffcc00; border-color: #ffcc00; }
@@ -117,7 +115,6 @@ HTML_TEMPLATE = """
             animation: casino-power-anim 0.25s infinite ease-in-out !important;
         }
 
-        /* WIN FLASH CELEBRATION ANIMATION */
         @keyframes win-flash-anim {
             0% { box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); border-color: #00ff88aa; }
             20% { box-shadow: 0 0 50px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; transform: scale(1.02); }
@@ -174,13 +171,11 @@ HTML_TEMPLATE = """
         .period-box span { font-size: 11px; font-weight: bold; color: #fff; display: block; }
         .countdown { font-size: 14px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
 
-        /* TAB CONTENT & SPLIT CONTAINER */
         .tab-content { display: none; height: 100%; flex-direction: column; flex-grow: 1; overflow: hidden; }
         .tab-content.active { display: flex; }
 
         .terminal-split-container { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 3px; flex-grow: 1; min-height: 0; }
         
-        /* LEFT VIP PREDICTOR CARD WITH MULTI-COLOR ANIMATED BACKGROUND */
         .predictor-box { 
             background: linear-gradient(135deg, #071510, #130026, #001f18, #180d00);
             background-size: 400% 400%;
@@ -204,12 +199,10 @@ HTML_TEMPLATE = """
         .analyzing-text { font-size: 8px; font-weight: bold; color: #00ff88; animation: text-flash 0.5s infinite; line-height: 1.2; text-align: center; }
         .winner-badge { background: linear-gradient(45deg, #111, #222); border: 1px solid #ffcc00; color: #ffcc00; border-radius: 8px; padding: 3px 8px; font-size: 8px; font-weight: bold; width: 85%; margin-bottom: 2px; }
 
-        /* RIGHT CALCULATOR CARD (Vibrant Colors & Big Buttons) */
         .calc-box { background: #0a0d12; border: 1px solid #00a2ff66; border-radius: 10px; padding: 5px; display: flex; flex-direction: column; justify-content: space-between; font-size: 9px; }
         .calc-header { display: flex; justify-content: space-between; align-items: center; color: #00a2ff; font-weight: bold; font-size: 8px; margin-bottom: 2px; }
         .calc-display { background: #000; border: 1px solid #333; border-radius: 4px; color: #00ff88; font-size: 13px; font-weight: bold; text-align: right; padding: 4px 6px; margin-bottom: 4px; min-height: 24px; word-break: break-all; }
         
-        /* Vibrant Color-Coded Numpad Buttons */
         .calc-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 4px; }
         .calc-btn { border-radius: 4px; padding: 6px 0; font-size: 11px; font-weight: 900; cursor: pointer; border: 1px solid #333; transition: 0.1s; }
         .calc-btn:active { transform: scale(0.92); }
@@ -228,7 +221,6 @@ HTML_TEMPLATE = """
         
         .save-invest-btn { background: linear-gradient(90deg, #00cc66, #00ff88); color: #000; border: none; border-radius: 5px; padding: 5px; font-size: 10px; font-weight: 900; cursor: pointer; margin-bottom: 4px; width: 100%; box-shadow: 0 0 10px rgba(0,255,136,0.5); }
 
-        /* TWO LARGE SUMMARY BUTTONS (BET AMOUNT & WIN AMOUNT) */
         .summary-two-grid { display: flex; flex-direction: column; gap: 4px; width: 100%; margin-top: 2px; }
         .big-summary-btn { background: #0b1522; border: 1.5px solid #00a2ff; border-radius: 6px; padding: 4px 6px; text-align: center; box-shadow: 0 0 8px rgba(0,162,255,0.25); }
         .big-summary-btn.win-card { border-color: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.25); }
@@ -238,7 +230,6 @@ HTML_TEMPLATE = """
 
         .reset-btn { background: #161e2b; color: #00a2ff; border: 1px solid #00a2ff66; border-radius: 4px; padding: 3px; font-size: 8px; font-weight: bold; cursor: pointer; margin-top: 3px; width: 100%; }
 
-        /* BDG CHART STYLES */
         .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 270px); position: relative; padding-right: 2px; margin-top: 3px; }
         .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 5px; padding: 3px; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; }
         .tiranga-period { color: #aaa; font-family: monospace; font-size: 7px; text-align: left; width: 60px; flex-shrink: 0; }
@@ -261,7 +252,6 @@ HTML_TEMPLATE = """
         .profile-card p { margin: 4px 0; color: #bbb; }
         .profile-card span { color: #fff; font-weight: bold; }
 
-        /* FIXED & RAISED BOTTOM NAVIGATION BAR */
         .bottom-nav { position: absolute; bottom: 14px; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 0 10px 0; z-index: 25; box-shadow: 0 -5px 12px rgba(0,0,0,0.85); }
         .nav-item { font-size: 7px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
         .nav-item.active { color: #d4af37; font-weight: bold; }
@@ -342,7 +332,6 @@ HTML_TEMPLATE = """
         <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="terminal-split-container">
-                <!-- LEFT VIP PREDICTOR CARD WITH ANIMATED MULTI-COLOR BACKGROUND -->
                 <div class="predictor-box" id="predictorBox">
                     <div class="wings-banner">👑 CHECK RESULT 👑</div>
                     
@@ -354,7 +343,6 @@ HTML_TEMPLATE = """
                     <div class="winner-badge">👑 WINNER 👑</div>
                 </div>
 
-                <!-- RIGHT CALCULATOR & BET/WIN AMOUNT TRACKER -->
                 <div class="calc-box">
                     <div class="calc-header">
                         <span>🧮 AMOUNT CALCULATOR</span>
@@ -362,7 +350,6 @@ HTML_TEMPLATE = """
                     </div>
                     <div class="calc-display" id="calcDisplay">0</div>
 
-                    <!-- COLORFUL NUMPAD BUTTONS -->
                     <div class="calc-pad">
                         <button class="calc-btn n7" onclick="pressCalc('7')">7</button>
                         <button class="calc-btn n8" onclick="pressCalc('8')">8</button>
@@ -383,7 +370,6 @@ HTML_TEMPLATE = """
 
                     <button class="save-invest-btn" onclick="saveInvestAmount()">💾 SAVE INVEST AMOUNT</button>
 
-                    <!-- 2 LARGE SUMMARY BUTTONS (BET AMOUNT & WIN AMOUNT) -->
                     <div class="summary-two-grid">
                         <div class="big-summary-btn">
                             <span class="big-sum-title">🎰 BET AMOUNT</span>
@@ -449,7 +435,6 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- 5-ITEM RAISED BOTTOM NAV BAR -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('terminal', this)">
                 <div>📈</div>TERMINAL
@@ -483,25 +468,42 @@ HTML_TEMPLATE = """
         let currentPredNum = 0;
         let lastEvaluatedIssue = null;
 
-        // LOCKED PREDICTION VARIABLES (Prevents Background Overwrite & Fake Jackpot Bug)
         let lockedPredType = null;
         let lockedPredNum = null;
 
-        // ADAPTIVE LOSS TRACKER
         let consecutiveLosses = 0;
 
-        // KEY WARNING TRIGGER FLAGS
         let warnTriggered120 = false;
         let warnTriggered90 = false;
         let warnTriggered60 = false;
         let warnTriggered30 = false;
 
-        // CALCULATOR & BET / WIN TRACKER LOGIC
         let calcExpr = "";
         let totalInvested = 0;
         let totalPayout = 0;
         let lastRoundBet = 0;
         let netWinAmount = 0;
+
+        // BROWSER AUDIO UNLOCK LOGIC (Unlocks background audio on first user touch/click)
+        let audioUnlocked = false;
+        function unlockAudio() {
+            if (audioUnlocked) return;
+            try {
+                const dummyAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+                dummyAudio.volume = 0.01;
+                dummyAudio.play().then(() => {
+                    audioUnlocked = true;
+                    console.log("Audio Unlocked Successfully!");
+                }).catch(e => console.log("Audio unlock catch:", e));
+
+                if ('speechSynthesis' in window) {
+                    const emptyUtterance = new SpeechSynthesisUtterance("");
+                    window.speechSynthesis.speak(emptyUtterance);
+                }
+            } catch(e) {}
+        }
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('touchstart', unlockAudio, { once: true });
 
         function pressCalc(val) {
             if (calcExpr === "0") calcExpr = "";
@@ -548,7 +550,15 @@ HTML_TEMPLATE = """
             clearCalc();
         }
 
-        // WEB SPEECH VOICE ANNOUNCEMENT
+        // MP3 ALARM & VOICE ALERTS
+        function playWarningBeep() {
+            try {
+                const alertAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+                alertAudio.volume = 1.0;
+                alertAudio.play().catch(e => console.log("Audio play deferred"));
+            } catch(e) {}
+        }
+
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 try {
@@ -572,6 +582,9 @@ HTML_TEMPLATE = """
                     dismissWarnModal();
                 }, 4500);
             }
+            
+            playWarningBeep();
+
             if (speakMsg) {
                 speakText(speakMsg);
             }
@@ -582,7 +595,6 @@ HTML_TEMPLATE = """
             if (modal) modal.style.display = 'none';
         }
 
-        // FIXED LICENSE KEY TIMER WITH SAFE PARSING, BUFFER & 4-STEP VOICE/UI WARNINGS
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
@@ -601,7 +613,6 @@ HTML_TEMPLATE = """
                 const diffMs = expireDate.getTime() - now.getTime();
                 const diffSecs = Math.floor(diffMs / 1000);
 
-                // 4-STEP EXPIRY WARNING & VOICE ALERTS
                 if (diffSecs <= 120 && diffSecs > 105 && !warnTriggered120) {
                     warnTriggered120 = true;
                     showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 2 MINUTES!", "Warning! Your VIP key expires in 2 minutes.");
@@ -704,7 +715,6 @@ HTML_TEMPLATE = """
                 if (pedestal) pedestal.classList.remove('pedestal-active-power');
                 isRevealed = true;
                 
-                // LOCK PREDICTION FOR CURRENT ROUND (Prevents overwrite bug!)
                 lockedPredType = currentPredType;
                 lockedPredNum = currentPredNum;
 
@@ -736,7 +746,7 @@ HTML_TEMPLATE = """
                 try {
                     const resDef = await fetch(WORKER_URL);
                     const dataDef = await resDef.json();
-                    if (dataDef && dataDef.data && dataDef.data.list) combinedList = dataDef.data.list;
+                    if (dataDef && dataDef.data && dataDef.data.list) combinedList = combinedList.concat(dataDef.data.list);
                 } catch(e) {}
             }
 
@@ -768,7 +778,6 @@ HTML_TEMPLATE = """
                         totalRounds++;
                         let statusRes = "LOSS";
                         
-                        // USE LOCKED PREDICTION FOR STRICT ACCURATE EVALUATION
                         let evalType = lockedPredType || currentPredType;
                         let evalNum = (lockedPredNum !== null) ? lockedPredNum : currentPredNum;
 
@@ -808,7 +817,6 @@ HTML_TEMPLATE = """
                         if (historyLogs.length > 50) historyLogs.pop();
                         updateLogUI();
 
-                        // RESET LOCKS FOR NEXT UPCOMING ROUND
                         lockedPredType = null;
                         lockedPredNum = null;
                         isRevealed = false;
@@ -817,9 +825,6 @@ HTML_TEMPLATE = """
 
                     updateBdgChartUI(items);
 
-                    // ==========================================
-                    // PREDICTION ENGINE LOGIC (WITH 2-LOSS FILTER)
-                    // ==========================================
                     const analysisPool = items.slice(0, 300);
                     const lastNum = parseInt(items[0].number, 10);
                     const lastType = lastNum >= 5 ? "BIG" : "SMALL";
@@ -859,7 +864,6 @@ HTML_TEMPLATE = """
                     let engineStatusEl = document.getElementById('engineStatusMsg');
                     let statLossChainEl = document.getElementById('statLossChain');
 
-                    // ADAPTIVE 2-LOSS BYPASS FILTER
                     if (consecutiveLosses >= 2) {
                         if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE ADAPTIVE FILTER (2-LOSS BYPASS) ACTIVE";
                         if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Engine Flipped)`;
@@ -965,7 +969,7 @@ HTML_TEMPLATE = """
             activeCircles.forEach(circle => {
                 const rect = circle.getBoundingClientRect();
                 const wrapperRect = wrapper.getBoundingClientRect();
-                let x = rect.left + rect.width / 2 - wrapperRect.left + wrapper.scrollTop;
+                let x = rect.left + rect.width / 2 - wrapperRect.left + wrapper.scrollLeft;
                 let y = rect.top + rect.height / 2 - wrapperRect.top + wrapper.scrollTop;
                 points.push(`${x},${y}`);
             });
@@ -1054,7 +1058,6 @@ def login():
         else:
             if db:
                 try:
-                    # Case-Insensitive Document Lookup Logic
                     doc_ref = db.collection('trustwin_keys').document(key.upper())
                     doc = doc_ref.get()
 
