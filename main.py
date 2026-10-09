@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026_absolute_final'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_period_locked'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -87,7 +87,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP - 15 Engine Master Ensemble</title>
+    <title>Trust Win VIP - Period-Locked 15-Engine Master</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); border-color: #d4af37; }
@@ -153,13 +153,11 @@ HTML_TEMPLATE = """
             text-align: center; margin: 0; padding: 4px; overflow: hidden; position: fixed; width: 100%; height: 100%; 
         }
 
-        /* CLEAR LIVE BACKGROUND VIDEO */
         .video-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             object-fit: cover; z-index: -1; opacity: 0.8; filter: contrast(1.2) brightness(0.9);
         }
 
-        /* GLASSMORPHISM CONTAINER */
         .container { 
             max-width: 420px; height: 100%; margin: auto; 
             background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -264,20 +262,16 @@ HTML_TEMPLATE = """
     </style>
 </head>
 <body>
-    <!-- Live Background Video -->
     <video autoplay loop muted playsinline class="video-bg">
         <source src="https://www.image2url.com/r2/default/videos/1785310888502-2cf6edf9-e8da-4acd-9499-49cf0bafddf2.mp4" type="video/mp4">
     </video>
 
-    <!-- WIN TOAST & AUDIO -->
     <div id="winToast" class="win-toast">🏆 WINNER 🏆</div>
 
-    <!-- JACKPOT OVERLAY WITH ENGINES TARGET -->
     <div id="jackpotOverlay" class="jackpot-overlay" onclick="this.style.display='none'">
         <div class="jackpot-text" id="jackpotMsg">🎉 MEGA JACKPOT 🎉<br><span id="jpSubText" style="font-size:22px; color:#00ff88;"></span></div>
     </div>
 
-    <!-- KEY WARNING MODAL -->
     <div id="keyWarnModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
         <div style="background:linear-gradient(145deg, #220000, #3d0000); border:3px solid #ff3300; border-radius:20px; padding:20px; text-align:center; max-width:320px; box-shadow:0 0 35px #ff3300; animation:pulse-warn 1.5s infinite;">
             <div style="font-size:38px; margin-bottom:5px;">⚠️</div>
@@ -288,27 +282,24 @@ HTML_TEMPLATE = """
     </div>
 
     <div class="container">
-        <!-- TOP BANNER -->
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">15-ENGINE MASTER GLASS AI</div>
+            <div class="sub-engine">PERIOD-LOCKED 15-ENGINE MASTER</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
             </div>
         </div>
 
-        <!-- HUGE RESULT TRACKER -->
         <div class="huge-last-result">
             <div class="huge-last-title">🔥 LIVE WINGO RESULT TRACKER 🔥</div>
             <div class="huge-last-val" id="hugeResultVal">Connecting to Worker...</div>
         </div>
 
-        <!-- STATS GRID -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="lbl">TOTAL</div><span class="val" id="statTotal">0</span>
@@ -324,13 +315,11 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- PERIOD BOX -->
         <div class="period-box">
             <div>CURRENT PERIOD<br><b id="periodVal" style="color:#ffdf73; font-size:11px;">Syncing...</b></div>
             <div style="text-align: right;">NEXT SIGNAL IN<br><div class="countdown" id="timer">00:60</div></div>
         </div>
 
-        <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="giant-predictor">
                 <div class="wings-banner">👑 CHECK RESULT 👑</div>
@@ -341,7 +330,6 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- STATS TAB (15 ENGINES VOTING PANEL) -->
         <div id="tab-stats" class="tab-content">
             <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; overflow-y:auto; flex-grow:1;">
                 <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 METRICS & 15 ENGINES</div>
@@ -351,7 +339,6 @@ HTML_TEMPLATE = """
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
                 </div>
 
-                <!-- 15 ENGINES DISPLAY -->
                 <div class="engine-status-box">
                     <div class="engine-header">🤖 15 MASTER ENGINES VOTING PANEL</div>
                     <div class="engine-row"><span>1. Sequence Opposite Engine:</span> <b id="uiEng1">--</b></div>
@@ -374,7 +361,6 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- PATTERN TAB -->
         <div id="tab-pattern" class="tab-content">
             <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
                 <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:5px;">📊 BDG CHART TREND</div>
@@ -384,7 +370,6 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- LOG TAB -->
         <div id="tab-log" class="tab-content">
             <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
                 <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:5px;">📜 REAL HISTORY LOG</div>
@@ -394,7 +379,6 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- PROFILE TAB -->
         <div id="tab-profile" class="tab-content">
             <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; text-align:left;">
                 <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:8px;">👑 USER PROFILE</div>
@@ -402,14 +386,13 @@ HTML_TEMPLATE = """
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server: <span style="color:#ffdf73;">15-Engine Master Dedicated Server</span></p>
+                    <p>Server: <span style="color:#ffdf73;">Period-Locked Dedicated Server</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
             </div>
         </div>
 
-        <!-- BOTTOM NAV -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('terminal', this)"><div>📈</div>TERMINAL</div>
             <div class="nav-item" onclick="switchTab('pattern', this)"><div>📊</div>PATTERN</div>
@@ -428,6 +411,9 @@ HTML_TEMPLATE = """
         let hasRevealedThisRound = false; 
         let isAnalyzing = false;
         let lastEvaluatedIssue = null;
+
+        // Period-Locked State Variables
+        let lockedPeriod = null;
         let currentPredType = "WAITING";
         let currentPredNum = 0;
 
@@ -532,7 +518,6 @@ HTML_TEMPLATE = """
             return 'color-wait';
         }
 
-        // 4-SECOND COLORFUL ANALYSIS & REVEAL
         function revealPrediction() {
             if (hasRevealedThisRound || isAnalyzing || currentPredType === "WAITING") return;
             
@@ -561,7 +546,7 @@ HTML_TEMPLATE = """
 
                 inner.className = `prediction-display ${getColorClass(currentPredNum, currentPredType)}`;
                 inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
-            }, 4000); // 4 seconds colorful analysis delay
+            }, 4000);
         }
 
         function showWinToast() {
@@ -662,14 +647,15 @@ HTML_TEMPLATE = """
                     updateBdgChartUI(items);
 
                     // ==========================================
-                    // 15 MASTER ENGINES SYSTEM (FULL LOGIC)
+                    // PERIOD-LOCKED 15 MASTER ENGINES SYSTEM
                     // ==========================================
+                    let currentActivePeriod = getLiveUTCPeriod();
+                    
                     const pool = items.slice(0, 500);
                     const lastN = parseInt(pool[0].number, 10);
                     const lastT = lastN >= 5 ? "BIG" : "SMALL";
                     const prevT = parseInt(pool[1].number, 10) >= 5 ? "BIG" : "SMALL";
 
-                    // 1. SEQUENCE-BASED OPPOSITE ENGINE (Scans last 500 results sequence)
                     let predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
                     if (pool.length > 10) {
                         let matchCount = 0;
@@ -689,7 +675,6 @@ HTML_TEMPLATE = """
                         }
                     }
 
-                    // 2. Statistical Engine
                     let numFreq = Array(10).fill(0);
                     let bigC = 0, smallC = 0;
                     for (let i = 0; i < pool.length - 1; i++) {
@@ -702,7 +687,6 @@ HTML_TEMPLATE = """
                     let predE2 = bigC >= smallC ? "BIG" : "SMALL";
                     let bestNumE2 = numFreq.indexOf(Math.max(...numFreq));
 
-                    // 3. Psychology Engine
                     let streak = 1;
                     for(let i=1; i<pool.length; i++) {
                         let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
@@ -710,23 +694,19 @@ HTML_TEMPLATE = """
                     }
                     let predE3 = (streak >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
 
-                    // 4. Pattern Engine
                     let predE4 = lastT; 
                     let t1 = parseInt(pool[1].number,10)>=5?"BIG":"SMALL";
                     let t2 = parseInt(pool[2].number,10)>=5?"BIG":"SMALL";
                     if (lastT === t1 && t1 !== t2) predE4 = (lastT === "BIG") ? "SMALL" : "BIG";
 
-                    // 5. Zig-Zag Engine
                     let predE5 = lastT;
                     if (lastT !== t1 && t1 !== t2) predE5 = (lastT === "BIG") ? "SMALL" : "BIG";
 
-                    // 6. Loss Grant Engine
                     let predE6 = lastT;
                     if (lastRoundWasLoss && lastMajorityType) {
                         predE6 = (lastMajorityType === "BIG") ? "SMALL" : "BIG";
                     }
 
-                    // 7. Math Counting Engine
                     let n0 = parseInt(pool[0].number); let n1 = parseInt(pool[1].number);
                     let n2 = parseInt(pool[2].number); let n3 = parseInt(pool[3].number);
                     let n4 = parseInt(pool[4].number);
@@ -734,7 +714,6 @@ HTML_TEMPLATE = """
                     if (mathVal < 0) mathVal += 10;
                     let predE7 = mathVal >= 5 ? "BIG" : "SMALL";
 
-                    // 8. Zigzag Trend Engine
                     let cons = 1;
                     for(let i=1; i<pool.length; i++) {
                         let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
@@ -742,28 +721,18 @@ HTML_TEMPLATE = """
                     }
                     let predE8 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
 
-                    // 9. Chart Map Engine
                     let chartEntry = CHART_MAP[lastN];
                     let predE9 = chartEntry ? chartEntry.size : lastT;
                     let targetN1 = chartEntry ? chartEntry.n1 : 0;
 
-                    // 10. 2S/2B Rule Engine
                     let predE10 = (cons === 2) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
-
-                    // 11. Breakout Engine
                     let predE11 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
-
-                    // 12. Pattern Detect Engine
                     let predE12 = (lastT === prevT) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
 
-                    // 13. Loss Guard Engine
                     let predE13 = lastT;
                     if (lastRoundWasLoss) predE13 = (lastT === "BIG") ? "SMALL" : "BIG";
 
-                    // 14. Dual Confirm Engine
                     let predE14 = (predE9 === predE8) ? predE9 : lastT;
-
-                    // 15. Dual Lock Engine
                     let predE15 = (mathVal >= 5) ? "BIG" : "SMALL";
 
                     updateUIEngine('uiEng1', predE1);
@@ -786,21 +755,25 @@ HTML_TEMPLATE = """
                     let voteB = validVotes.filter(v => v === "BIG").length;
                     let voteS = validVotes.filter(v => v === "SMALL").length;
 
-                    let finalPredT = (voteB >= voteS) ? "BIG" : "SMALL";
-                    lastMajorityType = finalPredT;
+                    let calcPredT = (voteB >= voteS) ? "BIG" : "SMALL";
+                    lastMajorityType = calcPredT;
                     
-                    // Engine-derived Jackpot Target Number calculation
-                    let finalPredN = targetN1;
-                    if (bestNumE2 >= 5 && finalPredT === "BIG") finalPredN = bestNumE2;
-                    if (bestNumE2 < 5 && finalPredT === "SMALL") finalPredN = bestNumE2;
-                    let subPool = finalPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
-                    if (!subPool.includes(finalPredN)) finalPredN = mathVal;
+                    let calcPredN = targetN1;
+                    if (bestNumE2 >= 5 && calcPredT === "BIG") calcPredN = bestNumE2;
+                    if (bestNumE2 < 5 && calcPredT === "SMALL") calcPredN = bestNumE2;
+                    let subPool = calcPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
+                    if (!subPool.includes(calcPredN)) calcPredN = mathVal;
 
-                    document.getElementById('uiEngFinal').className = finalPredT === "BIG" ? "color-green" : "color-red";
-                    document.getElementById('uiEngFinal').innerText = `${finalPredT} (Votes: ${voteB >= voteS ? voteB : voteS}/${validVotes.length})`;
+                    // PERIOD LOCK LOGIC: Lock prediction for current active period so it never changes mid-round
+                    if (lockedPeriod !== currentActivePeriod) {
+                        lockedPeriod = currentActivePeriod;
+                        currentPredType = calcPredT;
+                        currentPredNum = calcPredN;
+                    }
 
-                    currentPredType = finalPredT;
-                    currentPredNum = finalPredN;
+                    document.getElementById('uiEngFinal').className = calcPredT === "BIG" ? "color-green" : "color-red";
+                    document.getElementById('uiEngFinal').innerText = `${calcPredT} (Votes: ${voteB >= voteS ? voteB : voteS}/${validVotes.length})`;
+
                     lastEvaluatedIssue = actIssue;
 
                     document.getElementById('statTotal').innerText = totalRounds;
