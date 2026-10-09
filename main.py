@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026_period_locked'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_engine_wins'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -87,7 +87,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP - Period-Locked 15-Engine Master</title>
+    <title>Trust Win VIP - Engine Win-Tracking AI</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); border-color: #d4af37; }
@@ -288,7 +288,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">PERIOD-LOCKED 15-ENGINE MASTER</div>
+            <div class="sub-engine">15-ENGINE WIN-TRACKING MASTER</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -341,21 +341,21 @@ HTML_TEMPLATE = """
 
                 <div class="engine-status-box">
                     <div class="engine-header">🤖 15 MASTER ENGINES VOTING PANEL</div>
-                    <div class="engine-row"><span>1. Sequence Opposite Engine:</span> <b id="uiEng1">--</b></div>
-                    <div class="engine-row"><span>2. Statistical Engine:</span> <b id="uiEng2">--</b></div>
-                    <div class="engine-row"><span>3. Psychology Engine:</span> <b id="uiEng3">--</b></div>
-                    <div class="engine-row"><span>4. Pattern Engine:</span> <b id="uiEng4">--</b></div>
-                    <div class="engine-row"><span>5. Zig-Zag Engine:</span> <b id="uiEng5">--</b></div>
-                    <div class="engine-row"><span>6. Loss Grant Engine:</span> <b id="uiEng6">--</b></div>
-                    <div class="engine-row"><span>7. Math Counting Engine:</span> <b id="uiEng7">--</b></div>
-                    <div class="engine-row"><span>8. Zigzag Trend Engine:</span> <b id="uiEng8">--</b></div>
-                    <div class="engine-row"><span>9. Chart Map Engine:</span> <b id="uiEng9">--</b></div>
-                    <div class="engine-row"><span>10. 2S/2B Rule Engine:</span> <b id="uiEng10">--</b></div>
-                    <div class="engine-row"><span>11. Breakout Engine:</span> <b id="uiEng11">--</b></div>
-                    <div class="engine-row"><span>12. Pattern Detect Engine:</span> <b id="uiEng12">--</b></div>
-                    <div class="engine-row"><span>13. Loss Guard Engine:</span> <b id="uiEng13">--</b></div>
-                    <div class="engine-row"><span>14. Dual Confirm Engine:</span> <b id="uiEng14">--</b></div>
-                    <div class="engine-row"><span>15. Dual Lock Engine:</span> <b id="uiEng15">--</b></div>
+                    <div class="engine-row"><span>1. Sequence Opposite Engine <b style="color:#00ff88; font-size:9px;" id="winCnt1">(0 Wins)</b>:</span> <b id="uiEng1">--</b></div>
+                    <div class="engine-row"><span>2. Statistical Engine <b style="color:#00ff88; font-size:9px;" id="winCnt2">(0 Wins)</b>:</span> <b id="uiEng2">--</b></div>
+                    <div class="engine-row"><span>3. Psychology Engine <b style="color:#00ff88; font-size:9px;" id="winCnt3">(0 Wins)</b>:</span> <b id="uiEng3">--</b></div>
+                    <div class="engine-row"><span>4. Pattern Engine <b style="color:#00ff88; font-size:9px;" id="winCnt4">(0 Wins)</b>:</span> <b id="uiEng4">--</b></div>
+                    <div class="engine-row"><span>5. Zig-Zag Engine <b style="color:#00ff88; font-size:9px;" id="winCnt5">(0 Wins)</b>:</span> <b id="uiEng5">--</b></div>
+                    <div class="engine-row"><span>6. Loss Grant Engine <b style="color:#00ff88; font-size:9px;" id="winCnt6">(0 Wins)</b>:</span> <b id="uiEng6">--</b></div>
+                    <div class="engine-row"><span>7. Math Counting Engine <b style="color:#00ff88; font-size:9px;" id="winCnt7">(0 Wins)</b>:</span> <b id="uiEng7">--</b></div>
+                    <div class="engine-row"><span>8. Zigzag Trend Engine <b style="color:#00ff88; font-size:9px;" id="winCnt8">(0 Wins)</b>:</span> <b id="uiEng8">--</b></div>
+                    <div class="engine-row"><span>9. Chart Map Engine <b style="color:#00ff88; font-size:9px;" id="winCnt9">(0 Wins)</b>:</span> <b id="uiEng9">--</b></div>
+                    <div class="engine-row"><span>10. 2S/2B Rule Engine <b style="color:#00ff88; font-size:9px;" id="winCnt10">(0 Wins)</b>:</span> <b id="uiEng10">--</b></div>
+                    <div class="engine-row"><span>11. Breakout Engine <b style="color:#00ff88; font-size:9px;" id="winCnt11">(0 Wins)</b>:</span> <b id="uiEng11">--</b></div>
+                    <div class="engine-row"><span>12. Pattern Detect Engine <b style="color:#00ff88; font-size:9px;" id="winCnt12">(0 Wins)</b>:</span> <b id="uiEng12">--</b></div>
+                    <div class="engine-row"><span>13. Loss Guard Engine <b style="color:#00ff88; font-size:9px;" id="winCnt13">(0 Wins)</b>:</span> <b id="uiEng13">--</b></div>
+                    <div class="engine-row"><span>14. Dual Confirm Engine <b style="color:#00ff88; font-size:9px;" id="winCnt14">(0 Wins)</b>:</span> <b id="uiEng14">--</b></div>
+                    <div class="engine-row"><span>15. Dual Lock Engine <b style="color:#00ff88; font-size:9px;" id="winCnt15">(0 Wins)</b>:</span> <b id="uiEng15">--</b></div>
                     <div class="engine-row final-vote"><span>FINAL MAJORITY (15 ENGINES):</span> <b id="uiEngFinal" style="font-size:12px;">--</b></div>
                 </div>
             </div>
@@ -386,7 +386,7 @@ HTML_TEMPLATE = """
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server: <span style="color:#ffdf73;">Period-Locked Dedicated Server</span></p>
+                    <p>Server: <span style="color:#ffdf73;">Engine Win-Tracking Server</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
@@ -412,13 +412,16 @@ HTML_TEMPLATE = """
         let isAnalyzing = false;
         let lastEvaluatedIssue = null;
 
-        // Period-Locked State Variables
         let lockedPeriod = null;
         let currentPredType = "WAITING";
         let currentPredNum = 0;
 
         let lastRoundWasLoss = false, lastMajorityType = null;
         let warnTriggered120 = false, warnTriggered90 = false, warnTriggered60 = false, warnTriggered30 = false;
+
+        // Individual Engine Win Counters
+        let engineWins = Array(16).fill(0);
+        let lastEnginePreds = Array(16).fill(null);
 
         const CHART_MAP = {
             0: { size:"BIG", n1:0, n2:5 }, 1: { size:"SMALL", n1:1, n2:6 },
@@ -618,6 +621,16 @@ HTML_TEMPLATE = """
                     if (lastEvaluatedIssue && lastEvaluatedIssue !== actIssue) {
                         totalRounds++;
                         let statusRes = "LOSS";
+
+                        // Evaluate Individual Engine Wins based on last recorded engine predictions
+                        for(let j=1; j<=15; j++) {
+                            if (lastEnginePreds[j] === actType) {
+                                engineWins[j]++;
+                            }
+                            const wEl = document.getElementById('winCnt' + j);
+                            if (wEl) wEl.innerText = `(${engineWins[j]} Wins)`;
+                        }
+
                         if (currentPredType === actType && currentPredNum === actNum && hasRevealedThisRound) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
                             showJackpotOverlay(currentPredNum, currentPredType);
@@ -646,9 +659,6 @@ HTML_TEMPLATE = """
 
                     updateBdgChartUI(items);
 
-                    // ==========================================
-                    // PERIOD-LOCKED 15 MASTER ENGINES SYSTEM
-                    // ==========================================
                     let currentActivePeriod = getLiveUTCPeriod();
                     
                     const pool = items.slice(0, 500);
@@ -735,6 +745,9 @@ HTML_TEMPLATE = """
                     let predE14 = (predE9 === predE8) ? predE9 : lastT;
                     let predE15 = (mathVal >= 5) ? "BIG" : "SMALL";
 
+                    // Save current predictions to check win counts on next evaluation cycle
+                    lastEnginePreds = [null, predE1, predE2, predE3, predE4, predE5, predE6, predE7, predE8, predE9, predE10, predE11, predE12, predE13, predE14, predE15];
+
                     updateUIEngine('uiEng1', predE1);
                     updateUIEngine('uiEng2', predE2);
                     updateUIEngine('uiEng3', predE3);
@@ -764,7 +777,6 @@ HTML_TEMPLATE = """
                     let subPool = calcPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
                     if (!subPool.includes(calcPredN)) calcPredN = mathVal;
 
-                    // PERIOD LOCK LOGIC: Lock prediction for current active period so it never changes mid-round
                     if (lockedPeriod !== currentActivePeriod) {
                         lockedPeriod = currentActivePeriod;
                         currentPredType = calcPredT;
