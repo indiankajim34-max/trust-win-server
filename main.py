@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026_delayed_fetch'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_top5_recovery'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -87,7 +87,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP - Safe Fetch AI</title>
+    <title>Trust Win VIP - Top 5 Recovery AI</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); border-color: #d4af37; }
@@ -289,7 +289,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">SAFE FETCH & VOTING AI MASTER</div>
+            <div class="sub-engine">TOP 5 RECOVERY AI MASTER</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -342,7 +342,7 @@ HTML_TEMPLATE = """
                 </div>
 
                 <div class="engine-status-box">
-                    <div class="engine-header">🤖 15 ENGINES (VOTING PANEL)</div>
+                    <div class="engine-header">🤖 15 ENGINES (TOP 5 RECOVERY)</div>
                     <div class="engine-row"><span>1. Sequence Opposite <b style="color:#00ff88; font-size:9px;" id="winCnt1">(0)</b>:</span> <b id="uiEng1">--</b></div>
                     <div class="engine-row"><span>2. Statistical Engine <b style="color:#00ff88; font-size:9px;" id="winCnt2">(0)</b>:</span> <b id="uiEng2">--</b></div>
                     <div class="engine-row"><span>3. Psychology Engine <b style="color:#00ff88; font-size:9px;" id="winCnt3">(0)</b>:</span> <b id="uiEng3">--</b></div>
@@ -388,7 +388,7 @@ HTML_TEMPLATE = """
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server: <span style="color:#ffdf73;">Safe Fetch & Voting Server</span></p>
+                    <p>Server: <span style="color:#ffdf73;">Top 5 Recovery Server</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
@@ -628,7 +628,6 @@ HTML_TEMPLATE = """
         async function fetchLotteryData() {
             try {
                 showLoadingIndicator();
-                // 2.5 seconds delay to let server publish and update the fresh result completely
                 await new Promise(resolve => setTimeout(resolve, 2500));
 
                 const items = await fetch500Results();
@@ -732,8 +731,8 @@ HTML_TEMPLATE = """
                     const modeLbl = document.getElementById('modeStatusLbl');
 
                     if (lastRoundWasLoss) {
-                        if (modeLbl) { modeLbl.innerText = "🚨 RECOVERY MODE (3 SMART ENGINES ACTIVE)"; modeLbl.style.color = "#ff4444"; }
-                        activeIndices = [1, 5, 6];
+                        if (modeLbl) { modeLbl.innerText = "🚨 RECOVERY MODE (TOP 5 SMART ENGINES ACTIVE)"; modeLbl.style.color = "#ff4444"; }
+                        activeIndices = [1, 2, 5, 8, 9]; // Top 5 Engines: Sequence Opposite, Statistical, Zig-Zag, Zigzag Trend, Chart Map
                         for (let i = 1; i <= 15; i++) {
                             updateUIEngine('uiEng' + i, engineData[i].size, engineData[i].num, !activeIndices.includes(i));
                         }
