@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_vFinal'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -39,20 +39,30 @@ LOGIN_TEMPLATE = """
             50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(0, 255, 136, 0.8); }
             100% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 136, 0.4); }
         }
-        body { background-color: #080808; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        .login-card { background: linear-gradient(145deg, #121212, #1a1a1a); border: 2px solid #d4af37; border-radius: 20px; padding: 25px; width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-        .title { font-size: 18px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
-        .sub { font-size: 11px; color: #888; margin-bottom: 20px; }
-        .input-box { width: 100%; padding: 12px; background: #161616; border: 1px solid #444; border-radius: 10px; color: #fff; font-size: 14px; text-align: center; margin-bottom: 15px; box-sizing: border-box; outline: none; text-transform: uppercase; font-weight: bold; }
-        .input-box:focus { border-color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
-        .btn { background: linear-gradient(45deg, #d4af37, #ffdf73); color: #000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
-        .buy-btn { 
-            display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 18px; padding: 12px; width: 100%; background: linear-gradient(45deg, #00c853, #00ff88); color: #000; font-size: 13px; font-weight: 900; text-decoration: none; border-radius: 10px; box-sizing: border-box; animation: pulse-btn 2s infinite ease-in-out; letter-spacing: 0.5px;
+        body { 
+            background-color: #080808; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; 
+            height: 100vh; overflow: hidden; position: relative;
         }
-        .error { color: #ff4444; font-size: 12px; margin-top: 10px; }
+        .live-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.3;
+        }
+        .login-card { 
+            background: linear-gradient(145deg, rgba(18,18,18,0.9), rgba(26,26,26,0.9)); backdrop-filter: blur(10px);
+            border: 2px solid #d4af37; border-radius: 20px; padding: 25px; width: 100%; max-width: 350px; 
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); z-index: 2; position: relative;
+        }
+        .title { font-size: 18px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
+        .sub { font-size: 11px; color: #ccc; margin-bottom: 20px; font-weight:bold; }
+        .input-box { width: 100%; padding: 12px; background: rgba(0,0,0,0.6); border: 1px solid #d4af37; border-radius: 10px; color: #fff; font-size: 14px; text-align: center; margin-bottom: 15px; box-sizing: border-box; outline: none; text-transform: uppercase; font-weight: bold; }
+        .input-box:focus { border-color: #ffdf73; box-shadow: 0 0 15px rgba(255, 223, 115, 0.5); }
+        .btn { background: linear-gradient(45deg, #d4af37, #ffdf73); color: #000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
+        .buy-btn { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 18px; padding: 12px; width: 100%; background: linear-gradient(45deg, #00c853, #00ff88); color: #000; font-size: 13px; font-weight: 900; text-decoration: none; border-radius: 10px; box-sizing: border-box; animation: pulse-btn 2s infinite ease-in-out; letter-spacing: 0.5px; }
+        .error { color: #ff4444; font-size: 13px; margin-top: 15px; font-weight:bold; text-shadow: 0 0 5px rgba(255,0,0,0.5); }
     </style>
 </head>
 <body>
+    <img src="https://i.pinimg.com/originals/a6/5c/df/a65cdfcbdcf6fb38a2e5e1b8b69389e9.gif" class="live-bg" alt="bg">
     <div class="login-card">
         <div class="title">👑 TRUST WIN VIP 👑</div>
         <div class="sub">ENTER TRUST WIN LICENSE KEY</div>
@@ -75,7 +85,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP AI Engine</title>
+    <title>Trust Win VIP - 7 Engine AI Master</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
@@ -83,144 +93,179 @@ HTML_TEMPLATE = """
             100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
         }
         @keyframes radar-pulse {
-            0% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #d4af37, inset 0 0 10px #d4af37; }
-            50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 30px #ffdf73, inset 0 0 20px #ffdf73; }
-            100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #d4af37, inset 0 0 10px #d4af37; }
+            0% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 20px #ffdf73, inset 0 0 15px #ffdf73; }
+            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 60px #ffdf73, inset 0 0 30px #ffdf73; }
+            100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 20px #ffdf73, inset 0 0 15px #ffdf73; }
         }
-        @keyframes casino-power-anim {
-            0% { transform: scale(1); box-shadow: 0 0 20px #ffdf73; border-color: #ffdf73; }
-            30% { transform: scale(1.08); box-shadow: 0 0 35px #ffcc00; border-color: #ffcc00; }
-            60% { transform: scale(0.96); box-shadow: 0 0 45px #d4af37; border-color: #d4af37; }
-            100% { transform: scale(1); box-shadow: 0 0 20px #ffdf73; border-color: #ffdf73; }
-        }
-        .pedestal-active-power { animation: casino-power-anim 0.25s infinite ease-in-out !important; }
-
         @keyframes win-flash-anim {
-            0% { box-shadow: 0 0 20px rgba(0,255,136,0.25); border-color: #00ff88aa; }
-            20% { box-shadow: 0 0 50px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; transform: scale(1.02); }
-            40% { box-shadow: 0 0 20px rgba(0,255,136,0.25); border-color: #00ff88aa; transform: scale(1); }
-            60% { box-shadow: 0 0 50px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; transform: scale(1.02); }
-            100% { box-shadow: 0 0 20px rgba(0,255,136,0.25); border-color: #00ff88aa; transform: scale(1); }
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(0,255,136,0.5); border-color: #00ff88; }
+            50% { transform: scale(1.1); box-shadow: 0 0 80px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(0,255,136,0.5); border-color: #00ff88; }
         }
-        .win-flash-active { animation: win-flash-anim 1.5s ease-in-out !important; }
+        .pedestal-win-flash {
+            animation: win-flash-anim 1.5s ease-in-out !important;
+            border-color: #00ff88 !important;
+            background: radial-gradient(circle, rgba(0,255,136,0.4) 0%, rgba(0,0,0,0.6) 80%) !important;
+        }
 
         @keyframes pulse-warn {
             0% { transform: scale(1); box-shadow: 0 0 20px #ff3300; }
             50% { transform: scale(1.03); box-shadow: 0 0 40px #ff6600; }
             100% { transform: scale(1); box-shadow: 0 0 20px #ff3300; }
         }
-        @keyframes text-flash {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; color: #ffdf73; text-shadow: 0 0 15px #ffdf73; }
-            100% { opacity: 0.4; }
+
+        .win-toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(45deg, #00ff88, #009955); color: #000;
+            padding: 15px 40px; border-radius: 30px; font-weight: 900; font-size: 22px;
+            z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 30px rgba(0,255,136,0.8); border: 2px solid #fff; letter-spacing: 2px;
+        }
+        .win-toast.show { top: 30px; }
+
+        .jackpot-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); z-index: 10001; align-items: center; justify-content: center; flex-direction: column;
+        }
+        .jackpot-text {
+            font-size: 45px; font-weight: 900; background: linear-gradient(45deg, #ffcc00, #fff, #ffcc00);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px #ffcc00;
+            animation: radar-pulse 0.5s infinite; text-align: center; line-height: 1.2;
         }
 
-        /* NEW ANIMATIONS: WIN TOAST & JACKPOT */
-        .win-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #00ff88, #009955); color: #000; padding: 12px 40px; border-radius: 30px; font-weight: 900; font-size: 18px; z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 5px 25px rgba(0,255,136,0.8); border: 2px solid #fff; letter-spacing: 1px; }
-        .win-toast.show { top: 30px; }
-        
-        .jackpot-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; flex-direction: column; }
-        .jackpot-text { font-size: 45px; font-weight: 900; background: linear-gradient(45deg, #ffcc00, #fff, #ffcc00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px #ffcc00; animation: casino-power-anim 0.5s infinite; text-align: center; line-height: 1.2; }
-        .jackpot-sub { color: #fff; font-size: 18px; margin-top: 15px; font-weight: bold; letter-spacing: 2px; }
-
         * { box-sizing: border-box; }
-        body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 4px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
-        .container { max-width: 420px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 6px 6px 52px 6px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        body { 
+            background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; margin: 0; padding: 4px; overflow: hidden; position: fixed; width: 100%; height: 100%; 
+        }
+
+        /* PREMIUM LIVE BACKGROUND */
+        .live-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; z-index: -1; opacity: 0.5; filter: contrast(1.2) brightness(0.8);
+        }
+
+        /* GLASSMORPHISM CONTAINER */
+        .container { 
+            max-width: 420px; height: 100%; margin: auto; 
+            background: rgba(15, 15, 15, 0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 16px; padding: 6px 6px 52px 6px; 
+            position: relative; display: flex; flex-direction: column; overflow: hidden; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
         
-        .top-banner { background: #181818; border: 1px solid #333; border-radius: 10px; padding: 5px; margin-bottom: 3px; flex-shrink: 0; }
-        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 2px; margin-bottom: 2px; }
-        .main-title { font-size: 14px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
-        .sub-engine { font-size: 8px; color: #ffdf73; margin-top: 1px; font-weight: bold; }
-        .time-row { display: flex; justify-content: space-between; font-size: 9px; color: #aaa; margin-top: 2px; padding: 0 4px; }
+        .top-banner { 
+            background: rgba(20,20,20,0.85); border: 1px solid #d4af37; border-radius: 10px; 
+            padding: 5px; margin-bottom: 3px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: bold; color: #d4af37; border-bottom: 1px solid rgba(212,175,55,0.4); padding-bottom: 2px; margin-bottom: 2px; }
+        
+        .main-title { font-size: 15px; font-weight: 900; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+        .sub-engine { font-size: 9px; color: #00ff88; margin-top: 1px; font-weight: bold; letter-spacing: 1px; }
+        .time-row { display: flex; justify-content: space-between; font-size: 9px; color: #ccc; margin-top: 2px; padding: 0 4px; font-weight:bold; }
 
-        .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 8px; padding: 4px; margin: 3px 0; box-shadow: 0 0 10px rgba(255,223,115,0.2); flex-shrink: 0; }
-        .huge-last-title { font-size: 8px; color: #ffdf73; font-weight: bold; letter-spacing: 1px; }
-        .huge-last-val { font-size: 14px; font-weight: bold; text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+        .huge-last-result { 
+            background: rgba(0,0,0,0.8); border: 2px solid #ffdf73; border-radius: 8px; 
+            padding: 4px; margin: 3px 0; box-shadow: 0 0 15px rgba(255,223,115,0.3); flex-shrink: 0; 
+        }
+        .huge-last-title { font-size: 9px; color: #ffdf73; font-weight: bold; letter-spacing: 1px; }
+        .huge-last-val { font-size: 15px; font-weight: 900; text-shadow: 0 0 10px rgba(255,255,255,0.3); margin-top:2px; }
 
-        .host-box { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 3px 6px; margin: 2px 0; display: flex; justify-content: space-between; align-items: center; font-size: 8px; flex-shrink: 0; }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 2px 0; flex-shrink: 0; }
-        .stat-card { background: #181818; border: 1px solid #333; padding: 3px 1px; border-radius: 6px; }
-        .stat-card .lbl { font-size: 7px; color: #888; }
-        .stat-card .val { font-size: 11px; font-weight: bold; color: #fff; margin-top: 1px; display: block; }
+        .stat-card { background: rgba(20,20,20,0.8); border: 1px solid #d4af3755; padding: 4px 2px; border-radius: 6px; }
+        .stat-card .lbl { font-size: 8px; color: #ccc; font-weight:bold; }
+        .stat-card .val { font-size: 12px; font-weight: 900; color: #fff; margin-top: 1px; display: block; }
 
-        .period-box { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 4px 6px; margin: 2px 0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .period-box div { text-align: left; font-size: 8px; color: #aaa; }
-        .period-box span { font-size: 11px; font-weight: bold; color: #fff; display: block; }
-        .countdown { font-size: 14px !important; font-weight: bold; color: #ffcc00 !important; font-family: monospace; }
+        .period-box { 
+            background: rgba(20,20,20,0.8); border: 1px solid #d4af37; border-radius: 6px; 
+            padding: 5px 8px; margin: 2px 0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; 
+        }
+        .period-box div { text-align: left; font-size: 9px; color: #ccc; font-weight:bold; }
+        .period-box span { font-size: 12px; font-weight: 900; color: #fff; display: block; margin-top:1px; }
+        .countdown { font-size: 16px !important; font-weight: 900; color: #ffcc00 !important; font-family: monospace; text-shadow: 0 0 8px #ffcc00;}
 
         .tab-content { display: none; height: 100%; flex-direction: column; flex-grow: 1; overflow: hidden; }
         .tab-content.active { display: flex; }
 
-        .terminal-split-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5px; margin-top: 3px; flex-grow: 1; min-height: 0; }
-        
-        /* GOLDEN PREDICTOR BOX */
-        .predictor-box { 
-            background: linear-gradient(135deg, #1a1400, #261e00, #140f00);
-            border: 2px solid #d4af37; 
-            border-radius: 10px; 
-            padding: 5px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: space-between; 
-            position: relative; 
-            box-shadow: 0 0 20px rgba(212,175,55,0.25), inset 0 0 15px rgba(255,223,115,0.1); 
+        /* GIANT FULL-WIDTH PREDICTOR BOX */
+        .giant-predictor { 
+            flex-grow: 1; margin-top: 5px; 
+            background: rgba(10, 5, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 2px solid #d4af37; border-radius: 12px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            position: relative; box-shadow: 0 0 25px rgba(212,175,55,0.3), inset 0 0 15px rgba(255,223,115,0.1); 
+            padding: 15px;
         }
-        .wings-banner { background: linear-gradient(90deg, transparent, #d4af3755, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 6px; color: #ffcc00; font-size: 8px; font-weight: bold; letter-spacing: 1px; width: 92%; margin-top: 1px; }
-        .glowing-pedestal { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #d4af37; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; transition: 0.2s; }
-        .leaf-icon { font-size: 22px; margin-bottom: 2px; }
-        .prediction-display { font-size: 16px; font-weight: 900; text-shadow: 0 0 10px rgba(255,255,255,0.3); text-align: center; }
-        .analyzing-text { font-size: 8px; font-weight: bold; color: #ffdf73; animation: text-flash 0.5s infinite; line-height: 1.2; text-align: center; }
+        .wings-banner { 
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent); 
+            border: 1px solid #ffcc00; border-radius: 20px; padding: 5px 25px; color: #ffcc00; 
+            font-size: 12px; font-weight: 900; letter-spacing: 2px; position: absolute; top: 15px; 
+        }
         
-        /* NEW GOLDEN ENGINE STATUS BOX (Replaced Calculator) */
-        .engine-status-box { background: linear-gradient(145deg, #1c1500, #0a0800); border: 2px solid #d4af37; border-radius: 10px; padding: 6px; display: flex; flex-direction: column; box-shadow: inset 0 0 15px rgba(212,175,55,0.1); }
-        .engine-header { color: #ffcc00; font-weight: bold; font-size: 9px; text-align: center; border-bottom: 1px solid #d4af3755; padding-bottom: 4px; margin-bottom: 4px; letter-spacing: 1px; }
-        .engine-row { display: flex; justify-content: space-between; align-items: center; background: #000; border: 1px solid #333; border-radius: 4px; padding: 4px 6px; margin-bottom: 3px; font-size: 8px; }
-        .engine-row span { color: #aaa; }
-        .final-vote { background: linear-gradient(90deg, #3a2a00, #000); border-color: #ffdf73; padding: 6px; font-size: 9px; margin-top: auto; }
-        
+        .glowing-pedestal { 
+            width: 170px; height: 170px; border-radius: 50%; border: 4px solid #ffdf73; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(0,0,0,0.6) 80%); 
+            animation: radar-pulse 3s infinite ease-in-out; cursor: pointer; transition: 0.3s; 
+            box-shadow: 0 0 30px #d4af37; z-index: 2;
+        }
+        .leaf-icon { font-size: 45px; margin-bottom: 5px; filter: drop-shadow(0 0 10px #ffdf73); }
+        .prediction-display { font-size: 26px; font-weight: 900; text-shadow: 0 0 15px rgba(255,255,255,0.5); text-align: center; }
+
         /* MULTIPLE COLORS */
-        .color-green { color: #00ff88 !important; text-shadow: 0 0 8px rgba(0,255,136,0.6) !important; }
-        .color-red { color: #ff4444 !important; text-shadow: 0 0 8px rgba(255,68,68,0.6) !important; }
-        .color-violet { color: #c084fc !important; text-shadow: 0 0 8px rgba(192,132,252,0.6) !important; }
+        .color-green { color: #00ff88 !important; text-shadow: 0 0 15px rgba(0,255,136,0.8) !important; }
+        .color-red { color: #ff4444 !important; text-shadow: 0 0 15px rgba(255,68,68,0.8) !important; }
+        .color-violet { color: #c084fc !important; text-shadow: 0 0 15px rgba(192,132,252,0.8) !important; }
         .color-wait { color: #ffcc00 !important; }
 
-        .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 270px); position: relative; padding-right: 2px; margin-top: 3px; }
-        .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 5px; padding: 3px; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; }
-        .tiranga-period { color: #aaa; font-family: monospace; font-size: 7px; text-align: left; width: 60px; flex-shrink: 0; }
-        .tiranga-nums { display: flex; gap: 2px; align-items: center; justify-content: space-between; flex-grow: 1; padding: 0 2px; }
-        .t-num-circle { width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: bold; background: #1f1f1f; color: #555; border: 1px solid #333; }
-        .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 4px #9b59b6; }
-        .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 4px #2ecc71; }
-        .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 4px #e74c3c; }
+        /* ENGINE STATUS IN STATS TAB */
+        .engine-status-box { 
+            background: rgba(0,0,0,0.8); border: 2px solid #d4af37; border-radius: 10px; 
+            padding: 10px; display: flex; flex-direction: column; width: 100%; margin-top: 10px; 
+        }
+        .engine-header { color: #ffcc00; font-weight: 900; font-size: 11px; text-align: center; border-bottom: 2px solid #d4af3755; padding-bottom: 6px; margin-bottom: 6px; letter-spacing: 1px; }
+        .engine-row { display: flex; justify-content: space-between; align-items: center; background: rgba(20,20,20,0.9); border: 1px solid #444; border-radius: 6px; padding: 6px 10px; margin-bottom: 4px; font-size: 10px; font-weight: bold; }
+        .engine-row span { color: #ccc; }
+        .final-vote { background: linear-gradient(90deg, #3a2a00, #000); border-color: #ffdf73; padding: 8px; font-size: 11px; margin-top: 5px; box-shadow: inset 0 0 10px rgba(255,223,115,0.2); }
 
-        .log-list { flex-grow: 1; overflow-y: auto; text-align: left; font-size: 8px; margin-top: 3px; }
-        .log-item { background: #161616; border: 1px solid #333; border-radius: 5px; padding: 4px; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; }
-        .badge-win { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 1px 3px; border-radius: 2px; }
-        .badge-loss { color: #ff4444; font-weight: bold; background: rgba(255,68,68,0.1); padding: 1px 3px; border-radius: 2px; }
+        .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; position: relative; padding-right: 2px; margin-top: 5px; }
+        .tiranga-row { background: rgba(15,15,15,0.9); border: 1px solid #444; border-radius: 6px; padding: 4px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; }
+        .tiranga-period { color: #ffdf73; font-family: monospace; font-size: 9px; font-weight:bold; text-align: left; width: 65px; flex-shrink: 0; }
+        .tiranga-nums { display: flex; gap: 3px; align-items: center; justify-content: space-between; flex-grow: 1; padding: 0 4px; }
+        .t-num-circle { width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 900; background: #111; color: #555; border: 1px solid #444; }
+        .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 6px #9b59b6; }
+        .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 6px #2ecc71; }
+        .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 6px #e74c3c; }
 
-        .profile-card { background: #161616; border: 1px solid #333; border-radius: 8px; padding: 8px; margin-top: 6px; text-align: left; font-size: 9px; }
-        .profile-card p { margin: 4px 0; color: #bbb; }
-        .profile-card span { color: #fff; font-weight: bold; }
+        .log-list { flex-grow: 1; overflow-y: auto; text-align: left; font-size: 10px; margin-top: 5px; }
+        .log-item { background: rgba(15,15,15,0.9); border: 1px solid #444; border-radius: 6px; padding: 6px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .badge-win { color: #00ff88; font-weight: 900; background: rgba(0,255,136,0.15); padding: 3px 6px; border-radius: 4px; border: 1px solid #00ff88; }
+        .badge-loss { color: #ff4444; font-weight: 900; background: rgba(255,68,68,0.15); padding: 3px 6px; border-radius: 4px; border: 1px solid #ff4444; }
 
-        .bottom-nav { position: absolute; bottom: 14px; left: 0; right: 0; background: #111; border-top: 1px solid #333; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 0 10px 0; z-index: 25; box-shadow: 0 -5px 12px rgba(0,0,0,0.85); }
-        .nav-item { font-size: 7px; color: #888; cursor: pointer; transition: 0.2s; text-decoration: none; }
-        .nav-item.active { color: #d4af37; font-weight: bold; }
-        .nav-item div { font-size: 11px; margin-bottom: 1px; }
+        .profile-card { background: rgba(15,15,15,0.9); border: 1px solid #d4af37; border-radius: 8px; padding: 10px; margin-top: 8px; text-align: left; font-size: 10px; font-weight: bold; }
+        .profile-card p { margin: 6px 0; color: #ddd; }
+        .profile-card span { color: #fff; font-weight: 900; }
+
+        .bottom-nav { position: absolute; bottom: 12px; left: 0; right: 0; background: rgba(10,10,10,0.95); border-top: 2px solid #d4af37; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 0 12px 0; z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.9); }
+        .nav-item { font-size: 8px; color: #888; font-weight: bold; cursor: pointer; transition: 0.2s; text-decoration: none; display: flex; flex-direction: column; align-items: center; }
+        .nav-item.active { color: #ffdf73; text-shadow: 0 0 8px rgba(255,223,115,0.5); }
+        .nav-item div { font-size: 14px; margin-bottom: 3px; }
     </style>
 </head>
 <body>
+    <!-- Premium Live Background Image/GIF -->
+    <img src="https://i.pinimg.com/originals/a6/5c/df/a65cdfcbdcf6fb38a2e5e1b8b69389e9.gif" class="live-bg" alt="live-bg">
+
     <!-- WIN TOAST -->
     <div id="winToast" class="win-toast">🏆 WINNER 🏆</div>
 
     <!-- JACKPOT OVERLAY -->
     <div id="jackpotOverlay" class="jackpot-overlay" onclick="this.style.display='none'">
         <div class="jackpot-text">🎉 MEGA JACKPOT 🎉</div>
-        <div class="jackpot-sub">TAP TO CLOSE</div>
     </div>
 
     <!-- KEY EXPIRY WARNING MODAL -->
-    <div id="keyWarnModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); z-index:9999; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
+    <div id="keyWarnModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
         <div style="background:linear-gradient(145deg, #220000, #3d0000); border:3px solid #ff3300; border-radius:20px; padding:20px; text-align:center; max-width:320px; box-shadow:0 0 35px #ff3300; animation:pulse-warn 1.5s infinite;">
             <div style="font-size:38px; margin-bottom:5px;">⚠️</div>
             <div style="font-size:15px; font-weight:900; color:#ff3300; letter-spacing:1px; margin-bottom:8px;" id="warnTitle">VIP KEY EXPIRING SOON</div>
@@ -230,81 +275,88 @@ HTML_TEMPLATE = """
     </div>
 
     <div class="container">
+        <!-- TOP BANNER & HEADER -->
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine" id="engineStatusMsg">5-ENGINE MASTER AI ENSEMBLE</div>
+            <div class="sub-engine">7-ENGINE AI MASTER (100% MAJORITY)</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
             </div>
         </div>
 
+        <!-- HUGE RESULT TRACKER -->
         <div class="huge-last-result">
             <div class="huge-last-title">🔥 LIVE WINGO RESULT TRACKER 🔥</div>
-            <div class="huge-last-val" id="hugeResultVal">Connecting to Database...</div>
+            <div class="huge-last-val" id="hugeResultVal">Connecting to Worker...</div>
         </div>
 
+        <!-- STATS GRID -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="lbl">TOTAL</div>
-                <span class="val" id="statTotal">0</span>
+                <div class="lbl">TOTAL</div><span class="val" id="statTotal">0</span>
             </div>
-            <div class="stat-card" style="border-color: #00ff8844;">
-                <div class="lbl" style="color:#00ff88;">WIN</div>
-                <span class="val" id="statWins" style="color: #00ff88;">0</span>
+            <div class="stat-card" style="border-color: #00ff88aa; background: rgba(0,255,136,0.1);">
+                <div class="lbl" style="color:#00ff88;">WIN</div><span class="val" id="statWins" style="color: #00ff88;">0</span>
             </div>
-            <div class="stat-card" style="border-color: #ff444444;">
-                <div class="lbl" style="color:#ff4444;">LOSS</div>
-                <span class="val" id="statLosses" style="color: #ff4444;">0</span>
+            <div class="stat-card" style="border-color: #ff4444aa; background: rgba(255,68,68,0.1);">
+                <div class="lbl" style="color:#ff4444;">LOSS</div><span class="val" id="statLosses" style="color: #ff4444;">0</span>
             </div>
-            <div class="stat-card" style="border-color: #ffcc0044;">
-                <div class="lbl" style="color:#ffcc00;">JACKPOT</div>
-                <span class="val" id="statJackpots" style="color: #ffcc00;">0</span>
+            <div class="stat-card" style="border-color: #ffcc00aa; background: rgba(255,204,0,0.1);">
+                <div class="lbl" style="color:#ffcc00;">JACKPOT</div><span class="val" id="statJackpots" style="color: #ffcc00;">0</span>
             </div>
         </div>
 
+        <!-- PERIOD BOX -->
         <div class="period-box">
-            <div>
-                <span>CURRENT PERIOD</span>
-                <b id="periodVal" style="color:#fff; font-size:10px;">Syncing...</b>
-            </div>
-            <div style="text-align: right;">
-                <span>NEXT SIGNAL IN</span>
-                <div class="countdown" id="timer">00:60</div>
+            <div>CURRENT PERIOD<br><b id="periodVal" style="color:#ffdf73; font-size:11px;">Syncing...</b></div>
+            <div style="text-align: right;">NEXT SIGNAL IN<br><div class="countdown" id="timer">00:60</div></div>
+        </div>
+
+        <!-- TERMINAL TAB (GIANT FULL DISPLAY) -->
+        <div id="tab-terminal" class="tab-content active">
+            <div class="giant-predictor">
+                <div class="wings-banner">👑 CHECK RESULT 👑</div>
+                <div class="glowing-pedestal" id="mainPedestal" onclick="revealPrediction()">
+                    <div class="leaf-icon">👑</div>
+                    <div class="prediction-display color-wait" id="predDisplay">🔒 LOCKED</div>
+                </div>
             </div>
         </div>
 
-        <!-- TERMINAL TAB -->
-        <div id="tab-terminal" class="tab-content active">
-            <div class="terminal-split-container">
-                <div class="predictor-box" id="predictorBox">
-                    <div class="wings-banner">👑 CHECK RESULT 👑</div>
-                    
-                    <div class="glowing-pedestal" onclick="revealPrediction()">
-                        <div class="leaf-icon">👑</div>
-                        <div class="prediction-display color-wait" id="predDisplay">🔒 LOCKED</div>
-                    </div>
+        <!-- STATS TAB (ENGINE STATUS & METRICS) -->
+        <div id="tab-stats" class="tab-content">
+            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; overflow-y:auto; flex-grow:1;">
+                <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 METRICS & ENGINES</div>
+                
+                <div style="background:rgba(0,0,0,0.8); border-radius:6px; padding:8px; text-align:left; font-size:10px; font-weight:bold; border:1px solid #444;">
+                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
                 </div>
 
+                <!-- 7 ENGINES DISPLAY -->
                 <div class="engine-status-box">
-                    <div class="engine-header">🤖 LIVE ENGINES (500-DATA)</div>
-                    <div class="engine-row"><span>Opposite:</span> <b id="uiEng1">--</b></div>
-                    <div class="engine-row"><span>Statistical:</span> <b id="uiEng2">--</b></div>
-                    <div class="engine-row"><span>Psychology:</span> <b id="uiEng3">--</b></div>
-                    <div class="engine-row"><span>Pattern:</span> <b id="uiEng4">--</b></div>
-                    <div class="engine-row final-vote"><span>FINAL (MAJORITY):</span> <b id="uiEngFinal" style="font-size:10px;">--</b></div>
+                    <div class="engine-header">🤖 7 LIVE ENGINES (VOTING PANEL)</div>
+                    <div class="engine-row"><span>1. Opposite Engine:</span> <b id="uiEng1">--</b></div>
+                    <div class="engine-row"><span>2. Statistical Engine:</span> <b id="uiEng2">--</b></div>
+                    <div class="engine-row"><span>3. Psychology Engine:</span> <b id="uiEng3">--</b></div>
+                    <div class="engine-row"><span>4. Pattern Engine:</span> <b id="uiEng4">--</b></div>
+                    <div class="engine-row"><span>5. Zig-Zag Engine:</span> <b id="uiEng5">--</b></div>
+                    <div class="engine-row"><span>6. Loss Grant Engine:</span> <b id="uiEng6">--</b></div>
+                    <div class="engine-row"><span>7. Math Counting:</span> <b id="uiEng7">--</b></div>
+                    <div class="engine-row final-vote"><span>FINAL MAJORITY:</span> <b id="uiEngFinal" style="font-size:12px;">--</b></div>
                 </div>
             </div>
         </div>
 
         <!-- PATTERN TAB -->
         <div id="tab-pattern" class="tab-content">
-            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:5px; display:block; height:100%;">
-                <div style="font-size:9px; color:#aaa; text-align:center; margin-bottom:2px;">📊 BDG CHART & ZIGZAG TREND</div>
+            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
+                <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:5px;">📊 BDG CHART TREND</div>
                 <div class="chart-scroll-area" id="tirangaPatternList">
                     <div style="text-align:center; color:#777; padding:20px;">Loading Data...</div>
                 </div>
@@ -313,44 +365,35 @@ HTML_TEMPLATE = """
 
         <!-- LOG TAB -->
         <div id="tab-log" class="tab-content">
-            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:5px; display:block; height:100%;">
-                <div style="font-size:9px; color:#aaa; text-align:center; margin-bottom:3px;">📜 REAL HISTORY LOG</div>
+            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
+                <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:5px;">📜 REAL HISTORY LOG</div>
                 <div class="log-list" id="logList">
-                    <div style="text-align:center; color:#777; padding:20px;">Waiting for real round completion...</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- STATS TAB -->
-        <div id="tab-stats" class="tab-content">
-            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:6px; display:block;">
-                <div style="font-size:9px; color:#aaa; margin-bottom:4px;">📊 PERFORMANCE METRICS</div>
-                <div style="background:#161616; border-radius:6px; padding:6px; text-align:left; font-size:9px;">
-                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
+                    <div style="text-align:center; color:#777; padding:20px;">Waiting for real round...</div>
                 </div>
             </div>
         </div>
 
         <!-- PROFILE TAB -->
         <div id="tab-profile" class="tab-content">
-            <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:6px; text-align:left;">
-                <div style="font-size:9px; color:#aaa; text-align:center; margin-bottom:4px;">👑 USER PROFILE</div>
+            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; text-align:left;">
+                <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:8px;">👑 USER PROFILE</div>
                 <div class="profile-card">
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
+                    <p>Server: <span style="color:#ffdf73;">Dedicated Engine Server</span></p>
                     <br>
-                    <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:5px; border-radius:4px; font-weight:bold;">LOGOUT ACCOUNT</a>
+                    <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
             </div>
         </div>
 
+        <!-- BOTTOM NAV -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchTab('terminal', this)"><div>📈</div>TERMINAL</div>
             <div class="nav-item" onclick="switchTab('pattern', this)"><div>📊</div>PATTERN</div>
             <div class="nav-item" onclick="switchTab('log', this)"><div>📜</div>LOG</div>
-            <div class="nav-item" onclick="switchTab('stats', this)"><div>📊</div>STATS</div>
+            <div class="nav-item" onclick="switchTab('stats', this)"><div>🤖</div>STATS</div>
             <div class="nav-item" onclick="switchTab('profile', this)"><div>👑</div>PROFILE</div>
         </div>
     </div>
@@ -358,67 +401,38 @@ HTML_TEMPLATE = """
     <script>
         const WORKER_URL = "https://wingo-cloudflare-worker.anishanisha143love.workers.dev";
         const KEY_EXPIRE_ISO = "{{ session.get('key_expire_iso', '') }}";
-
+        
         let totalRounds = 0, winsCount = 0, lossesCount = 0, jackpotsCount = 0;
         let historyLogs = [];
-        let isRevealed = false;
         
+        // Locks and Memory
+        let hasRevealedThisRound = false; 
         let lastEvaluatedIssue = null;
-        let lockedPredType = null;
-        let lockedPredNum = null;
-        
-        // Final live calculation
         let currentPredType = "WAITING";
         let currentPredNum = 0;
 
-        // Engine states
+        // Engine States
         let oppLosses = 0; 
         let lastOppPred = null; 
-
-        // Warning Flags
+        let lastRoundWasLoss = false;
+        let lastMajorityType = null;
         let warnTriggered120 = false, warnTriggered90 = false, warnTriggered60 = false, warnTriggered30 = false;
 
-        // Audio Unlock
+        // Audio System
         let audioUnlocked = false;
         function unlockAudio() {
             if (audioUnlocked) return;
             try {
-                const dummyAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
-                dummyAudio.volume = 0.01; dummyAudio.play().then(() => { audioUnlocked = true; }).catch(e => {});
+                const a = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+                a.volume = 0.01; a.play().then(()=>{audioUnlocked=true;}).catch(e=>{});
             } catch(e) {}
         }
         document.addEventListener('click', unlockAudio, { once: true });
         document.addEventListener('touchstart', unlockAudio, { once: true });
 
-        // Animations functions
-        function showWinToast() {
-            const toast = document.getElementById('winToast');
-            toast.classList.add('show');
-            try {
-                const winAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
-                winAudio.volume = 1.0; winAudio.play().catch(e => {});
-            } catch(e) {}
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        }
-
-        function showJackpotOverlay() {
-            const overlay = document.getElementById('jackpotOverlay');
-            overlay.style.display = 'flex';
-            try {
-                const jpAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
-                jpAudio.volume = 1.0; jpAudio.play().catch(e => {});
-            } catch(e) {}
-            // auto hide after 5 secs
-            setTimeout(() => { overlay.style.display = 'none'; }, 5000);
-        }
-
         function playWarningBeep() {
-            try {
-                const alertAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
-                alertAudio.volume = 1.0; alertAudio.play().catch(e => {});
-            } catch(e) {}
+            try { const a = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"); a.volume = 1.0; a.play().catch(e=>{}); } catch(e) {}
         }
-
         function showWarnModal(msg) {
             const modal = document.getElementById('keyWarnModal');
             const body = document.getElementById('warnBody');
@@ -430,13 +444,7 @@ HTML_TEMPLATE = """
         }
         function dismissWarnModal() { document.getElementById('keyWarnModal').style.display = 'none'; }
 
-        function getColorClass(num, type) {
-            if (num === 0 || num === 5) return 'color-violet';
-            if (type === 'BIG') return 'color-green';
-            if (type === 'SMALL') return 'color-red';
-            return 'color-wait';
-        }
-
+        // Key Timer Logic (Restored full logic)
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
@@ -470,14 +478,25 @@ HTML_TEMPLATE = """
         }
         setInterval(updateRealKeyTimer, 1000); updateRealKeyTimer();
 
+        // Clock System
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours(), minutes = now.getMinutes(), seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12; hours = hours ? hours : 12;
+            document.getElementById('currentTime').innerText = `${hours}:${minutes<10?'0'+minutes:minutes}:${seconds<10?'0'+seconds:seconds} ${ampm}`;
+            document.getElementById('currentDate').innerText = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+
         function switchTab(tabName, element) {
             try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator(), gainNode = audioCtx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
-                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+                const actx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = actx.createOscillator(), gn = actx.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(587.33, actx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, actx.currentTime + 0.15);
+                gn.gain.setValueAtTime(0.15, actx.currentTime); gn.gain.exponentialRampToValueAtTime(0.01, actx.currentTime + 0.2);
+                osc.connect(gn); gn.connect(actx.destination); osc.start(); osc.stop(actx.currentTime + 0.2);
             } catch(e) {}
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -485,27 +504,46 @@ HTML_TEMPLATE = """
             element.classList.add('active');
         }
 
+        function getColorClass(num, type) {
+            if (num === 0 || num === 5) return 'color-violet';
+            if (type === 'BIG') return 'color-green';
+            if (type === 'SMALL') return 'color-red';
+            return 'color-wait';
+        }
+
+        // ONE-TIME CLICK LOCK & REVEAL
         function revealPrediction() {
-            const pedestal = document.querySelector('.glowing-pedestal');
-            const inner = document.getElementById('predDisplay');
+            if (hasRevealedThisRound || currentPredType === "WAITING") return;
+            
             try {
                 const dtAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
-                dtAudio.volume = 1.0; dtAudio.play().catch(e => {});
+                dtAudio.volume = 1.0; dtAudio.play().catch(e=>{});
             } catch(e) {}
-            if (pedestal) pedestal.classList.add('pedestal-active-power');
-            inner.className = 'prediction-display color-wait';
-            inner.innerHTML = '<div class="analyzing-text">TRUST AI<br>ANALYSING...</div>';
+            
+            hasRevealedThisRound = true; // Locks the result
+            const inner = document.getElementById('predDisplay');
+            let colClass = getColorClass(currentPredNum, currentPredType);
+            inner.className = `prediction-display ${colClass}`;
+            inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
+        }
 
-            setTimeout(() => {
-                if (pedestal) pedestal.classList.remove('pedestal-active-power');
-                isRevealed = true;
-                lockedPredType = currentPredType;
-                lockedPredNum = currentPredNum;
-                
-                let colClass = getColorClass(lockedPredNum, lockedPredType);
-                inner.className = `prediction-display ${colClass}`;
-                inner.innerHTML = `${lockedPredType} : ${lockedPredNum}`;
-            }, 1000);
+        // Animations for Win/Jackpot
+        function showWinToast() {
+            const toast = document.getElementById('winToast');
+            toast.classList.add('show');
+            document.getElementById('mainPedestal').classList.add('pedestal-win-flash');
+            try { const w = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"); w.volume = 1.0; w.play().catch(e=>{}); } catch(e) {}
+            setTimeout(() => { 
+                toast.classList.remove('show'); 
+                document.getElementById('mainPedestal').classList.remove('pedestal-win-flash');
+            }, 3500);
+        }
+
+        function showJackpotOverlay() {
+            const overlay = document.getElementById('jackpotOverlay');
+            overlay.style.display = 'flex';
+            try { const jp = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"); jp.volume = 1.0; jp.play().catch(e=>{}); } catch(e) {}
+            setTimeout(() => { overlay.style.display = 'none'; }, 5000);
         }
 
         function getLiveUTCPeriod() {
@@ -517,7 +555,6 @@ HTML_TEMPLATE = """
 
         async function fetch500Results() {
             let combinedList = [];
-            // Fetch up to 5 pages for 500 results
             for(let i=1; i<=5; i++) {
                 try {
                     const res = await fetch(WORKER_URL + `?pageSize=100&pageNo=${i}`);
@@ -539,7 +576,7 @@ HTML_TEMPLATE = """
         async function fetchLotteryData() {
             try {
                 const items = await fetch500Results();
-                if (items.length > 0) {
+                if (items.length >= 5) {
                     const latest = items[0];
                     const actIssue = String(latest.issueNumber);
                     const actNum = parseInt(latest.number, 10);
@@ -552,30 +589,31 @@ HTML_TEMPLATE = """
                     if (lastEvaluatedIssue && lastEvaluatedIssue !== actIssue) {
                         totalRounds++;
                         let statusRes = "LOSS";
-                        let evalType = lockedPredType || currentPredType;
-                        let evalNum = (lockedPredNum !== null) ? lockedPredNum : currentPredNum;
-
-                        // Opp Engine check
-                        if (lastOppPred) {
-                            if (lastOppPred === actType) oppLosses = 0;
-                            else oppLosses++;
-                        }
-
-                        if (evalType === actType && evalNum === actNum) {
+                        
+                        // Check Win/Loss logic
+                        if (currentPredType === actType && currentPredNum === actNum && hasRevealedThisRound) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
                             showJackpotOverlay();
-                        } else if (evalType === actType) {
+                            oppLosses = 0; lastRoundWasLoss = false; // Reset skipped engine
+                        } else if (currentPredType === actType && hasRevealedThisRound) {
                             winsCount++; statusRes = "WIN";
                             showWinToast();
+                            oppLosses = 0; lastRoundWasLoss = false; // Reset skipped engine
                         } else {
-                            lossesCount++; statusRes = "LOSS";
+                            if (hasRevealedThisRound) lossesCount++; 
+                            statusRes = "LOSS";
+                            lastRoundWasLoss = true;
+                            if (lastOppPred && lastOppPred !== actType) oppLosses++;
                         }
 
-                        historyLogs.unshift({ issue: actIssue, pred: `${evalType} : ${evalNum}`, act_type: actType, act_num: actNum, status: statusRes });
-                        if (historyLogs.length > 50) historyLogs.pop();
-                        updateLogUI();
+                        if (hasRevealedThisRound) {
+                            historyLogs.unshift({ issue: lastEvaluatedIssue, pred: `${currentPredType} : ${currentPredNum}`, act_type: actType, act_num: actNum, status: statusRes });
+                            if (historyLogs.length > 50) historyLogs.pop();
+                            updateLogUI();
+                        }
 
-                        lockedPredType = null; lockedPredNum = null; isRevealed = false;
+                        // RESET LOCK FOR NEW ROUND
+                        hasRevealedThisRound = false;
                         document.getElementById('predDisplay').className = 'prediction-display color-wait';
                         document.getElementById('predDisplay').innerHTML = `🔒 LOCKED`;
                     }
@@ -583,24 +621,22 @@ HTML_TEMPLATE = """
                     updateBdgChartUI(items);
 
                     // ==========================================
-                    // 5-ENGINE MASTER ENSEMBLE SYSTEM
+                    // 7-ENGINE AI MASTER LOGIC
                     // ==========================================
-                    const analysisPool = items.slice(0, 500);
-                    const lastN = parseInt(items[0].number, 10);
+                    const pool = items.slice(0, 500);
+                    const lastN = parseInt(pool[0].number, 10);
                     const lastT = lastN >= 5 ? "BIG" : "SMALL";
 
                     // Engine 1: Opposite Engine
-                    let predE1 = null;
-                    if (oppLosses < 2) {
-                        predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
-                    }
+                    let predE1 = "SKIPPED";
+                    if (oppLosses < 2) predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
 
-                    // Engine 2: Statistical / Markov Engine
+                    // Engine 2: Statistical Engine
                     let numFreq = Array(10).fill(0);
                     let bigC = 0, smallC = 0;
-                    for (let i = 0; i < analysisPool.length - 1; i++) {
-                        if (parseInt(analysisPool[i + 1].number, 10) === lastN) {
-                            let nxt = parseInt(analysisPool[i].number, 10);
+                    for (let i = 0; i < pool.length - 1; i++) {
+                        if (parseInt(pool[i + 1].number, 10) === lastN) {
+                            let nxt = parseInt(pool[i].number, 10);
                             numFreq[nxt]++;
                             if (nxt >= 5) bigC++; else smallC++;
                         }
@@ -608,70 +644,92 @@ HTML_TEMPLATE = """
                     let predE2 = bigC >= smallC ? "BIG" : "SMALL";
                     let bestNumE2 = numFreq.indexOf(Math.max(...numFreq));
 
-                    // Engine 3: Psychology / Momentum
+                    // Engine 3: Psychology Engine
                     let streak = 1;
-                    for(let i=1; i<10 && i<analysisPool.length; i++) {
-                        let t = parseInt(analysisPool[i].number,10)>=5 ? "BIG" : "SMALL";
+                    for(let i=1; i<pool.length; i++) {
+                        let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
                         if(t === lastT) streak++; else break;
                     }
                     let predE3 = (streak >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
 
-                    // Engine 4: Smart Pattern (Zigzag / Blocks)
+                    // Engine 4: Pattern Engine
                     let predE4 = lastT; 
-                    if (analysisPool.length >= 3) {
-                        let t0 = lastT;
-                        let t1 = parseInt(analysisPool[1].number,10)>=5?"BIG":"SMALL";
-                        let t2 = parseInt(analysisPool[2].number,10)>=5?"BIG":"SMALL";
-                        if (t0 !== t1 && t1 !== t2) predE4 = (t0 === "BIG") ? "SMALL" : "BIG"; // Zigzag
-                        else if (t0 === t1 && t1 !== t2) predE4 = (t0 === "BIG") ? "SMALL" : "BIG"; // Break 2-streak
+                    let t1 = parseInt(pool[1].number,10)>=5?"BIG":"SMALL";
+                    let t2 = parseInt(pool[2].number,10)>=5?"BIG":"SMALL";
+                    if (lastT === t1 && t1 !== t2) predE4 = (lastT === "BIG") ? "SMALL" : "BIG";
+
+                    // Engine 5: Zig-Zag Engine
+                    let predE5 = lastT;
+                    if (lastT !== t1 && t1 !== t2) predE5 = (lastT === "BIG") ? "SMALL" : "BIG";
+
+                    // Engine 6: Loss Grant Engine
+                    let predE6 = lastT;
+                    if (lastRoundWasLoss && lastMajorityType) {
+                        predE6 = (lastMajorityType === "BIG") ? "SMALL" : "BIG"; 
+                    } else {
+                        predE6 = lastT;
                     }
 
-                    // UPDATE UI FOR ENGINES
+                    // Engine 7: Math Counting Engine (User Formula: 1+9+4-4-2)
+                    let n0 = parseInt(pool[0].number); let n1 = parseInt(pool[1].number);
+                    let n2 = parseInt(pool[2].number); let n3 = parseInt(pool[3].number);
+                    let n4 = parseInt(pool[4].number);
+                    let mathVal = (n0 + n1 + n2 - n3 - n4) % 10;
+                    if (mathVal < 0) mathVal += 10;
+                    let predE7 = mathVal >= 5 ? "BIG" : "SMALL";
+
+                    // Update Engine UI Status
                     updateUIEngine('uiEng1', predE1);
                     updateUIEngine('uiEng2', predE2);
                     updateUIEngine('uiEng3', predE3);
                     updateUIEngine('uiEng4', predE4);
+                    updateUIEngine('uiEng5', predE5);
+                    updateUIEngine('uiEng6', predE6);
+                    updateUIEngine('uiEng7', predE7);
 
-                    // VOTING MECHANISM
-                    let validVotes = [predE1, predE2, predE3, predE4].filter(v => v !== null);
+                    // 100% MAJORITY VOTING
+                    let validVotes = [predE1, predE2, predE3, predE4, predE5, predE6, predE7].filter(v => v === "BIG" || v === "SMALL");
                     let voteB = validVotes.filter(v => v === "BIG").length;
                     let voteS = validVotes.filter(v => v === "SMALL").length;
 
                     let finalPredT = (voteB >= voteS) ? "BIG" : "SMALL";
+                    lastMajorityType = finalPredT;
                     
-                    // Assign Target Number
+                    // Final Target Number logic
+                    let finalPredN = mathVal; // Math engine target
+                    if (bestNumE2 >= 5 && finalPredT === "BIG") finalPredN = bestNumE2;
+                    if (bestNumE2 < 5 && finalPredT === "SMALL") finalPredN = bestNumE2;
+                    
                     let subPool = finalPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
-                    let finalPredN = bestNumE2;
                     if (!subPool.includes(finalPredN)) finalPredN = subPool[Math.floor(Math.random()*subPool.length)];
 
-                    updateUIEngine('uiEngFinal', finalPredT);
-                    document.getElementById('uiEngFinal').innerText = `${finalPredT} (${finalPredN})`;
+                    document.getElementById('uiEngFinal').className = finalPredT === "BIG" ? "color-green" : "color-red";
+                    document.getElementById('uiEngFinal').innerText = `${finalPredT} (Votes: ${voteB >= voteS ? voteB : voteS}/${validVotes.length})`;
 
+                    // Setup next round
                     currentPredType = finalPredT;
                     currentPredNum = finalPredN;
                     lastEvaluatedIssue = actIssue;
                     lastOppPred = predE1;
 
-                    // Update Stats
+                    // Update Metrics UI
                     document.getElementById('statTotal').innerText = totalRounds;
                     document.getElementById('statWins').innerText = winsCount;
                     document.getElementById('statLosses').innerText = lossesCount;
                     document.getElementById('statJackpots').innerText = jackpotsCount;
                     document.getElementById('statTotal2').innerText = totalRounds;
-                    
                     let acc = totalRounds > 0 ? ((winsCount / totalRounds) * 100).toFixed(1) : "0.0";
                     document.getElementById('statAccuracy').innerText = acc + "%";
                 }
-            } catch(e) { console.error("Fetch error:", e); }
+            } catch(e) { console.error("Fetch error"); }
         }
 
+        // Expanded UI Builder for Pattern Chart
         function updateBdgChartUI(items) {
             const container = document.getElementById('tirangaPatternList');
-            let html = '<div style="position:relative;" id="chartWrapper"><svg id="zigzagSvg" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;"></svg>';
-            
+            let html = '';
             const displayItems = items.slice(0, 40);
-            displayItems.forEach((item, index) => {
-                let issueNum = String(item.issueNumber);
+            displayItems.forEach((item) => {
                 let actualNum = parseInt(item.number, 10);
                 let circlesHtml = '';
                 for(let i=0; i<=9; i++) {
@@ -684,45 +742,32 @@ HTML_TEMPLATE = """
                     }
                     circlesHtml += `<div class="t-num-circle ${isActive ? 'active ' + colorClass : ''}">${i}</div>`;
                 }
-                html += `<div class="tiranga-row" style="position:relative; z-index:2;">
-                    <div class="tiranga-period">${issueNum.slice(-4)}</div>
-                    <div class="tiranga-nums">${circlesHtml}</div>
-                </div>`;
+                html += `<div class="tiranga-row"><div class="tiranga-period">${String(item.issueNumber).slice(-4)}</div><div class="tiranga-nums">${circlesHtml}</div></div>`;
             });
-            html += '</div>';
             container.innerHTML = html;
         }
 
+        // Expanded UI Builder for Logs
         function updateLogUI() {
             const listEl = document.getElementById('logList');
             if (historyLogs.length === 0) return;
             let html = '';
             historyLogs.forEach(log => {
                 let badge = log.status === 'WIN' ? '<span class="badge-win">WIN ✅</span>' :
-                            log.status === 'JACKPOT' ? '<span class="badge-win" style="color:#ffcc00; background:rgba(255,204,0,0.1);">JACKPOT 🌟</span>' :
+                            log.status === 'JACKPOT' ? '<span class="badge-win" style="color:#ffcc00; border-color:#ffcc00;">JACKPOT 🌟</span>' :
                             '<span class="badge-loss">LOSS ❌</span>';
                 let actColor = log.act_type === 'BIG' ? '#00ff88' : '#ff4444';
                 html += `
                 <div class="log-item">
                     <div>
-                        <div style="color:#aaa; font-size:7px;">Period: ${log.issue}</div>
-                        <div style="color:#fff; font-weight:bold;">Pred: ${log.pred} | Actual: <span style="color:${actColor}">${log.act_type} (${log.act_num})</span></div>
+                        <div style="color:#aaa; font-size:9px;">Period: ${log.issue}</div>
+                        <div style="color:#fff; font-weight:900;">Pred: ${log.pred} | Act: <span style="color:${actColor}">${log.act_type} (${log.act_num})</span></div>
                     </div>
                     <div>${badge}</div>
                 </div>`;
             });
             listEl.innerHTML = html;
         }
-
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours(), minutes = now.getMinutes(), seconds = now.getSeconds();
-            let ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12; hours = hours ? hours : 12;
-            document.getElementById('currentTime').innerText = `${hours}:${minutes<10?'0'+minutes:minutes}:${seconds<10?'0'+seconds:seconds} ${ampm}`;
-            document.getElementById('currentDate').innerText = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
-        }
-        setInterval(updateClock, 1000); updateClock();
 
         function updateTimer() {
             const now = new Date();
@@ -751,11 +796,9 @@ def login():
                 try:
                     doc_ref = db.collection('trustwin_keys').document(key.upper())
                     doc = doc_ref.get()
-
                     if not doc.exists:
                         doc_ref = db.collection('trustwin_keys').document(key.lower())
                         doc = doc_ref.get()
-
                     if not doc.exists:
                         doc_ref = db.collection('trustwin_keys').document(key)
                         doc = doc_ref.get()
@@ -833,10 +876,6 @@ def logout():
     session.pop('active_key', None)
     session.pop('key_expire_iso', None)
     return redirect(url_for('login'))
-
-@app.route('/keepalive')
-def keepalive():
-    return "I am awake!", 200
 
 @app.route('/')
 def home():
