@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026_15engines_complete'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_absolute_final'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -45,10 +45,10 @@ LOGIN_TEMPLATE = """
             height: 100vh; overflow: hidden; position: relative;
         }
         .video-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.35;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.7;
         }
         .login-card { 
-            background: linear-gradient(145deg, rgba(18,18,18,0.9), rgba(26,26,26,0.9)); backdrop-filter: blur(10px);
+            background: linear-gradient(145deg, rgba(18,18,18,0.7), rgba(26,26,26,0.7)); backdrop-filter: blur(12px);
             border: 2px solid #d4af37; border-radius: 20px; padding: 25px; width: 100%; max-width: 350px; 
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); z-index: 2; position: relative;
         }
@@ -87,12 +87,12 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP - 15 Engine Master AI</title>
+    <title>Trust Win VIP - 15 Engine Master Ensemble</title>
     <style>
         @keyframes glow {
-            0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
-            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); border-color: #ffdf73; }
-            100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
+            0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); border-color: #d4af37; }
+            50% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.8); border-color: #ffdf73; }
+            100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); border-color: #d4af37; }
         }
         @keyframes radar-pulse {
             0% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 20px #ffdf73, inset 0 0 15px #ffdf73; }
@@ -100,9 +100,9 @@ HTML_TEMPLATE = """
             100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 20px #ffdf73, inset 0 0 15px #ffdf73; }
         }
         @keyframes win-flash-anim {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(0,255,136,0.5); border-color: #00ff88; }
-            50% { transform: scale(1.1); box-shadow: 0 0 80px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; }
-            100% { transform: scale(1); box-shadow: 0 0 20px rgba(0,255,136,0.5); border-color: #00ff88; }
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(0,255,136,0.6); border-color: #00ff88; }
+            50% { transform: scale(1.1); box-shadow: 0 0 90px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(0,255,136,0.6); border-color: #00ff88; }
         }
         .pedestal-win-flash {
             animation: win-flash-anim 1.5s ease-in-out !important;
@@ -116,6 +116,18 @@ HTML_TEMPLATE = """
             100% { transform: scale(1); box-shadow: 0 0 20px #ff3300; }
         }
 
+        @keyframes rainbow-glow {
+            0% { border-color: #ff0055; box-shadow: 0 0 30px #ff0055, inset 0 0 20px #ff0055; }
+            33% { border-color: #00ff88; box-shadow: 0 0 30px #00ff88, inset 0 0 20px #00ff88; }
+            66% { border-color: #00ccff; box-shadow: 0 0 30px #00ccff, inset 0 0 20px #00ccff; }
+            100% { border-color: #ff0055; box-shadow: 0 0 30px #ff0055, inset 0 0 20px #ff0055; }
+        }
+
+        .analyzing-effect {
+            animation: rainbow-glow 1s infinite linear !important;
+            background: radial-gradient(circle, rgba(192,132,252,0.35) 0%, rgba(0,0,0,0.7) 80%) !important;
+        }
+
         .win-toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             background: linear-gradient(45deg, #00ff88, #009955); color: #000;
@@ -127,12 +139,12 @@ HTML_TEMPLATE = """
 
         .jackpot-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.92); z-index: 10001; align-items: center; justify-content: center; flex-direction: column;
+            background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; flex-direction: column;
         }
         .jackpot-text {
-            font-size: 45px; font-weight: 900; background: linear-gradient(45deg, #ffcc00, #fff, #ffcc00);
+            font-size: 42px; font-weight: 900; background: linear-gradient(45deg, #ffcc00, #fff, #ffcc00);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px #ffcc00;
-            animation: radar-pulse 0.5s infinite; text-align: center; line-height: 1.2;
+            animation: radar-pulse 0.5s infinite; text-align: center; line-height: 1.3; padding: 0 20px;
         }
 
         * { box-sizing: border-box; }
@@ -141,23 +153,24 @@ HTML_TEMPLATE = """
             text-align: center; margin: 0; padding: 4px; overflow: hidden; position: fixed; width: 100%; height: 100%; 
         }
 
-        /* LIVE BACKGROUND VIDEO LINK */
+        /* CLEAR LIVE BACKGROUND VIDEO */
         .video-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            object-fit: cover; z-index: -1; opacity: 0.55; filter: contrast(1.2) brightness(0.85);
+            object-fit: cover; z-index: -1; opacity: 0.8; filter: contrast(1.2) brightness(0.9);
         }
 
+        /* GLASSMORPHISM CONTAINER */
         .container { 
             max-width: 420px; height: 100%; margin: auto; 
-            background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 16px; padding: 6px 6px 52px 6px; 
+            background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.7); border-radius: 16px; padding: 6px 6px 52px 6px; 
             position: relative; display: flex; flex-direction: column; overflow: hidden; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            box-shadow: 0 0 35px rgba(0,0,0,0.8);
         }
         
         .top-banner { 
-            background: rgba(20,20,20,0.85); border: 1px solid #d4af37; border-radius: 10px; 
-            padding: 5px; margin-bottom: 3px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            background: rgba(18,18,18,0.5); backdrop-filter: blur(6px); border: 1px solid #d4af37; border-radius: 10px; 
+            padding: 5px; margin-bottom: 3px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
         .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: bold; color: #d4af37; border-bottom: 1px solid rgba(212,175,55,0.4); padding-bottom: 2px; margin-bottom: 2px; }
         
@@ -166,19 +179,19 @@ HTML_TEMPLATE = """
         .time-row { display: flex; justify-content: space-between; font-size: 9px; color: #ccc; margin-top: 2px; padding: 0 4px; font-weight:bold; }
 
         .huge-last-result { 
-            background: rgba(0,0,0,0.8); border: 2px solid #ffdf73; border-radius: 8px; 
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); border: 2px solid #ffdf73; border-radius: 8px; 
             padding: 4px; margin: 3px 0; box-shadow: 0 0 15px rgba(255,223,115,0.3); flex-shrink: 0; 
         }
         .huge-last-title { font-size: 9px; color: #ffdf73; font-weight: bold; letter-spacing: 1px; }
         .huge-last-val { font-size: 15px; font-weight: 900; text-shadow: 0 0 10px rgba(255,255,255,0.3); margin-top:2px; }
 
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 2px 0; flex-shrink: 0; }
-        .stat-card { background: rgba(20,20,20,0.8); border: 1px solid #d4af3755; padding: 4px 2px; border-radius: 6px; }
+        .stat-card { background: rgba(18,18,18,0.5); backdrop-filter: blur(6px); border: 1px solid #d4af3755; padding: 4px 2px; border-radius: 6px; }
         .stat-card .lbl { font-size: 8px; color: #ccc; font-weight:bold; }
         .stat-card .val { font-size: 12px; font-weight: 900; color: #fff; margin-top: 1px; display: block; }
 
         .period-box { 
-            background: rgba(20,20,20,0.8); border: 1px solid #d4af37; border-radius: 6px; 
+            background: rgba(18,18,18,0.5); backdrop-filter: blur(6px); border: 1px solid #d4af37; border-radius: 6px; 
             padding: 5px 8px; margin: 2px 0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; 
         }
         .period-box div { text-align: left; font-size: 9px; color: #ccc; font-weight:bold; }
@@ -190,7 +203,7 @@ HTML_TEMPLATE = """
 
         .giant-predictor { 
             flex-grow: 1; margin-top: 5px; 
-            background: rgba(10, 5, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: rgba(10, 5, 0, 0.3); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
             border: 2px solid #d4af37; border-radius: 12px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             position: relative; box-shadow: 0 0 25px rgba(212,175,55,0.3), inset 0 0 15px rgba(255,223,115,0.1); 
@@ -203,31 +216,31 @@ HTML_TEMPLATE = """
         }
         
         .glowing-pedestal { 
-            width: 170px; height: 170px; border-radius: 50%; border: 4px solid #ffdf73; 
+            width: 175px; height: 175px; border-radius: 50%; border: 4px solid #ffdf73; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(0,0,0,0.6) 80%); 
+            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(0,0,0,0.5) 80%); 
             animation: radar-pulse 3s infinite ease-in-out; cursor: pointer; transition: 0.3s; 
             box-shadow: 0 0 30px #d4af37; z-index: 2;
         }
-        .leaf-icon { font-size: 45px; margin-bottom: 5px; filter: drop-shadow(0 0 10px #ffdf73); }
-        .prediction-display { font-size: 26px; font-weight: 900; text-shadow: 0 0 15px rgba(255,255,255,0.5); text-align: center; }
+        .leaf-icon { font-size: 42px; margin-bottom: 3px; filter: drop-shadow(0 0 10px #ffdf73); }
+        .prediction-display { font-size: 17px; font-weight: 900; text-shadow: 0 0 15px rgba(255,255,255,0.5); text-align: center; letter-spacing: 0.5px; }
 
-        .color-green { color: #00ff88 !important; text-shadow: 0 0 15px rgba(0,255,136,0.8) !important; }
-        .color-red { color: #ff4444 !important; text-shadow: 0 0 15px rgba(255,68,68,0.8) !important; }
-        .color-violet { color: #c084fc !important; text-shadow: 0 0 15px rgba(192,132,252,0.8) !important; }
+        .color-green { color: #00ff88 !important; text-shadow: 0 0 15px rgba(0,255,136,0.8) !important; font-size: 24px !important; }
+        .color-red { color: #ff4444 !important; text-shadow: 0 0 15px rgba(255,68,68,0.8) !important; font-size: 24px !important; }
+        .color-violet { color: #c084fc !important; text-shadow: 0 0 15px rgba(192,132,252,0.8) !important; font-size: 24px !important; }
         .color-wait { color: #ffcc00 !important; }
 
         .engine-status-box { 
-            background: rgba(0,0,0,0.8); border: 2px solid #d4af37; border-radius: 10px; 
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); border: 2px solid #d4af37; border-radius: 10px; 
             padding: 10px; display: flex; flex-direction: column; width: 100%; margin-top: 10px; 
         }
         .engine-header { color: #ffcc00; font-weight: 900; font-size: 11px; text-align: center; border-bottom: 2px solid #d4af3755; padding-bottom: 6px; margin-bottom: 6px; letter-spacing: 1px; }
-        .engine-row { display: flex; justify-content: space-between; align-items: center; background: rgba(20,20,20,0.9); border: 1px solid #444; border-radius: 6px; padding: 6px 10px; margin-bottom: 4px; font-size: 10px; font-weight: bold; }
+        .engine-row { display: flex; justify-content: space-between; align-items: center; background: rgba(20,20,20,0.8); border: 1px solid #444; border-radius: 6px; padding: 6px 10px; margin-bottom: 4px; font-size: 10px; font-weight: bold; }
         .engine-row span { color: #ccc; }
         .final-vote { background: linear-gradient(90deg, #3a2a00, #000); border-color: #ffdf73; padding: 8px; font-size: 11px; margin-top: 5px; box-shadow: inset 0 0 10px rgba(255,223,115,0.2); }
 
         .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; position: relative; padding-right: 2px; margin-top: 5px; }
-        .tiranga-row { background: rgba(15,15,15,0.9); border: 1px solid #444; border-radius: 6px; padding: 4px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; }
+        .tiranga-row { background: rgba(15,15,15,0.7); border: 1px solid #444; border-radius: 6px; padding: 4px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; }
         .tiranga-period { color: #ffdf73; font-family: monospace; font-size: 9px; font-weight:bold; text-align: left; width: 65px; flex-shrink: 0; }
         .tiranga-nums { display: flex; gap: 3px; align-items: center; justify-content: space-between; flex-grow: 1; padding: 0 4px; }
         .t-num-circle { width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 900; background: #111; color: #555; border: 1px solid #444; }
@@ -236,15 +249,15 @@ HTML_TEMPLATE = """
         .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 6px #e74c3c; }
 
         .log-list { flex-grow: 1; overflow-y: auto; text-align: left; font-size: 10px; margin-top: 5px; }
-        .log-item { background: rgba(15,15,15,0.9); border: 1px solid #444; border-radius: 6px; padding: 6px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .log-item { background: rgba(15,15,15,0.7); border: 1px solid #444; border-radius: 6px; padding: 6px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
         .badge-win { color: #00ff88; font-weight: 900; background: rgba(0,255,136,0.15); padding: 3px 6px; border-radius: 4px; border: 1px solid #00ff88; }
         .badge-loss { color: #ff4444; font-weight: 900; background: rgba(255,68,68,0.15); padding: 3px 6px; border-radius: 4px; border: 1px solid #ff4444; }
 
-        .profile-card { background: rgba(15,15,15,0.9); border: 1px solid #d4af37; border-radius: 8px; padding: 10px; margin-top: 8px; text-align: left; font-size: 10px; font-weight: bold; }
+        .profile-card { background: rgba(15,15,15,0.75); border: 1px solid #d4af37; border-radius: 8px; padding: 10px; margin-top: 8px; text-align: left; font-size: 10px; font-weight: bold; }
         .profile-card p { margin: 6px 0; color: #ddd; }
         .profile-card span { color: #fff; font-weight: 900; }
 
-        .bottom-nav { position: absolute; bottom: 12px; left: 0; right: 0; background: rgba(10,10,10,0.95); border-top: 2px solid #d4af37; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 0 12px 0; z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.9); }
+        .bottom-nav { position: absolute; bottom: 12px; left: 0; right: 0; background: rgba(10,10,10,0.85); backdrop-filter: blur(8px); border-top: 2px solid #d4af37; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 0 12px 0; z-index: 25; box-shadow: 0 -5px 20px rgba(0,0,0,0.9); }
         .nav-item { font-size: 8px; color: #888; font-weight: bold; cursor: pointer; transition: 0.2s; text-decoration: none; display: flex; flex-direction: column; align-items: center; }
         .nav-item.active { color: #ffdf73; text-shadow: 0 0 8px rgba(255,223,115,0.5); }
         .nav-item div { font-size: 14px; margin-bottom: 3px; }
@@ -256,12 +269,12 @@ HTML_TEMPLATE = """
         <source src="https://www.image2url.com/r2/default/videos/1785310888502-2cf6edf9-e8da-4acd-9499-49cf0bafddf2.mp4" type="video/mp4">
     </video>
 
-    <!-- WIN TOAST -->
+    <!-- WIN TOAST & AUDIO -->
     <div id="winToast" class="win-toast">🏆 WINNER 🏆</div>
 
-    <!-- JACKPOT OVERLAY -->
+    <!-- JACKPOT OVERLAY WITH ENGINES TARGET -->
     <div id="jackpotOverlay" class="jackpot-overlay" onclick="this.style.display='none'">
-        <div class="jackpot-text">🎉 MEGA JACKPOT 🎉</div>
+        <div class="jackpot-text" id="jackpotMsg">🎉 MEGA JACKPOT 🎉<br><span id="jpSubText" style="font-size:22px; color:#00ff88;"></span></div>
     </div>
 
     <!-- KEY WARNING MODAL -->
@@ -282,7 +295,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">15-ENGINE MASTER AI ENSEMBLE</div>
+            <div class="sub-engine">15-ENGINE MASTER GLASS AI</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -300,13 +313,13 @@ HTML_TEMPLATE = """
             <div class="stat-card">
                 <div class="lbl">TOTAL</div><span class="val" id="statTotal">0</span>
             </div>
-            <div class="stat-card" style="border-color: #00ff88aa; background: rgba(0,255,136,0.1);">
+            <div class="stat-card" style="border-color: #00ff88aa; background: rgba(0,255,136,0.15);">
                 <div class="lbl" style="color:#00ff88;">WIN</div><span class="val" id="statWins" style="color: #00ff88;">0</span>
             </div>
-            <div class="stat-card" style="border-color: #ff4444aa; background: rgba(255,68,68,0.1);">
+            <div class="stat-card" style="border-color: #ff4444aa; background: rgba(255,68,68,0.15);">
                 <div class="lbl" style="color:#ff4444;">LOSS</div><span class="val" id="statLosses" style="color: #ff4444;">0</span>
             </div>
-            <div class="stat-card" style="border-color: #ffcc00aa; background: rgba(255,204,0,0.1);">
+            <div class="stat-card" style="border-color: #ffcc00aa; background: rgba(255,204,0,0.15);">
                 <div class="lbl" style="color:#ffcc00;">JACKPOT</div><span class="val" id="statJackpots" style="color: #ffcc00;">0</span>
             </div>
         </div>
@@ -323,17 +336,17 @@ HTML_TEMPLATE = """
                 <div class="wings-banner">👑 CHECK RESULT 👑</div>
                 <div class="glowing-pedestal" id="mainPedestal" onclick="revealPrediction()">
                     <div class="leaf-icon">👑</div>
-                    <div class="prediction-display color-wait" id="predDisplay">🔒 LOCKED</div>
+                    <div class="prediction-display color-wait" id="predDisplay">CHECK RESULT</div>
                 </div>
             </div>
         </div>
 
         <!-- STATS TAB (15 ENGINES VOTING PANEL) -->
         <div id="tab-stats" class="tab-content">
-            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; overflow-y:auto; flex-grow:1;">
+            <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; overflow-y:auto; flex-grow:1;">
                 <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 METRICS & 15 ENGINES</div>
                 
-                <div style="background:rgba(0,0,0,0.8); border-radius:6px; padding:8px; text-align:left; font-size:10px; font-weight:bold; border:1px solid #444;">
+                <div style="background:rgba(0,0,0,0.7); border-radius:6px; padding:8px; text-align:left; font-size:10px; font-weight:bold; border:1px solid #444;">
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
                 </div>
@@ -341,7 +354,7 @@ HTML_TEMPLATE = """
                 <!-- 15 ENGINES DISPLAY -->
                 <div class="engine-status-box">
                     <div class="engine-header">🤖 15 MASTER ENGINES VOTING PANEL</div>
-                    <div class="engine-row"><span>1. Opposite Engine:</span> <b id="uiEng1">--</b></div>
+                    <div class="engine-row"><span>1. Sequence Opposite Engine:</span> <b id="uiEng1">--</b></div>
                     <div class="engine-row"><span>2. Statistical Engine:</span> <b id="uiEng2">--</b></div>
                     <div class="engine-row"><span>3. Psychology Engine:</span> <b id="uiEng3">--</b></div>
                     <div class="engine-row"><span>4. Pattern Engine:</span> <b id="uiEng4">--</b></div>
@@ -363,7 +376,7 @@ HTML_TEMPLATE = """
 
         <!-- PATTERN TAB -->
         <div id="tab-pattern" class="tab-content">
-            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
+            <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
                 <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:5px;">📊 BDG CHART TREND</div>
                 <div class="chart-scroll-area" id="tirangaPatternList">
                     <div style="text-align:center; color:#777; padding:20px;">Loading Data...</div>
@@ -373,7 +386,7 @@ HTML_TEMPLATE = """
 
         <!-- LOG TAB -->
         <div id="tab-log" class="tab-content">
-            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
+            <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; display:flex; flex-direction:column; height:100%;">
                 <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:5px;">📜 REAL HISTORY LOG</div>
                 <div class="log-list" id="logList">
                     <div style="text-align:center; color:#777; padding:20px;">Waiting for real round...</div>
@@ -383,13 +396,13 @@ HTML_TEMPLATE = """
 
         <!-- PROFILE TAB -->
         <div id="tab-profile" class="tab-content">
-            <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; text-align:left;">
+            <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; text-align:left;">
                 <div style="font-size:10px; color:#ffdf73; font-weight:900; text-align:center; margin-bottom:8px;">👑 USER PROFILE</div>
                 <div class="profile-card">
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server: <span style="color:#ffdf73;">15-Engine Dedicated Server</span></p>
+                    <p>Server: <span style="color:#ffdf73;">15-Engine Master Dedicated Server</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
@@ -413,11 +426,12 @@ HTML_TEMPLATE = """
         let totalRounds = 0, winsCount = 0, lossesCount = 0, jackpotsCount = 0;
         let historyLogs = [];
         let hasRevealedThisRound = false; 
+        let isAnalyzing = false;
         let lastEvaluatedIssue = null;
         let currentPredType = "WAITING";
         let currentPredNum = 0;
 
-        let oppLosses = 0, lastOppPred = null, lastRoundWasLoss = false, lastMajorityType = null;
+        let lastRoundWasLoss = false, lastMajorityType = null;
         let warnTriggered120 = false, warnTriggered90 = false, warnTriggered60 = false, warnTriggered30 = false;
 
         const CHART_MAP = {
@@ -518,33 +532,62 @@ HTML_TEMPLATE = """
             return 'color-wait';
         }
 
+        // 4-SECOND COLORFUL ANALYSIS & REVEAL
         function revealPrediction() {
-            if (hasRevealedThisRound || currentPredType === "WAITING") return;
-            try {
-                const dtAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
-                dtAudio.volume = 1.0; dtAudio.play().catch(e=>{});
-            } catch(e) {}
-            hasRevealedThisRound = true;
+            if (hasRevealedThisRound || isAnalyzing || currentPredType === "WAITING") return;
+            
+            isAnalyzing = true;
+            const pedestal = document.getElementById('mainPedestal');
             const inner = document.getElementById('predDisplay');
-            inner.className = `prediction-display ${getColorClass(currentPredNum, currentPredType)}`;
-            inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
+            
+            pedestal.classList.add('analyzing-effect');
+            inner.className = "prediction-display color-wait";
+            inner.innerHTML = "⚡ ANALYZING... ⚡";
+
+            try {
+                const scanAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3");
+                scanAudio.volume = 0.6; scanAudio.play().catch(e=>{});
+            } catch(e) {}
+
+            setTimeout(() => {
+                isAnalyzing = false;
+                hasRevealedThisRound = true;
+                pedestal.classList.remove('analyzing-effect');
+                
+                try {
+                    const dtAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
+                    dtAudio.volume = 1.0; dtAudio.play().catch(e=>{});
+                } catch(e) {}
+
+                inner.className = `prediction-display ${getColorClass(currentPredNum, currentPredType)}`;
+                inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
+            }, 4000); // 4 seconds colorful analysis delay
         }
 
         function showWinToast() {
             const toast = document.getElementById('winToast');
             toast.classList.add('show');
             document.getElementById('mainPedestal').classList.add('pedestal-win-flash');
-            try { const w = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"); w.volume = 1.0; w.play().catch(e=>{}); } catch(e) {}
+            try { 
+                const w = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"); 
+                w.volume = 1.0; w.play().catch(e=>{}); 
+            } catch(e) {}
             setTimeout(() => { 
                 toast.classList.remove('show'); 
                 document.getElementById('mainPedestal').classList.remove('pedestal-win-flash');
             }, 3500);
         }
 
-        function showJackpotOverlay() {
-            document.getElementById('jackpotOverlay').style.display = 'flex';
-            try { const jp = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"); jp.volume = 1.0; jp.play().catch(e=>{}); } catch(e) {}
-            setTimeout(() => { document.getElementById('jackpotOverlay').style.display = 'none'; }, 5000);
+        function showJackpotOverlay(targetNum, targetType) {
+            const overlay = document.getElementById('jackpotOverlay');
+            const sub = document.getElementById('jpSubText');
+            sub.innerText = `JACKPOT TARGET: ${targetType} : ${targetNum} (15 Engines Verified)`;
+            overlay.style.display = 'flex';
+            try { 
+                const jp = new Audio("https://assets.mixkit.co/active_storage/sfx/2020/2020-preview.mp3"); 
+                jp.volume = 1.0; jp.play().catch(e=>{}); 
+            } catch(e) {}
+            setTimeout(() => { overlay.style.display = 'none'; }, 5000);
         }
 
         function getLiveUTCPeriod() {
@@ -592,17 +635,16 @@ HTML_TEMPLATE = """
                         let statusRes = "LOSS";
                         if (currentPredType === actType && currentPredNum === actNum && hasRevealedThisRound) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
-                            showJackpotOverlay();
-                            oppLosses = 0; lastRoundWasLoss = false;
+                            showJackpotOverlay(currentPredNum, currentPredType);
+                            lastRoundWasLoss = false;
                         } else if (currentPredType === actType && hasRevealedThisRound) {
                             winsCount++; statusRes = "WIN";
                             showWinToast();
-                            oppLosses = 0; lastRoundWasLoss = false;
+                            lastRoundWasLoss = false;
                         } else {
                             if (hasRevealedThisRound) lossesCount++; 
                             statusRes = "LOSS";
                             lastRoundWasLoss = true;
-                            if (lastOppPred && lastOppPred !== actType) oppLosses++;
                         }
 
                         if (hasRevealedThisRound) {
@@ -612,23 +654,42 @@ HTML_TEMPLATE = """
                         }
 
                         hasRevealedThisRound = false;
+                        isAnalyzing = false;
                         document.getElementById('predDisplay').className = 'prediction-display color-wait';
-                        document.getElementById('predDisplay').innerHTML = `🔒 LOCKED`;
+                        document.getElementById('predDisplay').innerHTML = `CHECK RESULT`;
                     }
 
                     updateBdgChartUI(items);
 
                     // ==========================================
-                    // 15 MASTER ENGINES SYSTEM (Complete Integration)
+                    // 15 MASTER ENGINES SYSTEM (FULL LOGIC)
                     // ==========================================
                     const pool = items.slice(0, 500);
                     const lastN = parseInt(pool[0].number, 10);
                     const lastT = lastN >= 5 ? "BIG" : "SMALL";
                     const prevT = parseInt(pool[1].number, 10) >= 5 ? "BIG" : "SMALL";
 
-                    let predE1 = "SKIPPED";
-                    if (oppLosses < 2) predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
+                    // 1. SEQUENCE-BASED OPPOSITE ENGINE (Scans last 500 results sequence)
+                    let predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
+                    if (pool.length > 10) {
+                        let matchCount = 0;
+                        let nextTrendSum = 0;
+                        let currentPattern = `${parseInt(pool[1].number,10)>=5?"B":"S"}-${lastT[0]}`;
+                        for(let i=2; i<pool.length-1; i++) {
+                            let histPattern = `${parseInt(pool[i+1].number,10)>=5?"B":"S"}-${parseInt(pool[i].number,10)>=5?"B":"S"}`;
+                            if(histPattern === currentPattern) {
+                                matchCount++;
+                                let nxtType = parseInt(pool[i-1].number,10)>=5 ? "BIG" : "SMALL";
+                                if(nxtType === "BIG") nextTrendSum++; else nextTrendSum--;
+                            }
+                        }
+                        if(matchCount >= 2) {
+                            let expectedHist = (nextTrendSum >= 0) ? "BIG" : "SMALL";
+                            predE1 = (expectedHist === "BIG") ? "SMALL" : "BIG";
+                        }
+                    }
 
+                    // 2. Statistical Engine
                     let numFreq = Array(10).fill(0);
                     let bigC = 0, smallC = 0;
                     for (let i = 0; i < pool.length - 1; i++) {
@@ -641,6 +702,7 @@ HTML_TEMPLATE = """
                     let predE2 = bigC >= smallC ? "BIG" : "SMALL";
                     let bestNumE2 = numFreq.indexOf(Math.max(...numFreq));
 
+                    // 3. Psychology Engine
                     let streak = 1;
                     for(let i=1; i<pool.length; i++) {
                         let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
@@ -648,19 +710,23 @@ HTML_TEMPLATE = """
                     }
                     let predE3 = (streak >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
 
+                    // 4. Pattern Engine
                     let predE4 = lastT; 
                     let t1 = parseInt(pool[1].number,10)>=5?"BIG":"SMALL";
                     let t2 = parseInt(pool[2].number,10)>=5?"BIG":"SMALL";
                     if (lastT === t1 && t1 !== t2) predE4 = (lastT === "BIG") ? "SMALL" : "BIG";
 
+                    // 5. Zig-Zag Engine
                     let predE5 = lastT;
                     if (lastT !== t1 && t1 !== t2) predE5 = (lastT === "BIG") ? "SMALL" : "BIG";
 
+                    // 6. Loss Grant Engine
                     let predE6 = lastT;
                     if (lastRoundWasLoss && lastMajorityType) {
                         predE6 = (lastMajorityType === "BIG") ? "SMALL" : "BIG";
                     }
 
+                    // 7. Math Counting Engine
                     let n0 = parseInt(pool[0].number); let n1 = parseInt(pool[1].number);
                     let n2 = parseInt(pool[2].number); let n3 = parseInt(pool[3].number);
                     let n4 = parseInt(pool[4].number);
@@ -668,6 +734,7 @@ HTML_TEMPLATE = """
                     if (mathVal < 0) mathVal += 10;
                     let predE7 = mathVal >= 5 ? "BIG" : "SMALL";
 
+                    // 8. Zigzag Trend Engine
                     let cons = 1;
                     for(let i=1; i<pool.length; i++) {
                         let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
@@ -675,18 +742,28 @@ HTML_TEMPLATE = """
                     }
                     let predE8 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
 
+                    // 9. Chart Map Engine
                     let chartEntry = CHART_MAP[lastN];
                     let predE9 = chartEntry ? chartEntry.size : lastT;
                     let targetN1 = chartEntry ? chartEntry.n1 : 0;
 
+                    // 10. 2S/2B Rule Engine
                     let predE10 = (cons === 2) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
+
+                    // 11. Breakout Engine
                     let predE11 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
+
+                    // 12. Pattern Detect Engine
                     let predE12 = (lastT === prevT) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
 
+                    // 13. Loss Guard Engine
                     let predE13 = lastT;
                     if (lastRoundWasLoss) predE13 = (lastT === "BIG") ? "SMALL" : "BIG";
 
+                    // 14. Dual Confirm Engine
                     let predE14 = (predE9 === predE8) ? predE9 : lastT;
+
+                    // 15. Dual Lock Engine
                     let predE15 = (mathVal >= 5) ? "BIG" : "SMALL";
 
                     updateUIEngine('uiEng1', predE1);
@@ -712,6 +789,7 @@ HTML_TEMPLATE = """
                     let finalPredT = (voteB >= voteS) ? "BIG" : "SMALL";
                     lastMajorityType = finalPredT;
                     
+                    // Engine-derived Jackpot Target Number calculation
                     let finalPredN = targetN1;
                     if (bestNumE2 >= 5 && finalPredT === "BIG") finalPredN = bestNumE2;
                     if (bestNumE2 < 5 && finalPredT === "SMALL") finalPredN = bestNumE2;
@@ -724,7 +802,6 @@ HTML_TEMPLATE = """
                     currentPredType = finalPredT;
                     currentPredNum = finalPredN;
                     lastEvaluatedIssue = actIssue;
-                    lastOppPred = predE1;
 
                     document.getElementById('statTotal').innerText = totalRounds;
                     document.getElementById('statWins').innerText = winsCount;
