@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026_vFinal'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_15engines_complete'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -44,8 +44,8 @@ LOGIN_TEMPLATE = """
             text-align: center; margin: 0; padding: 20px; display: flex; align-items: center; justify-content: center; 
             height: 100vh; overflow: hidden; position: relative;
         }
-        .live-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.3;
+        .video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.35;
         }
         .login-card { 
             background: linear-gradient(145deg, rgba(18,18,18,0.9), rgba(26,26,26,0.9)); backdrop-filter: blur(10px);
@@ -62,7 +62,9 @@ LOGIN_TEMPLATE = """
     </style>
 </head>
 <body>
-    <img src="https://i.pinimg.com/originals/a6/5c/df/a65cdfcbdcf6fb38a2e5e1b8b69389e9.gif" class="live-bg" alt="bg">
+    <video autoplay loop muted playsinline class="video-bg">
+        <source src="https://www.image2url.com/r2/default/videos/1785310888502-2cf6edf9-e8da-4acd-9499-49cf0bafddf2.mp4" type="video/mp4">
+    </video>
     <div class="login-card">
         <div class="title">👑 TRUST WIN VIP 👑</div>
         <div class="sub">ENTER TRUST WIN LICENSE KEY</div>
@@ -85,7 +87,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP - 7 Engine AI Master</title>
+    <title>Trust Win VIP - 15 Engine Master AI</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
@@ -139,16 +141,15 @@ HTML_TEMPLATE = """
             text-align: center; margin: 0; padding: 4px; overflow: hidden; position: fixed; width: 100%; height: 100%; 
         }
 
-        /* PREMIUM LIVE BACKGROUND */
-        .live-bg {
+        /* LIVE BACKGROUND VIDEO LINK */
+        .video-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            object-fit: cover; z-index: -1; opacity: 0.5; filter: contrast(1.2) brightness(0.8);
+            object-fit: cover; z-index: -1; opacity: 0.55; filter: contrast(1.2) brightness(0.85);
         }
 
-        /* GLASSMORPHISM CONTAINER */
         .container { 
             max-width: 420px; height: 100%; margin: auto; 
-            background: rgba(15, 15, 15, 0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 16px; padding: 6px 6px 52px 6px; 
             position: relative; display: flex; flex-direction: column; overflow: hidden; 
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
@@ -187,7 +188,6 @@ HTML_TEMPLATE = """
         .tab-content { display: none; height: 100%; flex-direction: column; flex-grow: 1; overflow: hidden; }
         .tab-content.active { display: flex; }
 
-        /* GIANT FULL-WIDTH PREDICTOR BOX */
         .giant-predictor { 
             flex-grow: 1; margin-top: 5px; 
             background: rgba(10, 5, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -212,13 +212,11 @@ HTML_TEMPLATE = """
         .leaf-icon { font-size: 45px; margin-bottom: 5px; filter: drop-shadow(0 0 10px #ffdf73); }
         .prediction-display { font-size: 26px; font-weight: 900; text-shadow: 0 0 15px rgba(255,255,255,0.5); text-align: center; }
 
-        /* MULTIPLE COLORS */
         .color-green { color: #00ff88 !important; text-shadow: 0 0 15px rgba(0,255,136,0.8) !important; }
         .color-red { color: #ff4444 !important; text-shadow: 0 0 15px rgba(255,68,68,0.8) !important; }
         .color-violet { color: #c084fc !important; text-shadow: 0 0 15px rgba(192,132,252,0.8) !important; }
         .color-wait { color: #ffcc00 !important; }
 
-        /* ENGINE STATUS IN STATS TAB */
         .engine-status-box { 
             background: rgba(0,0,0,0.8); border: 2px solid #d4af37; border-radius: 10px; 
             padding: 10px; display: flex; flex-direction: column; width: 100%; margin-top: 10px; 
@@ -253,8 +251,10 @@ HTML_TEMPLATE = """
     </style>
 </head>
 <body>
-    <!-- Premium Live Background Image/GIF -->
-    <img src="https://i.pinimg.com/originals/a6/5c/df/a65cdfcbdcf6fb38a2e5e1b8b69389e9.gif" class="live-bg" alt="live-bg">
+    <!-- Live Background Video -->
+    <video autoplay loop muted playsinline class="video-bg">
+        <source src="https://www.image2url.com/r2/default/videos/1785310888502-2cf6edf9-e8da-4acd-9499-49cf0bafddf2.mp4" type="video/mp4">
+    </video>
 
     <!-- WIN TOAST -->
     <div id="winToast" class="win-toast">🏆 WINNER 🏆</div>
@@ -264,25 +264,25 @@ HTML_TEMPLATE = """
         <div class="jackpot-text">🎉 MEGA JACKPOT 🎉</div>
     </div>
 
-    <!-- KEY EXPIRY WARNING MODAL -->
+    <!-- KEY WARNING MODAL -->
     <div id="keyWarnModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
         <div style="background:linear-gradient(145deg, #220000, #3d0000); border:3px solid #ff3300; border-radius:20px; padding:20px; text-align:center; max-width:320px; box-shadow:0 0 35px #ff3300; animation:pulse-warn 1.5s infinite;">
             <div style="font-size:38px; margin-bottom:5px;">⚠️</div>
-            <div style="font-size:15px; font-weight:900; color:#ff3300; letter-spacing:1px; margin-bottom:8px;" id="warnTitle">VIP KEY EXPIRING SOON</div>
+            <div style="font-size:15px; font-weight:900; color:#ff3300; letter-spacing:1px; margin-bottom:8px;">VIP KEY EXPIRING SOON</div>
             <div style="font-size:12px; color:#fff; font-weight:bold; margin-bottom:15px; line-height:1.4;" id="warnBody">Your VIP key will expire shortly!</div>
-            <button onclick="dismissWarnModal()" style="background:linear-gradient(45deg, #ff3300, #ff6600); color:#fff; border:none; padding:10px 20px; font-weight:900; border-radius:8px; cursor:pointer; font-size:12px; width:100%; letter-spacing:0.5px;">OK, UNDERSTOOD</button>
+            <button onclick="dismissWarnModal()" style="background:linear-gradient(45deg, #ff3300, #ff6600); color:#fff; border:none; padding:10px 20px; font-weight:900; border-radius:8px; cursor:pointer; font-size:12px; width:100%;">OK, UNDERSTOOD</button>
         </div>
     </div>
 
     <div class="container">
-        <!-- TOP BANNER & HEADER -->
+        <!-- TOP BANNER -->
         <div class="top-banner">
             <div class="vip-header">
                 <span>👑 TRUST WIN VIP</span>
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">7-ENGINE AI MASTER (100% MAJORITY)</div>
+            <div class="sub-engine">15-ENGINE MASTER AI ENSEMBLE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -317,7 +317,7 @@ HTML_TEMPLATE = """
             <div style="text-align: right;">NEXT SIGNAL IN<br><div class="countdown" id="timer">00:60</div></div>
         </div>
 
-        <!-- TERMINAL TAB (GIANT FULL DISPLAY) -->
+        <!-- TERMINAL TAB -->
         <div id="tab-terminal" class="tab-content active">
             <div class="giant-predictor">
                 <div class="wings-banner">👑 CHECK RESULT 👑</div>
@@ -328,27 +328,35 @@ HTML_TEMPLATE = """
             </div>
         </div>
 
-        <!-- STATS TAB (ENGINE STATUS & METRICS) -->
+        <!-- STATS TAB (15 ENGINES VOTING PANEL) -->
         <div id="tab-stats" class="tab-content">
             <div style="background:rgba(20,20,20,0.85); border:1px solid #d4af37; border-radius:10px; padding:10px; overflow-y:auto; flex-grow:1;">
-                <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 METRICS & ENGINES</div>
+                <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 METRICS & 15 ENGINES</div>
                 
                 <div style="background:rgba(0,0,0,0.8); border-radius:6px; padding:8px; text-align:left; font-size:10px; font-weight:bold; border:1px solid #444;">
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
                 </div>
 
-                <!-- 7 ENGINES DISPLAY -->
+                <!-- 15 ENGINES DISPLAY -->
                 <div class="engine-status-box">
-                    <div class="engine-header">🤖 7 LIVE ENGINES (VOTING PANEL)</div>
+                    <div class="engine-header">🤖 15 MASTER ENGINES VOTING PANEL</div>
                     <div class="engine-row"><span>1. Opposite Engine:</span> <b id="uiEng1">--</b></div>
                     <div class="engine-row"><span>2. Statistical Engine:</span> <b id="uiEng2">--</b></div>
                     <div class="engine-row"><span>3. Psychology Engine:</span> <b id="uiEng3">--</b></div>
                     <div class="engine-row"><span>4. Pattern Engine:</span> <b id="uiEng4">--</b></div>
                     <div class="engine-row"><span>5. Zig-Zag Engine:</span> <b id="uiEng5">--</b></div>
                     <div class="engine-row"><span>6. Loss Grant Engine:</span> <b id="uiEng6">--</b></div>
-                    <div class="engine-row"><span>7. Math Counting:</span> <b id="uiEng7">--</b></div>
-                    <div class="engine-row final-vote"><span>FINAL MAJORITY:</span> <b id="uiEngFinal" style="font-size:12px;">--</b></div>
+                    <div class="engine-row"><span>7. Math Counting Engine:</span> <b id="uiEng7">--</b></div>
+                    <div class="engine-row"><span>8. Zigzag Trend Engine:</span> <b id="uiEng8">--</b></div>
+                    <div class="engine-row"><span>9. Chart Map Engine:</span> <b id="uiEng9">--</b></div>
+                    <div class="engine-row"><span>10. 2S/2B Rule Engine:</span> <b id="uiEng10">--</b></div>
+                    <div class="engine-row"><span>11. Breakout Engine:</span> <b id="uiEng11">--</b></div>
+                    <div class="engine-row"><span>12. Pattern Detect Engine:</span> <b id="uiEng12">--</b></div>
+                    <div class="engine-row"><span>13. Loss Guard Engine:</span> <b id="uiEng13">--</b></div>
+                    <div class="engine-row"><span>14. Dual Confirm Engine:</span> <b id="uiEng14">--</b></div>
+                    <div class="engine-row"><span>15. Dual Lock Engine:</span> <b id="uiEng15">--</b></div>
+                    <div class="engine-row final-vote"><span>FINAL MAJORITY (15 ENGINES):</span> <b id="uiEngFinal" style="font-size:12px;">--</b></div>
                 </div>
             </div>
         </div>
@@ -381,7 +389,7 @@ HTML_TEMPLATE = """
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server: <span style="color:#ffdf73;">Dedicated Engine Server</span></p>
+                    <p>Server: <span style="color:#ffdf73;">15-Engine Dedicated Server</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
@@ -404,21 +412,22 @@ HTML_TEMPLATE = """
         
         let totalRounds = 0, winsCount = 0, lossesCount = 0, jackpotsCount = 0;
         let historyLogs = [];
-        
-        // Locks and Memory
         let hasRevealedThisRound = false; 
         let lastEvaluatedIssue = null;
         let currentPredType = "WAITING";
         let currentPredNum = 0;
 
-        // Engine States
-        let oppLosses = 0; 
-        let lastOppPred = null; 
-        let lastRoundWasLoss = false;
-        let lastMajorityType = null;
+        let oppLosses = 0, lastOppPred = null, lastRoundWasLoss = false, lastMajorityType = null;
         let warnTriggered120 = false, warnTriggered90 = false, warnTriggered60 = false, warnTriggered30 = false;
 
-        // Audio System
+        const CHART_MAP = {
+            0: { size:"BIG", n1:0, n2:5 }, 1: { size:"SMALL", n1:1, n2:6 },
+            2: { size:"BIG", n1:2, n2:7 }, 3: { size:"BIG", n1:3, n2:8 },
+            4: { size:"SMALL", n1:4, n2:0 }, 5: { size:"BIG", n1:5, n2:0 },
+            6: { size:"BIG", n1:6, n2:1 }, 7: { size:"SMALL", n1:7, n2:2 },
+            8: { size:"BIG", n1:8, n2:3 }, 9: { size:"SMALL", n1:0, n2:1 }
+        };
+
         let audioUnlocked = false;
         function unlockAudio() {
             if (audioUnlocked) return;
@@ -444,7 +453,6 @@ HTML_TEMPLATE = """
         }
         function dismissWarnModal() { document.getElementById('keyWarnModal').style.display = 'none'; }
 
-        // Key Timer Logic (Restored full logic)
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
@@ -478,7 +486,6 @@ HTML_TEMPLATE = """
         }
         setInterval(updateRealKeyTimer, 1000); updateRealKeyTimer();
 
-        // Clock System
         function updateClock() {
             const now = new Date();
             let hours = now.getHours(), minutes = now.getMinutes(), seconds = now.getSeconds();
@@ -511,23 +518,18 @@ HTML_TEMPLATE = """
             return 'color-wait';
         }
 
-        // ONE-TIME CLICK LOCK & REVEAL
         function revealPrediction() {
             if (hasRevealedThisRound || currentPredType === "WAITING") return;
-            
             try {
                 const dtAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
                 dtAudio.volume = 1.0; dtAudio.play().catch(e=>{});
             } catch(e) {}
-            
-            hasRevealedThisRound = true; // Locks the result
+            hasRevealedThisRound = true;
             const inner = document.getElementById('predDisplay');
-            let colClass = getColorClass(currentPredNum, currentPredType);
-            inner.className = `prediction-display ${colClass}`;
+            inner.className = `prediction-display ${getColorClass(currentPredNum, currentPredType)}`;
             inner.innerHTML = `${currentPredType} : ${currentPredNum}`;
         }
 
-        // Animations for Win/Jackpot
         function showWinToast() {
             const toast = document.getElementById('winToast');
             toast.classList.add('show');
@@ -540,10 +542,9 @@ HTML_TEMPLATE = """
         }
 
         function showJackpotOverlay() {
-            const overlay = document.getElementById('jackpotOverlay');
-            overlay.style.display = 'flex';
+            document.getElementById('jackpotOverlay').style.display = 'flex';
             try { const jp = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"); jp.volume = 1.0; jp.play().catch(e=>{}); } catch(e) {}
-            setTimeout(() => { overlay.style.display = 'none'; }, 5000);
+            setTimeout(() => { document.getElementById('jackpotOverlay').style.display = 'none'; }, 5000);
         }
 
         function getLiveUTCPeriod() {
@@ -589,16 +590,14 @@ HTML_TEMPLATE = """
                     if (lastEvaluatedIssue && lastEvaluatedIssue !== actIssue) {
                         totalRounds++;
                         let statusRes = "LOSS";
-                        
-                        // Check Win/Loss logic
                         if (currentPredType === actType && currentPredNum === actNum && hasRevealedThisRound) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
                             showJackpotOverlay();
-                            oppLosses = 0; lastRoundWasLoss = false; // Reset skipped engine
+                            oppLosses = 0; lastRoundWasLoss = false;
                         } else if (currentPredType === actType && hasRevealedThisRound) {
                             winsCount++; statusRes = "WIN";
                             showWinToast();
-                            oppLosses = 0; lastRoundWasLoss = false; // Reset skipped engine
+                            oppLosses = 0; lastRoundWasLoss = false;
                         } else {
                             if (hasRevealedThisRound) lossesCount++; 
                             statusRes = "LOSS";
@@ -612,7 +611,6 @@ HTML_TEMPLATE = """
                             updateLogUI();
                         }
 
-                        // RESET LOCK FOR NEW ROUND
                         hasRevealedThisRound = false;
                         document.getElementById('predDisplay').className = 'prediction-display color-wait';
                         document.getElementById('predDisplay').innerHTML = `🔒 LOCKED`;
@@ -621,17 +619,16 @@ HTML_TEMPLATE = """
                     updateBdgChartUI(items);
 
                     // ==========================================
-                    // 7-ENGINE AI MASTER LOGIC
+                    // 15 MASTER ENGINES SYSTEM (Complete Integration)
                     // ==========================================
                     const pool = items.slice(0, 500);
                     const lastN = parseInt(pool[0].number, 10);
                     const lastT = lastN >= 5 ? "BIG" : "SMALL";
+                    const prevT = parseInt(pool[1].number, 10) >= 5 ? "BIG" : "SMALL";
 
-                    // Engine 1: Opposite Engine
                     let predE1 = "SKIPPED";
                     if (oppLosses < 2) predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
 
-                    // Engine 2: Statistical Engine
                     let numFreq = Array(10).fill(0);
                     let bigC = 0, smallC = 0;
                     for (let i = 0; i < pool.length - 1; i++) {
@@ -644,7 +641,6 @@ HTML_TEMPLATE = """
                     let predE2 = bigC >= smallC ? "BIG" : "SMALL";
                     let bestNumE2 = numFreq.indexOf(Math.max(...numFreq));
 
-                    // Engine 3: Psychology Engine
                     let streak = 1;
                     for(let i=1; i<pool.length; i++) {
                         let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
@@ -652,25 +648,19 @@ HTML_TEMPLATE = """
                     }
                     let predE3 = (streak >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
 
-                    // Engine 4: Pattern Engine
                     let predE4 = lastT; 
                     let t1 = parseInt(pool[1].number,10)>=5?"BIG":"SMALL";
                     let t2 = parseInt(pool[2].number,10)>=5?"BIG":"SMALL";
                     if (lastT === t1 && t1 !== t2) predE4 = (lastT === "BIG") ? "SMALL" : "BIG";
 
-                    // Engine 5: Zig-Zag Engine
                     let predE5 = lastT;
                     if (lastT !== t1 && t1 !== t2) predE5 = (lastT === "BIG") ? "SMALL" : "BIG";
 
-                    // Engine 6: Loss Grant Engine
                     let predE6 = lastT;
                     if (lastRoundWasLoss && lastMajorityType) {
-                        predE6 = (lastMajorityType === "BIG") ? "SMALL" : "BIG"; 
-                    } else {
-                        predE6 = lastT;
+                        predE6 = (lastMajorityType === "BIG") ? "SMALL" : "BIG";
                     }
 
-                    // Engine 7: Math Counting Engine (User Formula: 1+9+4-4-2)
                     let n0 = parseInt(pool[0].number); let n1 = parseInt(pool[1].number);
                     let n2 = parseInt(pool[2].number); let n3 = parseInt(pool[3].number);
                     let n4 = parseInt(pool[4].number);
@@ -678,7 +668,27 @@ HTML_TEMPLATE = """
                     if (mathVal < 0) mathVal += 10;
                     let predE7 = mathVal >= 5 ? "BIG" : "SMALL";
 
-                    // Update Engine UI Status
+                    let cons = 1;
+                    for(let i=1; i<pool.length; i++) {
+                        let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
+                        if(t === lastT) cons++; else break;
+                    }
+                    let predE8 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
+
+                    let chartEntry = CHART_MAP[lastN];
+                    let predE9 = chartEntry ? chartEntry.size : lastT;
+                    let targetN1 = chartEntry ? chartEntry.n1 : 0;
+
+                    let predE10 = (cons === 2) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
+                    let predE11 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
+                    let predE12 = (lastT === prevT) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
+
+                    let predE13 = lastT;
+                    if (lastRoundWasLoss) predE13 = (lastT === "BIG") ? "SMALL" : "BIG";
+
+                    let predE14 = (predE9 === predE8) ? predE9 : lastT;
+                    let predE15 = (mathVal >= 5) ? "BIG" : "SMALL";
+
                     updateUIEngine('uiEng1', predE1);
                     updateUIEngine('uiEng2', predE2);
                     updateUIEngine('uiEng3', predE3);
@@ -686,33 +696,36 @@ HTML_TEMPLATE = """
                     updateUIEngine('uiEng5', predE5);
                     updateUIEngine('uiEng6', predE6);
                     updateUIEngine('uiEng7', predE7);
+                    updateUIEngine('uiEng8', predE8);
+                    updateUIEngine('uiEng9', predE9);
+                    updateUIEngine('uiEng10', predE10);
+                    updateUIEngine('uiEng11', predE11);
+                    updateUIEngine('uiEng12', predE12);
+                    updateUIEngine('uiEng13', predE13);
+                    updateUIEngine('uiEng14', predE14);
+                    updateUIEngine('uiEng15', predE15);
 
-                    // 100% MAJORITY VOTING
-                    let validVotes = [predE1, predE2, predE3, predE4, predE5, predE6, predE7].filter(v => v === "BIG" || v === "SMALL");
+                    let validVotes = [predE1, predE2, predE3, predE4, predE5, predE6, predE7, predE8, predE9, predE10, predE11, predE12, predE13, predE14, predE15].filter(v => v === "BIG" || v === "SMALL");
                     let voteB = validVotes.filter(v => v === "BIG").length;
                     let voteS = validVotes.filter(v => v === "SMALL").length;
 
                     let finalPredT = (voteB >= voteS) ? "BIG" : "SMALL";
                     lastMajorityType = finalPredT;
                     
-                    // Final Target Number logic
-                    let finalPredN = mathVal; // Math engine target
+                    let finalPredN = targetN1;
                     if (bestNumE2 >= 5 && finalPredT === "BIG") finalPredN = bestNumE2;
                     if (bestNumE2 < 5 && finalPredT === "SMALL") finalPredN = bestNumE2;
-                    
                     let subPool = finalPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
-                    if (!subPool.includes(finalPredN)) finalPredN = subPool[Math.floor(Math.random()*subPool.length)];
+                    if (!subPool.includes(finalPredN)) finalPredN = mathVal;
 
                     document.getElementById('uiEngFinal').className = finalPredT === "BIG" ? "color-green" : "color-red";
                     document.getElementById('uiEngFinal').innerText = `${finalPredT} (Votes: ${voteB >= voteS ? voteB : voteS}/${validVotes.length})`;
 
-                    // Setup next round
                     currentPredType = finalPredT;
                     currentPredNum = finalPredN;
                     lastEvaluatedIssue = actIssue;
                     lastOppPred = predE1;
 
-                    // Update Metrics UI
                     document.getElementById('statTotal').innerText = totalRounds;
                     document.getElementById('statWins').innerText = winsCount;
                     document.getElementById('statLosses').innerText = lossesCount;
@@ -724,12 +737,10 @@ HTML_TEMPLATE = """
             } catch(e) { console.error("Fetch error"); }
         }
 
-        // Expanded UI Builder for Pattern Chart
         function updateBdgChartUI(items) {
             const container = document.getElementById('tirangaPatternList');
             let html = '';
-            const displayItems = items.slice(0, 40);
-            displayItems.forEach((item) => {
+            items.slice(0, 40).forEach((item) => {
                 let actualNum = parseInt(item.number, 10);
                 let circlesHtml = '';
                 for(let i=0; i<=9; i++) {
@@ -747,7 +758,6 @@ HTML_TEMPLATE = """
             container.innerHTML = html;
         }
 
-        // Expanded UI Builder for Logs
         function updateLogUI() {
             const listEl = document.getElementById('logList');
             if (historyLogs.length === 0) return;
@@ -798,10 +808,10 @@ def login():
                     doc = doc_ref.get()
                     if not doc.exists:
                         doc_ref = db.collection('trustwin_keys').document(key.lower())
-                        doc = doc_ref.get()
+                        doc = doc.get()
                     if not doc.exists:
                         doc_ref = db.collection('trustwin_keys').document(key)
-                        doc = doc_ref.get()
+                        doc = doc.get()
 
                     if doc.exists:
                         data = doc.to_dict()
@@ -840,7 +850,7 @@ def login():
                                 if hasattr(created_val, 'astimezone'):
                                     created_dt = created_val.astimezone(timezone.utc)
                                 elif isinstance(created_val, datetime):
-                                    created_dt = created_val.replace(tzinfo=timezone.utc) if created_val.tzinfo is None else created_val.astimezone(timezone.utc)
+                                    created_dt = created_val.replace(tzinfo=timezone.utc) if created_val.tzinfo is None else created_dt.astimezone(timezone.utc)
                                 else:
                                     created_dt = now_utc
 
