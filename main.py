@@ -47,22 +47,7 @@ LOGIN_TEMPLATE = """
         .input-box:focus { border-color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
         .btn { background: linear-gradient(45deg, #d4af37, #ffdf73); color: #000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
         .buy-btn { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 6px; 
-            margin-top: 18px; 
-            padding: 12px; 
-            width: 100%; 
-            background: linear-gradient(45deg, #00c853, #00ff88); 
-            color: #000; 
-            font-size: 13px; 
-            font-weight: 900; 
-            text-decoration: none; 
-            border-radius: 10px; 
-            box-sizing: border-box; 
-            animation: pulse-btn 2s infinite ease-in-out; 
-            letter-spacing: 0.5px;
+            display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 18px; padding: 12px; width: 100%; background: linear-gradient(45deg, #00c853, #00ff88); color: #000; font-size: 13px; font-weight: 900; text-decoration: none; border-radius: 10px; box-sizing: border-box; animation: pulse-btn 2s infinite ease-in-out; letter-spacing: 0.5px;
         }
         .error { color: #ff4444; font-size: 12px; margin-top: 10px; }
     </style>
@@ -78,10 +63,7 @@ LOGIN_TEMPLATE = """
         {% if error %}
         <div class="error">{{ error }}</div>
         {% endif %}
-
-        <a href="https://admin-panel-0mra.onrender.com/" target="_blank" class="buy-btn">
-            🛒 BUY NEW VIP KEY 🔑
-        </a>
+        <a href="https://admin-panel-0mra.onrender.com/" target="_blank" class="buy-btn">🛒 BUY NEW VIP KEY 🔑</a>
     </div>
 </body>
 </html>
@@ -93,7 +75,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP Oracle Radar</title>
+    <title>Trust Win VIP AI Engine</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
@@ -101,66 +83,61 @@ HTML_TEMPLATE = """
             100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); border-color: #d4af37; }
         }
         @keyframes radar-pulse {
-            0% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #00ff88, inset 0 0 10px #00ff88; }
-            50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 30px #00ff88, inset 0 0 20px #00ff88; }
-            100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #00ff88, inset 0 0 10px #00ff88; }
+            0% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #d4af37, inset 0 0 10px #d4af37; }
+            50% { transform: scale(1.03); opacity: 1; box-shadow: 0 0 30px #ffdf73, inset 0 0 20px #ffdf73; }
+            100% { transform: scale(0.95); opacity: 0.85; box-shadow: 0 0 15px #d4af37, inset 0 0 10px #d4af37; }
         }
         @keyframes casino-power-anim {
-            0% { transform: scale(1); box-shadow: 0 0 20px #00ff88; border-color: #00ff88; }
+            0% { transform: scale(1); box-shadow: 0 0 20px #ffdf73; border-color: #ffdf73; }
             30% { transform: scale(1.08); box-shadow: 0 0 35px #ffcc00; border-color: #ffcc00; }
-            60% { transform: scale(0.96); box-shadow: 0 0 45px #00e5ff; border-color: #00e5ff; }
-            100% { transform: scale(1); box-shadow: 0 0 20px #00ff88; border-color: #00ff88; }
+            60% { transform: scale(0.96); box-shadow: 0 0 45px #d4af37; border-color: #d4af37; }
+            100% { transform: scale(1); box-shadow: 0 0 20px #ffdf73; border-color: #ffdf73; }
         }
-        .pedestal-active-power {
-            animation: casino-power-anim 0.25s infinite ease-in-out !important;
-        }
+        .pedestal-active-power { animation: casino-power-anim 0.25s infinite ease-in-out !important; }
 
         @keyframes win-flash-anim {
-            0% { box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); border-color: #00ff88aa; }
+            0% { box-shadow: 0 0 20px rgba(0,255,136,0.25); border-color: #00ff88aa; }
             20% { box-shadow: 0 0 50px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; transform: scale(1.02); }
-            40% { box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); border-color: #00ff88aa; transform: scale(1); }
+            40% { box-shadow: 0 0 20px rgba(0,255,136,0.25); border-color: #00ff88aa; transform: scale(1); }
             60% { box-shadow: 0 0 50px #00ff88, inset 0 0 40px #00ff88; border-color: #00ff88; transform: scale(1.02); }
-            100% { box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); border-color: #00ff88aa; transform: scale(1); }
+            100% { box-shadow: 0 0 20px rgba(0,255,136,0.25); border-color: #00ff88aa; transform: scale(1); }
         }
-        .win-flash-active {
-            animation: win-flash-anim 1.5s ease-in-out !important;
-        }
+        .win-flash-active { animation: win-flash-anim 1.5s ease-in-out !important; }
 
         @keyframes pulse-warn {
             0% { transform: scale(1); box-shadow: 0 0 20px #ff3300; }
             50% { transform: scale(1.03); box-shadow: 0 0 40px #ff6600; }
             100% { transform: scale(1); box-shadow: 0 0 20px #ff3300; }
         }
-
-        @keyframes bg-glow-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
         @keyframes text-flash {
             0% { opacity: 0.4; }
-            50% { opacity: 1; color: #00ff88; text-shadow: 0 0 15px #00ff88; }
+            50% { opacity: 1; color: #ffdf73; text-shadow: 0 0 15px #ffdf73; }
             100% { opacity: 0.4; }
         }
+
+        /* NEW ANIMATIONS: WIN TOAST & JACKPOT */
+        .win-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #00ff88, #009955); color: #000; padding: 12px 40px; border-radius: 30px; font-weight: 900; font-size: 18px; z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 5px 25px rgba(0,255,136,0.8); border: 2px solid #fff; letter-spacing: 1px; }
+        .win-toast.show { top: 30px; }
+        
+        .jackpot-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; flex-direction: column; }
+        .jackpot-text { font-size: 45px; font-weight: 900; background: linear-gradient(45deg, #ffcc00, #fff, #ffcc00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px #ffcc00; animation: casino-power-anim 0.5s infinite; text-align: center; line-height: 1.2; }
+        .jackpot-sub { color: #fff; font-size: 18px; margin-top: 15px; font-weight: bold; letter-spacing: 2px; }
+
         * { box-sizing: border-box; }
         body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; padding: 4px; overflow: hidden; position: fixed; width: 100%; height: 100%; }
         .container { max-width: 420px; height: 100%; margin: auto; background: linear-gradient(145deg, #121212, #181818); border: 2px solid #d4af37; border-radius: 16px; padding: 6px 6px 52px 6px; animation: glow 4s infinite ease-in-out; position: relative; display: flex; flex-direction: column; overflow: hidden; }
         
         .top-banner { background: #181818; border: 1px solid #333; border-radius: 10px; padding: 5px; margin-bottom: 3px; flex-shrink: 0; }
         .vip-header { display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: bold; color: #d4af37; border-bottom: 1px solid #282828; padding-bottom: 2px; margin-bottom: 2px; }
-        
         .main-title { font-size: 14px; font-weight: bold; background: linear-gradient(45deg, #d4af37, #fff, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
-        .sub-engine { font-size: 8px; color: #888; margin-top: 1px; }
+        .sub-engine { font-size: 8px; color: #ffdf73; margin-top: 1px; font-weight: bold; }
         .time-row { display: flex; justify-content: space-between; font-size: 9px; color: #aaa; margin-top: 2px; padding: 0 4px; }
 
         .huge-last-result { background: linear-gradient(145deg, #161616, #202020); border: 2px solid #ffdf73; border-radius: 8px; padding: 4px; margin: 3px 0; box-shadow: 0 0 10px rgba(255,223,115,0.2); flex-shrink: 0; }
         .huge-last-title { font-size: 8px; color: #ffdf73; font-weight: bold; letter-spacing: 1px; }
-        .huge-last-val { font-size: 14px; font-weight: bold; color: #00ff88; text-shadow: 0 0 8px rgba(0,255,136,0.5); }
+        .huge-last-val { font-size: 14px; font-weight: bold; text-shadow: 0 0 8px rgba(255,255,255,0.3); }
 
         .host-box { background: #161616; border: 1px solid #333; border-radius: 6px; padding: 3px 6px; margin: 2px 0; display: flex; justify-content: space-between; align-items: center; font-size: 8px; flex-shrink: 0; }
-        .host-left { text-align: left; }
-        .host-right { text-align: right; color: #00ff88; font-weight: bold; }
-
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 2px 0; flex-shrink: 0; }
         .stat-card { background: #181818; border: 1px solid #333; padding: 3px 1px; border-radius: 6px; }
         .stat-card .lbl { font-size: 7px; color: #888; }
@@ -174,13 +151,12 @@ HTML_TEMPLATE = """
         .tab-content { display: none; height: 100%; flex-direction: column; flex-grow: 1; overflow: hidden; }
         .tab-content.active { display: flex; }
 
-        .terminal-split-container { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 3px; flex-grow: 1; min-height: 0; }
+        .terminal-split-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5px; margin-top: 3px; flex-grow: 1; min-height: 0; }
         
+        /* GOLDEN PREDICTOR BOX */
         .predictor-box { 
-            background: linear-gradient(135deg, #071510, #130026, #001f18, #180d00);
-            background-size: 400% 400%;
-            animation: bg-glow-shift 10s infinite ease;
-            border: 1px solid #00ff88aa; 
+            background: linear-gradient(135deg, #1a1400, #261e00, #140f00);
+            border: 2px solid #d4af37; 
             border-radius: 10px; 
             padding: 5px; 
             display: flex; 
@@ -188,60 +164,35 @@ HTML_TEMPLATE = """
             align-items: center; 
             justify-content: space-between; 
             position: relative; 
-            box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 15px rgba(155,89,182,0.3); 
-            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(212,175,55,0.25), inset 0 0 15px rgba(255,223,115,0.1); 
         }
-        .wings-banner { background: linear-gradient(90deg, transparent, #00ff8833, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 6px; color: #ffcc00; font-size: 8px; font-weight: bold; letter-spacing: 1px; width: 92%; margin-top: 1px; }
+        .wings-banner { background: linear-gradient(90deg, transparent, #d4af3755, transparent); border: 1px solid #ffcc00; border-radius: 12px; padding: 3px 6px; color: #ffcc00; font-size: 8px; font-weight: bold; letter-spacing: 1px; width: 92%; margin-top: 1px; }
+        .glowing-pedestal { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #d4af37; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; transition: 0.2s; }
+        .leaf-icon { font-size: 22px; margin-bottom: 2px; }
+        .prediction-display { font-size: 16px; font-weight: 900; text-shadow: 0 0 10px rgba(255,255,255,0.3); text-align: center; }
+        .analyzing-text { font-size: 8px; font-weight: bold; color: #ffdf73; animation: text-flash 0.5s infinite; line-height: 1.2; text-align: center; }
         
-        .glowing-pedestal { width: 115px; height: 115px; border-radius: 50%; border: 3px solid #00ff88; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,255,136,0.35) 0%, transparent 75%); animation: radar-pulse 3s infinite ease-in-out; margin: auto; cursor: pointer; transition: 0.2s; }
-        .leaf-icon { font-size: 18px; color: #00ff88; margin-bottom: 2px; }
-        .prediction-display { font-size: 15px; font-weight: 900; color: #00ff88; text-shadow: 0 0 10px #00ff88; text-align: center; }
-        .analyzing-text { font-size: 8px; font-weight: bold; color: #00ff88; animation: text-flash 0.5s infinite; line-height: 1.2; text-align: center; }
-        .winner-badge { background: linear-gradient(45deg, #111, #222); border: 1px solid #ffcc00; color: #ffcc00; border-radius: 8px; padding: 3px 8px; font-size: 8px; font-weight: bold; width: 85%; margin-bottom: 2px; }
-
-        .calc-box { background: #0a0d12; border: 1px solid #00a2ff66; border-radius: 10px; padding: 5px; display: flex; flex-direction: column; justify-content: space-between; font-size: 9px; }
-        .calc-header { display: flex; justify-content: space-between; align-items: center; color: #00a2ff; font-weight: bold; font-size: 8px; margin-bottom: 2px; }
-        .calc-display { background: #000; border: 1px solid #333; border-radius: 4px; color: #00ff88; font-size: 13px; font-weight: bold; text-align: right; padding: 4px 6px; margin-bottom: 4px; min-height: 24px; word-break: break-all; }
+        /* NEW GOLDEN ENGINE STATUS BOX (Replaced Calculator) */
+        .engine-status-box { background: linear-gradient(145deg, #1c1500, #0a0800); border: 2px solid #d4af37; border-radius: 10px; padding: 6px; display: flex; flex-direction: column; box-shadow: inset 0 0 15px rgba(212,175,55,0.1); }
+        .engine-header { color: #ffcc00; font-weight: bold; font-size: 9px; text-align: center; border-bottom: 1px solid #d4af3755; padding-bottom: 4px; margin-bottom: 4px; letter-spacing: 1px; }
+        .engine-row { display: flex; justify-content: space-between; align-items: center; background: #000; border: 1px solid #333; border-radius: 4px; padding: 4px 6px; margin-bottom: 3px; font-size: 8px; }
+        .engine-row span { color: #aaa; }
+        .final-vote { background: linear-gradient(90deg, #3a2a00, #000); border-color: #ffdf73; padding: 6px; font-size: 9px; margin-top: auto; }
         
-        .calc-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 4px; }
-        .calc-btn { border-radius: 4px; padding: 6px 0; font-size: 11px; font-weight: 900; cursor: pointer; border: 1px solid #333; transition: 0.1s; }
-        .calc-btn:active { transform: scale(0.92); }
-        .calc-btn.n1 { background: #ff336622; border-color: #ff3366; color: #ff6688; }
-        .calc-btn.n2 { background: #00e5ff22; border-color: #00e5ff; color: #33efff; }
-        .calc-btn.n3 { background: #ffcc0022; border-color: #ffcc00; color: #ffdd33; }
-        .calc-btn.n4 { background: #a855f722; border-color: #a855f7; color: #c084fc; }
-        .calc-btn.n5 { background: #22c55e22; border-color: #22c55e; color: #4ade80; }
-        .calc-btn.n6 { background: #f9731622; border-color: #f97316; color: #fb923c; }
-        .calc-btn.n7 { background: #ec489922; border-color: #ec4899; color: #f472b6; }
-        .calc-btn.n8 { background: #3b82f622; border-color: #3b82f6; color: #60a5fa; }
-        .calc-btn.n9 { background: #eab30822; border-color: #eab308; color: #fde047; }
-        .calc-btn.n0 { background: #06b6d422; border-color: #06b6d4; color: #22d3ee; }
-        .calc-btn.dot { background: #64748b22; border-color: #64748b; color: #94a3b8; }
-        .calc-btn.clr { background: #ef444422; border-color: #ef4444; color: #f87171; }
-        
-        .save-invest-btn { background: linear-gradient(90deg, #00cc66, #00ff88); color: #000; border: none; border-radius: 5px; padding: 5px; font-size: 10px; font-weight: 900; cursor: pointer; margin-bottom: 4px; width: 100%; box-shadow: 0 0 10px rgba(0,255,136,0.5); }
-
-        .summary-two-grid { display: flex; flex-direction: column; gap: 4px; width: 100%; margin-top: 2px; }
-        .big-summary-btn { background: #0b1522; border: 1.5px solid #00a2ff; border-radius: 6px; padding: 4px 6px; text-align: center; box-shadow: 0 0 8px rgba(0,162,255,0.25); }
-        .big-summary-btn.win-card { border-color: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.25); }
-        .big-summary-btn.loss-card { border-color: #ff4444; box-shadow: 0 0 8px rgba(255,68,68,0.25); }
-        .big-sum-title { font-size: 7px; font-weight: 900; color: #aaa; letter-spacing: 0.5px; }
-        .big-sum-val { font-size: 12px; font-weight: 900; color: #fff; margin-top: 1px; }
-
-        .reset-btn { background: #161e2b; color: #00a2ff; border: 1px solid #00a2ff66; border-radius: 4px; padding: 3px; font-size: 8px; font-weight: bold; cursor: pointer; margin-top: 3px; width: 100%; }
+        /* MULTIPLE COLORS */
+        .color-green { color: #00ff88 !important; text-shadow: 0 0 8px rgba(0,255,136,0.6) !important; }
+        .color-red { color: #ff4444 !important; text-shadow: 0 0 8px rgba(255,68,68,0.6) !important; }
+        .color-violet { color: #c084fc !important; text-shadow: 0 0 8px rgba(192,132,252,0.6) !important; }
+        .color-wait { color: #ffcc00 !important; }
 
         .chart-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 270px); position: relative; padding-right: 2px; margin-top: 3px; }
         .tiranga-row { background: #161616; border: 1px solid #333; border-radius: 5px; padding: 3px; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; }
         .tiranga-period { color: #aaa; font-family: monospace; font-size: 7px; text-align: left; width: 60px; flex-shrink: 0; }
         .tiranga-nums { display: flex; gap: 2px; align-items: center; justify-content: space-between; flex-grow: 1; padding: 0 2px; }
-        
         .t-num-circle { width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: bold; background: #1f1f1f; color: #555; border: 1px solid #333; }
         .t-num-circle.c-violet { background: #9b59b6 !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 4px #9b59b6; }
         .t-num-circle.c-green { background: #2ecc71 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 4px #2ecc71; }
         .t-num-circle.c-red { background: #e74c3c !important; color: #fff !important; border-color: #fff !important; box-shadow: 0 0 4px #e74c3c; }
-
-        .badge-big-bdg { background: #f1c40f; color: #000; padding: 1px 3px; border-radius: 2px; font-weight: bold; font-size: 7px; width: 15px; text-align: center; flex-shrink: 0; }
-        .badge-small-bdg { background: #3498db; color: #fff; padding: 1px 3px; border-radius: 2px; font-weight: bold; font-size: 7px; width: 15px; text-align: center; flex-shrink: 0; }
 
         .log-list { flex-grow: 1; overflow-y: auto; text-align: left; font-size: 8px; margin-top: 3px; }
         .log-item { background: #161616; border: 1px solid #333; border-radius: 5px; padding: 4px; margin-bottom: 3px; display: flex; justify-content: space-between; align-items: center; }
@@ -259,7 +210,16 @@ HTML_TEMPLATE = """
     </style>
 </head>
 <body>
-    <!-- KEY EXPIRY WARNING MODAL OVERLAY -->
+    <!-- WIN TOAST -->
+    <div id="winToast" class="win-toast">🏆 WINNER 🏆</div>
+
+    <!-- JACKPOT OVERLAY -->
+    <div id="jackpotOverlay" class="jackpot-overlay" onclick="this.style.display='none'">
+        <div class="jackpot-text">🎉 MEGA JACKPOT 🎉</div>
+        <div class="jackpot-sub">TAP TO CLOSE</div>
+    </div>
+
+    <!-- KEY EXPIRY WARNING MODAL -->
     <div id="keyWarnModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); z-index:9999; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
         <div style="background:linear-gradient(145deg, #220000, #3d0000); border:3px solid #ff3300; border-radius:20px; padding:20px; text-align:center; max-width:320px; box-shadow:0 0 35px #ff3300; animation:pulse-warn 1.5s infinite;">
             <div style="font-size:38px; margin-bottom:5px;">⚠️</div>
@@ -276,7 +236,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine" id="engineStatusMsg" style="font-weight:bold; color:#00ff88;">300-RESULTS SEQUENTIAL PATTERN ENGINE</div>
+            <div class="sub-engine" id="engineStatusMsg">5-ENGINE MASTER AI ENSEMBLE</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -285,18 +245,7 @@ HTML_TEMPLATE = """
 
         <div class="huge-last-result">
             <div class="huge-last-title">🔥 LIVE WINGO RESULT TRACKER 🔥</div>
-            <div class="huge-last-val" id="hugeResultVal">Connecting to Worker...</div>
-        </div>
-
-        <div class="host-box">
-            <div class="host-left">
-                <div style="font-size:7px; color:#888;">PERIOD SYNC</div>
-                <div style="font-size:8px; color:#ccc;">UTC CLOCK STRICT +1</div>
-            </div>
-            <div class="host-right" style="color:#00ff88;">
-                <div style="font-size:7px; color:#888;">ZIGZAG LINE</div>
-                <div>PERFECT</div>
-            </div>
+            <div class="huge-last-val" id="hugeResultVal">Connecting to Database...</div>
         </div>
 
         <div class="stats-grid">
@@ -336,53 +285,18 @@ HTML_TEMPLATE = """
                     <div class="wings-banner">👑 CHECK RESULT 👑</div>
                     
                     <div class="glowing-pedestal" onclick="revealPrediction()">
-                        <div class="leaf-icon">🍁</div>
-                        <div class="prediction-display" id="predDisplay">🔒 LOCKED</div>
+                        <div class="leaf-icon">👑</div>
+                        <div class="prediction-display color-wait" id="predDisplay">🔒 LOCKED</div>
                     </div>
-
-                    <div class="winner-badge">👑 WINNER 👑</div>
                 </div>
 
-                <div class="calc-box">
-                    <div class="calc-header">
-                        <span>🧮 AMOUNT CALCULATOR</span>
-                        <span style="cursor:pointer;" onclick="clearCalc()" title="Clear">🔄</span>
-                    </div>
-                    <div class="calc-display" id="calcDisplay">0</div>
-
-                    <div class="calc-pad">
-                        <button class="calc-btn n7" onclick="pressCalc('7')">7</button>
-                        <button class="calc-btn n8" onclick="pressCalc('8')">8</button>
-                        <button class="calc-btn n9" onclick="pressCalc('9')">9</button>
-
-                        <button class="calc-btn n4" onclick="pressCalc('4')">4</button>
-                        <button class="calc-btn n5" onclick="pressCalc('5')">5</button>
-                        <button class="calc-btn n6" onclick="pressCalc('6')">6</button>
-
-                        <button class="calc-btn n1" onclick="pressCalc('1')">1</button>
-                        <button class="calc-btn n2" onclick="pressCalc('2')">2</button>
-                        <button class="calc-btn n3" onclick="pressCalc('3')">3</button>
-
-                        <button class="calc-btn n0" onclick="pressCalc('0')">0</button>
-                        <button class="calc-btn dot" onclick="pressCalc('.')">.</button>
-                        <button class="calc-btn clr" onclick="clearCalc()">⌫</button>
-                    </div>
-
-                    <button class="save-invest-btn" onclick="saveInvestAmount()">💾 SAVE INVEST AMOUNT</button>
-
-                    <div class="summary-two-grid">
-                        <div class="big-summary-btn">
-                            <span class="big-sum-title">🎰 BET AMOUNT</span>
-                            <div class="big-sum-val" style="color:#00a2ff;" id="betAmountVal">₹ 0</div>
-                        </div>
-
-                        <div class="big-summary-btn win-card" id="winCardBox">
-                            <span class="big-sum-title" id="winCardTitle">🏆 WIN AMOUNT (NET)</span>
-                            <div class="big-sum-val" style="color:#00ff88;" id="winAmountVal">₹ 0</div>
-                        </div>
-                    </div>
-
-                    <button class="reset-btn" onclick="resetSummary()">🔄 RESET STATS</button>
+                <div class="engine-status-box">
+                    <div class="engine-header">🤖 LIVE ENGINES (500-DATA)</div>
+                    <div class="engine-row"><span>Opposite:</span> <b id="uiEng1">--</b></div>
+                    <div class="engine-row"><span>Statistical:</span> <b id="uiEng2">--</b></div>
+                    <div class="engine-row"><span>Psychology:</span> <b id="uiEng3">--</b></div>
+                    <div class="engine-row"><span>Pattern:</span> <b id="uiEng4">--</b></div>
+                    <div class="engine-row final-vote"><span>FINAL (MAJORITY):</span> <b id="uiEngFinal" style="font-size:10px;">--</b></div>
                 </div>
             </div>
         </div>
@@ -391,9 +305,8 @@ HTML_TEMPLATE = """
         <div id="tab-pattern" class="tab-content">
             <div style="background:#141414; border:1px solid #333; border-radius:8px; padding:5px; display:block; height:100%;">
                 <div style="font-size:9px; color:#aaa; text-align:center; margin-bottom:2px;">📊 BDG CHART & ZIGZAG TREND</div>
-                <div style="font-size:8px; color:#777; text-align:center; margin-bottom:3px;">EXACT COLOR MAPPING & ALIGNED LINE</div>
                 <div class="chart-scroll-area" id="tirangaPatternList">
-                    <div style="text-align:center; color:#777; padding:20px;">Loading BDG Chart Data...</div>
+                    <div style="text-align:center; color:#777; padding:20px;">Loading Data...</div>
                 </div>
             </div>
         </div>
@@ -415,7 +328,6 @@ HTML_TEMPLATE = """
                 <div style="background:#161616; border-radius:6px; padding:6px; text-align:left; font-size:9px;">
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Loss Chain Trigger:</span> <b id="statLossChain" style="color:#ffcc00;">0 (Safe)</b></p>
                 </div>
             </div>
         </div>
@@ -428,7 +340,6 @@ HTML_TEMPLATE = """
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server Connected: <span>Cloud Dedicated Node</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:#ff4444; color:#000; text-decoration:none; padding:5px; border-radius:4px; font-weight:bold;">LOGOUT ACCOUNT</a>
                 </div>
@@ -436,21 +347,11 @@ HTML_TEMPLATE = """
         </div>
 
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="switchTab('terminal', this)">
-                <div>📈</div>TERMINAL
-            </div>
-            <div class="nav-item" onclick="switchTab('pattern', this)">
-                <div>📊</div>PATTERN
-            </div>
-            <div class="nav-item" onclick="switchTab('log', this)">
-                <div>📜</div>LOG
-            </div>
-            <div class="nav-item" onclick="switchTab('stats', this)">
-                <div>📊</div>STATS
-            </div>
-            <div class="nav-item" onclick="switchTab('profile', this)">
-                <div>👑</div>PROFILE
-            </div>
+            <div class="nav-item active" onclick="switchTab('terminal', this)"><div>📈</div>TERMINAL</div>
+            <div class="nav-item" onclick="switchTab('pattern', this)"><div>📊</div>PATTERN</div>
+            <div class="nav-item" onclick="switchTab('log', this)"><div>📜</div>LOG</div>
+            <div class="nav-item" onclick="switchTab('stats', this)"><div>📊</div>STATS</div>
+            <div class="nav-item" onclick="switchTab('profile', this)"><div>👑</div>PROFILE</div>
         </div>
     </div>
 
@@ -458,455 +359,300 @@ HTML_TEMPLATE = """
         const WORKER_URL = "https://wingo-cloudflare-worker.anishanisha143love.workers.dev";
         const KEY_EXPIRE_ISO = "{{ session.get('key_expire_iso', '') }}";
 
-        let totalRounds = 0;
-        let winsCount = 0;
-        let lossesCount = 0;
-        let jackpotsCount = 0;
+        let totalRounds = 0, winsCount = 0, lossesCount = 0, jackpotsCount = 0;
         let historyLogs = [];
         let isRevealed = false;
-        let currentPredType = "WAITING";
-        let currentPredNum = 0;
+        
         let lastEvaluatedIssue = null;
-
         let lockedPredType = null;
         let lockedPredNum = null;
+        
+        // Final live calculation
+        let currentPredType = "WAITING";
+        let currentPredNum = 0;
 
-        let consecutiveLosses = 0;
+        // Engine states
+        let oppLosses = 0; 
+        let lastOppPred = null; 
 
-        let warnTriggered120 = false;
-        let warnTriggered90 = false;
-        let warnTriggered60 = false;
-        let warnTriggered30 = false;
+        // Warning Flags
+        let warnTriggered120 = false, warnTriggered90 = false, warnTriggered60 = false, warnTriggered30 = false;
 
-        let calcExpr = "";
-        let totalInvested = 0;
-        let totalPayout = 0;
-        let lastRoundBet = 0;
-        let netWinAmount = 0;
-
-        // BROWSER AUDIO UNLOCK LOGIC
+        // Audio Unlock
         let audioUnlocked = false;
         function unlockAudio() {
             if (audioUnlocked) return;
             try {
                 const dummyAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
-                dummyAudio.volume = 0.01;
-                dummyAudio.play().then(() => {
-                    audioUnlocked = true;
-                }).catch(e => console.log("Audio unlock catch:", e));
-
-                if ('speechSynthesis' in window) {
-                    const emptyUtterance = new SpeechSynthesisUtterance("");
-                    window.speechSynthesis.speak(emptyUtterance);
-                }
+                dummyAudio.volume = 0.01; dummyAudio.play().then(() => { audioUnlocked = true; }).catch(e => {});
             } catch(e) {}
         }
         document.addEventListener('click', unlockAudio, { once: true });
         document.addEventListener('touchstart', unlockAudio, { once: true });
 
-        function pressCalc(val) {
-            if (calcExpr === "0") calcExpr = "";
-            calcExpr += val;
-            document.getElementById('calcDisplay').innerText = calcExpr || "0";
+        // Animations functions
+        function showWinToast() {
+            const toast = document.getElementById('winToast');
+            toast.classList.add('show');
+            try {
+                const winAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
+                winAudio.volume = 1.0; winAudio.play().catch(e => {});
+            } catch(e) {}
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
-        function clearCalc() {
-            calcExpr = "";
-            document.getElementById('calcDisplay').innerText = "0";
+        function showJackpotOverlay() {
+            const overlay = document.getElementById('jackpotOverlay');
+            overlay.style.display = 'flex';
+            try {
+                const jpAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
+                jpAudio.volume = 1.0; jpAudio.play().catch(e => {});
+            } catch(e) {}
+            // auto hide after 5 secs
+            setTimeout(() => { overlay.style.display = 'none'; }, 5000);
         }
 
-        function saveInvestAmount() {
-            let amt = parseFloat(calcExpr);
-            if (!isNaN(amt) && amt > 0) {
-                lastRoundBet = amt;
-                document.getElementById('betAmountVal').innerText = `₹ ${Math.round(lastRoundBet)}`;
-                clearCalc();
-            }
-        }
-
-        function updateWinCardUI() {
-            const cardBox = document.getElementById('winCardBox');
-            const cardVal = document.getElementById('winAmountVal');
-            
-            if (netWinAmount < 0) {
-                cardBox.className = "big-summary-btn loss-card";
-                cardVal.style.color = "#ff4444";
-                cardVal.innerText = `- ₹ ${Math.abs(Math.round(netWinAmount))}`;
-            } else {
-                cardBox.className = "big-summary-btn win-card";
-                cardVal.style.color = "#00ff88";
-                cardVal.innerText = `+ ₹ ${Math.round(netWinAmount)}`;
-            }
-        }
-
-        function resetSummary() {
-            totalInvested = 0;
-            totalPayout = 0;
-            lastRoundBet = 0;
-            netWinAmount = 0;
-            document.getElementById('betAmountVal').innerText = "₹ 0";
-            updateWinCardUI();
-            clearCalc();
-        }
-
-        // MP3 CHIME & TEXT-TO-SPEECH VOICE ALERT
         function playWarningBeep() {
             try {
                 const alertAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
-                alertAudio.volume = 1.0;
-                alertAudio.play().catch(e => console.log("Audio play deferred"));
+                alertAudio.volume = 1.0; alertAudio.play().catch(e => {});
             } catch(e) {}
         }
 
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                try {
-                    window.speechSynthesis.cancel();
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = 0.90;
-                    utterance.pitch = 1.0;
-                    utterance.lang = 'en-US';
-                    window.speechSynthesis.speak(utterance);
-                } catch(e) {}
-            }
-        }
-
-        function showWarnModal(msg, speakMsg) {
+        function showWarnModal(msg) {
             const modal = document.getElementById('keyWarnModal');
             const body = document.getElementById('warnBody');
             if (modal && body) {
-                body.innerText = msg;
-                modal.style.display = 'flex';
-                setTimeout(() => {
-                    dismissWarnModal();
-                }, 4500);
+                body.innerText = msg; modal.style.display = 'flex';
+                setTimeout(() => { dismissWarnModal(); }, 4500);
             }
-            
             playWarningBeep();
-
-            if (speakMsg) {
-                setTimeout(() => {
-                    speakText(speakMsg);
-                }, 400);
-            }
         }
+        function dismissWarnModal() { document.getElementById('keyWarnModal').style.display = 'none'; }
 
-        function dismissWarnModal() {
-            const modal = document.getElementById('keyWarnModal');
-            if (modal) modal.style.display = 'none';
+        function getColorClass(num, type) {
+            if (num === 0 || num === 5) return 'color-violet';
+            if (type === 'BIG') return 'color-green';
+            if (type === 'SMALL') return 'color-red';
+            return 'color-wait';
         }
 
         function updateRealKeyTimer() {
             let labelText = "VIP ACTIVE";
             if (KEY_EXPIRE_ISO && KEY_EXPIRE_ISO !== "" && KEY_EXPIRE_ISO !== "None") {
                 let formattedIso = KEY_EXPIRE_ISO.replace(" ", "T");
-                if (!formattedIso.endsWith("Z") && !formattedIso.includes("+")) {
-                    formattedIso += "Z";
-                }
+                if (!formattedIso.endsWith("Z") && !formattedIso.includes("+")) formattedIso += "Z";
                 const expireDate = new Date(formattedIso);
-                
-                if (isNaN(expireDate.getTime())) {
-                    document.getElementById('keyTimer').innerText = labelText;
-                    return;
-                }
-
-                const now = new Date();
-                const diffMs = expireDate.getTime() - now.getTime();
+                if (isNaN(expireDate.getTime())) return;
+                const diffMs = expireDate.getTime() - new Date().getTime();
                 const diffSecs = Math.floor(diffMs / 1000);
 
-                if (diffSecs <= 120 && diffSecs > 105 && !warnTriggered120) {
-                    warnTriggered120 = true;
-                    showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 2 MINUTES!", "Warning! Your VIP key expires in 2 minutes.");
-                } else if (diffSecs <= 90 && diffSecs > 75 && !warnTriggered90) {
-                    warnTriggered90 = true;
-                    showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 1 MINUTE 30 SECONDS!", "Warning! Your VIP key expires in 1 minute 30 seconds.");
-                } else if (diffSecs <= 60 && diffSecs > 45 && !warnTriggered60) {
-                    warnTriggered60 = true;
-                    showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 1 MINUTE!", "Warning! Your VIP key expires in 1 minute.");
-                } else if (diffSecs <= 30 && diffSecs > 0 && !warnTriggered30) {
-                    warnTriggered30 = true;
-                    showWarnModal("🚨 FINAL WARNING: YOUR VIP KEY EXPIRES IN 30 SECONDS!", "Alert! Final warning, your VIP key expires in 30 seconds.");
-                }
+                if (diffSecs <= 120 && diffSecs > 105 && !warnTriggered120) { warnTriggered120 = true; showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 2 MINUTES!"); }
+                else if (diffSecs <= 90 && diffSecs > 75 && !warnTriggered90) { warnTriggered90 = true; showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 1 MINUTE 30 SECONDS!"); }
+                else if (diffSecs <= 60 && diffSecs > 45 && !warnTriggered60) { warnTriggered60 = true; showWarnModal("⚠️ WARNING: YOUR VIP KEY EXPIRES IN 1 MINUTE!"); }
+                else if (diffSecs <= 30 && diffSecs > 0 && !warnTriggered30) { warnTriggered30 = true; showWarnModal("🚨 FINAL WARNING: YOUR VIP KEY EXPIRES IN 30 SECONDS!"); }
 
-                if (diffMs <= -10000) {
-                    labelText = "EXPIRED";
-                    document.getElementById('keyTimer').innerText = labelText;
-                    window.location.href = '/logout';
-                    return;
-                } else if (diffMs <= 0) {
-                    labelText = "00m 00s";
-                } else {
+                if (diffMs <= -10000) { window.location.href = '/logout'; return; }
+                else if (diffMs <= 0) { labelText = "00m 00s"; }
+                else {
                     const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
                     const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
-
-                    if (days > 0) {
-                        labelText = `${days}d ${hours}h ${mins}m`;
-                    } else if (hours > 0) {
-                        labelText = `${hours}h ${mins}m ${secs}s`;
-                    } else {
-                        labelText = `${mins}m ${secs}s`;
-                    }
+                    if (days > 0) labelText = `${days}d ${hours}h ${mins}m`;
+                    else if (hours > 0) labelText = `${hours}h ${mins}m ${secs}s`;
+                    else labelText = `${mins}m ${secs}s`;
                 }
-            } else {
-                labelText = "UNLIMITED VIP";
-            }
+            } else { labelText = "UNLIMITED VIP"; }
             document.getElementById('keyTimer').innerText = labelText;
             const profTimer = document.getElementById('profileKeyTimer');
             if (profTimer) profTimer.innerText = labelText;
         }
-        setInterval(updateRealKeyTimer, 1000);
-        updateRealKeyTimer();
+        setInterval(updateRealKeyTimer, 1000); updateRealKeyTimer();
 
         function switchTab(tabName, element) {
-            playClickSound();
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator(), gainNode = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
+                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.connect(gainNode); gainNode.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+            } catch(e) {}
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabName).classList.add('active');
             element.classList.add('active');
         }
 
-        function playClickSound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
-                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.2);
-            } catch(e) {}
-        }
-
-        function triggerWinEffect() {
-            try {
-                const winAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
-                winAudio.volume = 1.0;
-                winAudio.play().catch(e => console.log("Audio play deferred"));
-            } catch(e) {}
-
-            const pBox = document.getElementById('predictorBox');
-            if (pBox) {
-                pBox.classList.add('win-flash-active');
-                setTimeout(() => pBox.classList.remove('win-flash-active'), 1500);
-            }
-        }
-
         function revealPrediction() {
             const pedestal = document.querySelector('.glowing-pedestal');
             const inner = document.getElementById('predDisplay');
-
             try {
                 const dtAudio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
-                dtAudio.volume = 1.0;
-                dtAudio.play().catch(e => console.log("Audio play deferred:", e));
+                dtAudio.volume = 1.0; dtAudio.play().catch(e => {});
             } catch(e) {}
-
             if (pedestal) pedestal.classList.add('pedestal-active-power');
-
+            inner.className = 'prediction-display color-wait';
             inner.innerHTML = '<div class="analyzing-text">TRUST AI<br>ANALYSING...</div>';
 
             setTimeout(() => {
                 if (pedestal) pedestal.classList.remove('pedestal-active-power');
                 isRevealed = true;
-                
                 lockedPredType = currentPredType;
                 lockedPredNum = currentPredNum;
-
+                
+                let colClass = getColorClass(lockedPredNum, lockedPredType);
+                inner.className = `prediction-display ${colClass}`;
                 inner.innerHTML = `${lockedPredType} : ${lockedPredNum}`;
             }, 1000);
         }
 
         function getLiveUTCPeriod() {
             const now = new Date();
-            const yyyy = now.getUTCFullYear();
-            const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
-            const dd = String(now.getUTCDate()).padStart(2, '0');
-            const hours = now.getUTCHours();
-            const mins = now.getUTCMinutes();
-            const totalMins = hours * 60 + mins;
+            const totalMins = now.getUTCHours() * 60 + now.getUTCMinutes();
             const serial = 10000 + totalMins + 1;
-            return `${yyyy}${mm}${dd}1000${serial}`;
+            return `${now.getUTCFullYear()}${String(now.getUTCMonth()+1).padStart(2,'0')}${String(now.getUTCDate()).padStart(2,'0')}1000${serial}`;
         }
 
-        async function fetch300Results() {
+        async function fetch500Results() {
             let combinedList = [];
-            try {
-                const res1 = await fetch(WORKER_URL + "?pageSize=100&pageNo=1");
-                const data1 = await res1.json();
-                if (data1 && data1.data && data1.data.list) combinedList = combinedList.concat(data1.data.list);
-            } catch(e) {}
-
-            if (combinedList.length === 0) {
+            // Fetch up to 5 pages for 500 results
+            for(let i=1; i<=5; i++) {
                 try {
-                    const resDef = await fetch(WORKER_URL);
-                    const dataDef = await resDef.json();
-                    if (dataDef && dataDef.data && dataDef.data.list) combinedList = combinedList.concat(dataDef.data.list);
-                } catch(e) {}
-            }
-
-            if (combinedList.length > 0 && combinedList.length < 300) {
-                try {
-                    const res2 = await fetch(WORKER_URL + "?pageSize=100&pageNo=2");
-                    const data2 = await res2.json();
-                    if (data2 && data2.data && data2.data.list) combinedList = combinedList.concat(data2.data.list);
-                    const res3 = await fetch(WORKER_URL + "?pageSize=100&pageNo=3");
-                    const data3 = await res3.json();
-                    if (data3 && data3.data && data3.data.list) combinedList = combinedList.concat(data3.data.list);
-                } catch(e) {}
+                    const res = await fetch(WORKER_URL + `?pageSize=100&pageNo=${i}`);
+                    const data = await res.json();
+                    if (data && data.data && data.data.list) combinedList = combinedList.concat(data.data.list);
+                } catch(e) { break; }
             }
             return combinedList;
         }
 
+        function updateUIEngine(elId, val) {
+            const el = document.getElementById(elId);
+            if (!el) return;
+            if (val === "BIG") { el.innerText = "BIG"; el.className = "color-green"; }
+            else if (val === "SMALL") { el.innerText = "SMALL"; el.className = "color-red"; }
+            else { el.innerText = "SKIPPED"; el.className = "color-wait"; }
+        }
+
         async function fetchLotteryData() {
             try {
-                const items = await fetch300Results();
+                const items = await fetch500Results();
                 if (items.length > 0) {
                     const latest = items[0];
                     const actIssue = String(latest.issueNumber);
                     const actNum = parseInt(latest.number, 10);
                     const actType = actNum >= 5 ? "BIG" : "SMALL";
 
-                    document.getElementById('hugeResultVal').innerText = `${actType} : ${actNum} (Period: ${actIssue.slice(-4)})`;
+                    const hrEl = document.getElementById('hugeResultVal');
+                    hrEl.innerText = `${actType} : ${actNum} (Period: ${actIssue.slice(-4)})`;
+                    hrEl.className = `huge-last-val ${getColorClass(actNum, actType)}`;
 
                     if (lastEvaluatedIssue && lastEvaluatedIssue !== actIssue) {
                         totalRounds++;
                         let statusRes = "LOSS";
-                        
                         let evalType = lockedPredType || currentPredType;
                         let evalNum = (lockedPredNum !== null) ? lockedPredNum : currentPredNum;
 
+                        // Opp Engine check
+                        if (lastOppPred) {
+                            if (lastOppPred === actType) oppLosses = 0;
+                            else oppLosses++;
+                        }
+
                         if (evalType === actType && evalNum === actNum) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
-                            consecutiveLosses = 0;
-                            triggerWinEffect();
+                            showJackpotOverlay();
                         } else if (evalType === actType) {
                             winsCount++; statusRes = "WIN";
-                            consecutiveLosses = 0;
-                            triggerWinEffect();
+                            showWinToast();
                         } else {
                             lossesCount++; statusRes = "LOSS";
-                            consecutiveLosses++;
                         }
 
-                        if (lastRoundBet > 0) {
-                            totalInvested += lastRoundBet;
-                            if (statusRes === "WIN" || statusRes === "JACKPOT") {
-                                let totalReturnVal = lastRoundBet * 1.96;
-                                totalPayout += totalReturnVal;
-                            }
-                            netWinAmount = totalPayout - totalInvested;
-
-                            lastRoundBet = 0;
-                            document.getElementById('betAmountVal').innerText = "₹ 0";
-                            updateWinCardUI();
-                        }
-
-                        historyLogs.unshift({
-                            issue: actIssue,
-                            pred: `${evalType} : ${evalNum}`,
-                            act_type: actType,
-                            act_num: actNum,
-                            status: statusRes
-                        });
+                        historyLogs.unshift({ issue: actIssue, pred: `${evalType} : ${evalNum}`, act_type: actType, act_num: actNum, status: statusRes });
                         if (historyLogs.length > 50) historyLogs.pop();
                         updateLogUI();
 
-                        lockedPredType = null;
-                        lockedPredNum = null;
-                        isRevealed = false;
+                        lockedPredType = null; lockedPredNum = null; isRevealed = false;
+                        document.getElementById('predDisplay').className = 'prediction-display color-wait';
                         document.getElementById('predDisplay').innerHTML = `🔒 LOCKED`;
                     }
 
                     updateBdgChartUI(items);
 
                     // ==========================================
-                    // SMART HYBRID PREDICTION ENGINE (300-RESULTS PRIORITY)
+                    // 5-ENGINE MASTER ENSEMBLE SYSTEM
                     // ==========================================
-                    const analysisPool = items.slice(0, 300);
-                    const lastNum = parseInt(items[0].number, 10);
-                    const lastType = lastNum >= 5 ? "BIG" : "SMALL";
+                    const analysisPool = items.slice(0, 500);
+                    const lastN = parseInt(items[0].number, 10);
+                    const lastT = lastN >= 5 ? "BIG" : "SMALL";
 
-                    let nextNumFreq = {};
-                    for (let i = 0; i <= 9; i++) nextNumFreq[i] = 0;
-                    let nextBigCount = 0;
-                    let nextSmallCount = 0;
-                    let transitionMatches = 0;
+                    // Engine 1: Opposite Engine
+                    let predE1 = null;
+                    if (oppLosses < 2) {
+                        predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
+                    }
 
+                    // Engine 2: Statistical / Markov Engine
+                    let numFreq = Array(10).fill(0);
+                    let bigC = 0, smallC = 0;
                     for (let i = 0; i < analysisPool.length - 1; i++) {
-                        let histPrevNum = parseInt(analysisPool[i + 1].number, 10);
-                        let histNextNum = parseInt(analysisPool[i].number, 10);
-                        if (histPrevNum === lastNum) {
-                            transitionMatches++;
-                            nextNumFreq[histNextNum]++;
-                            if (histNextNum >= 5) nextBigCount++; else nextSmallCount++;
+                        if (parseInt(analysisPool[i + 1].number, 10) === lastN) {
+                            let nxt = parseInt(analysisPool[i].number, 10);
+                            numFreq[nxt]++;
+                            if (nxt >= 5) bigC++; else smallC++;
                         }
                     }
+                    let predE2 = bigC >= smallC ? "BIG" : "SMALL";
+                    let bestNumE2 = numFreq.indexOf(Math.max(...numFreq));
 
-                    let basePredT = lastType;
+                    // Engine 3: Psychology / Momentum
+                    let streak = 1;
+                    for(let i=1; i<10 && i<analysisPool.length; i++) {
+                        let t = parseInt(analysisPool[i].number,10)>=5 ? "BIG" : "SMALL";
+                        if(t === lastT) streak++; else break;
+                    }
+                    let predE3 = (streak >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
+
+                    // Engine 4: Smart Pattern (Zigzag / Blocks)
+                    let predE4 = lastT; 
+                    if (analysisPool.length >= 3) {
+                        let t0 = lastT;
+                        let t1 = parseInt(analysisPool[1].number,10)>=5?"BIG":"SMALL";
+                        let t2 = parseInt(analysisPool[2].number,10)>=5?"BIG":"SMALL";
+                        if (t0 !== t1 && t1 !== t2) predE4 = (t0 === "BIG") ? "SMALL" : "BIG"; // Zigzag
+                        else if (t0 === t1 && t1 !== t2) predE4 = (t0 === "BIG") ? "SMALL" : "BIG"; // Break 2-streak
+                    }
+
+                    // UPDATE UI FOR ENGINES
+                    updateUIEngine('uiEng1', predE1);
+                    updateUIEngine('uiEng2', predE2);
+                    updateUIEngine('uiEng3', predE3);
+                    updateUIEngine('uiEng4', predE4);
+
+                    // VOTING MECHANISM
+                    let validVotes = [predE1, predE2, predE3, predE4].filter(v => v !== null);
+                    let voteB = validVotes.filter(v => v === "BIG").length;
+                    let voteS = validVotes.filter(v => v === "SMALL").length;
+
+                    let finalPredT = (voteB >= voteS) ? "BIG" : "SMALL";
                     
-                    if (transitionMatches >= 2) {
-                        basePredT = nextBigCount >= nextSmallCount ? "BIG" : "SMALL";
-                    } else {
-                        let overallBig = 0, overallSmall = 0;
-                        analysisPool.forEach(item => {
-                            let n = parseInt(item.number, 10);
-                            if (!isNaN(n)) { if (n >= 5) overallBig++; else overallSmall++; }
-                        });
-                        if (overallBig > overallSmall + 10) basePredT = "SMALL";
-                        else if (overallSmall > overallBig + 10) basePredT = "BIG";
-                        else basePredT = lastType;
-                    }
+                    // Assign Target Number
+                    let subPool = finalPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
+                    let finalPredN = bestNumE2;
+                    if (!subPool.includes(finalPredN)) finalPredN = subPool[Math.floor(Math.random()*subPool.length)];
 
-                    let predT = basePredT;
-                    let engineStatusEl = document.getElementById('engineStatusMsg');
-                    let statLossChainEl = document.getElementById('statLossChain');
+                    updateUIEngine('uiEngFinal', finalPredT);
+                    document.getElementById('uiEngFinal').innerText = `${finalPredT} (${finalPredN})`;
 
-                    // BALANCED SHORT-TERM TREND OVERRIDE
-                    if (consecutiveLosses >= 2) {
-                        const recentTypes = analysisPool.slice(0, 6).map(x => parseInt(x.number, 10) >= 5 ? "BIG" : "SMALL");
-                        
-                        let streak = 1;
-                        for (let k = 1; k < recentTypes.length; k++) {
-                            if (recentTypes[k] === recentTypes[0]) streak++; else break;
-                        }
-                        let isZigzag = (recentTypes[0] !== recentTypes[1] && recentTypes[1] !== recentTypes[2]);
-
-                        if (streak >= 3) {
-                            predT = recentTypes[0]; // Dragon Follow
-                            if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE DRAGON TREND DETECTED";
-                        } else if (isZigzag) {
-                            predT = recentTypes[0] === "BIG" ? "SMALL" : "BIG"; // Zigzag Follow
-                            if (engineStatusEl) engineStatusEl.innerHTML = "⚡ LIVE ZIGZAG TREND DETECTED";
-                        } else {
-                            predT = basePredT; // Keep Primary 300-Result
-                            if (engineStatusEl) engineStatusEl.innerHTML = "300-RESULTS SEQUENTIAL PATTERN ENGINE";
-                        }
-                        if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Balanced)`;
-                    } else {
-                        if (engineStatusEl) engineStatusEl.innerHTML = "300-RESULTS SEQUENTIAL PATTERN ENGINE";
-                        if (statLossChainEl) statLossChainEl.innerText = `${consecutiveLosses} (Safe)`;
-                        predT = basePredT;
-                    }
-
-                    let subPool = predT === "BIG" ? [5, 6, 7, 8, 9] : [0, 1, 2, 3, 4];
-                    if (transitionMatches >= 2) {
-                        subPool.sort((a, b) => nextNumFreq[b] - nextNumFreq[a]);
-                    } else {
-                        subPool.sort(() => Math.random() - 0.5);
-                    }
-                    let predN = subPool[0];
-
-                    currentPredType = predT;
-                    currentPredNum = predN;
+                    currentPredType = finalPredT;
+                    currentPredNum = finalPredN;
                     lastEvaluatedIssue = actIssue;
+                    lastOppPred = predE1;
 
+                    // Update Stats
                     document.getElementById('statTotal').innerText = totalRounds;
                     document.getElementById('statWins').innerText = winsCount;
                     document.getElementById('statLosses').innerText = lossesCount;
@@ -916,9 +662,7 @@ HTML_TEMPLATE = """
                     let acc = totalRounds > 0 ? ((winsCount / totalRounds) * 100).toFixed(1) : "0.0";
                     document.getElementById('statAccuracy').innerText = acc + "%";
                 }
-            } catch(e) {
-                console.error("Fetch error:", e);
-            }
+            } catch(e) { console.error("Fetch error:", e); }
         }
 
         function updateBdgChartUI(items) {
@@ -929,10 +673,6 @@ HTML_TEMPLATE = """
             displayItems.forEach((item, index) => {
                 let issueNum = String(item.issueNumber);
                 let actualNum = parseInt(item.number, 10);
-                let isBig = actualNum >= 5;
-                let badgeClass = isBig ? 'badge-big-bdg' : 'badge-small-bdg';
-                let badgeText = isBig ? 'B' : 'S';
-
                 let circlesHtml = '';
                 for(let i=0; i<=9; i++) {
                     let isActive = (i === actualNum);
@@ -942,54 +682,20 @@ HTML_TEMPLATE = """
                         else if ([1, 3, 7, 9].includes(i)) colorClass = 'c-green';
                         else colorClass = 'c-red';
                     }
-                    circlesHtml += `<div class="t-num-circle ${isActive ? 'active ' + colorClass : ''}" id="circle-${index}-${i}">${i}</div>`;
+                    circlesHtml += `<div class="t-num-circle ${isActive ? 'active ' + colorClass : ''}">${i}</div>`;
                 }
-
-                html += `
-                <div class="tiranga-row" style="position:relative; z-index:2;">
+                html += `<div class="tiranga-row" style="position:relative; z-index:2;">
                     <div class="tiranga-period">${issueNum.slice(-4)}</div>
                     <div class="tiranga-nums">${circlesHtml}</div>
-                    <div class="tiranga-badge ${badgeClass}">${badgeText}</div>
                 </div>`;
             });
             html += '</div>';
             container.innerHTML = html;
-
-            setTimeout(() => {
-                drawZigzagLine();
-            }, 50);
-        }
-
-        function drawZigzagLine() {
-            const svg = document.getElementById('zigzagSvg');
-            const wrapper = document.getElementById('chartWrapper');
-            if (!svg || !wrapper) return;
-            
-            svg.setAttribute('width', wrapper.scrollWidth);
-            svg.setAttribute('height', wrapper.scrollHeight);
-            
-            let points = [];
-            const activeCircles = wrapper.querySelectorAll('.t-num-circle.active');
-            
-            activeCircles.forEach(circle => {
-                const rect = circle.getBoundingClientRect();
-                const wrapperRect = wrapper.getBoundingClientRect();
-                let x = rect.left + rect.width / 2 - wrapperRect.left + wrapper.scrollLeft;
-                let y = rect.top + rect.height / 2 - wrapperRect.top + wrapper.scrollTop;
-                points.push(`${x},${y}`);
-            });
-            
-            if (points.length > 1) {
-                svg.innerHTML = `<polyline points="${points.join(' ')}" fill="none" stroke="#e74c3c" stroke-width="2" stroke-linejoin="round" />`;
-            }
         }
 
         function updateLogUI() {
             const listEl = document.getElementById('logList');
-            if (historyLogs.length === 0) {
-                listEl.innerHTML = '<div style="text-align:center; color:#777; padding:20px;">Waiting for real round completion...</div>';
-                return;
-            }
+            if (historyLogs.length === 0) return;
             let html = '';
             historyLogs.forEach(log => {
                 let badge = log.status === 'WIN' ? '<span class="badge-win">WIN ✅</span>' :
@@ -1010,42 +716,22 @@ HTML_TEMPLATE = """
 
         function updateClock() {
             const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let seconds = now.getSeconds();
+            let hours = now.getHours(), minutes = now.getMinutes(), seconds = now.getSeconds();
             let ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            document.getElementById('currentTime').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
-            
-            let d = String(now.getDate()).padStart(2, '0');
-            let m = String(now.getMonth() + 1).padStart(2, '0');
-            let y = now.getFullYear();
-            document.getElementById('currentDate').innerText = `${d}/${m}/${y}`;
+            hours = hours % 12; hours = hours ? hours : 12;
+            document.getElementById('currentTime').innerText = `${hours}:${minutes<10?'0'+minutes:minutes}:${seconds<10?'0'+seconds:seconds} ${ampm}`;
+            document.getElementById('currentDate').innerText = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
         function updateTimer() {
             const now = new Date();
-            let sec = now.getSeconds();
-            let remaining = 60 - sec;
-            if (remaining > 60) remaining = 60;
-            let formatted = remaining < 10 ? '0' + remaining : remaining;
-            document.getElementById('timer').innerText = `00:${formatted}`;
-            
+            let remaining = 60 - now.getSeconds();
+            document.getElementById('timer').innerText = `00:${remaining<10?'0'+remaining:remaining}`;
             document.getElementById('periodVal').innerText = getLiveUTCPeriod();
-
-            if (remaining === 59 || remaining === 0) {
-                fetchLotteryData();
-            }
+            if (remaining === 59 || remaining === 0) fetchLotteryData();
         }
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        document.getElementById('periodVal').innerText = getLiveUTCPeriod();
+        setInterval(updateTimer, 1000); updateTimer();
         fetchLotteryData();
         setInterval(fetchLotteryData, 3000);
     </script>
@@ -1129,7 +815,6 @@ def login():
                                 error = '❌ Ye Trust Win Key Expire ho chuki hai!'
                             else:
                                 expire_iso = expire_dt.strftime('%Y-%m-%dT%H:%M:%SZ') if expire_dt else None
-
                                 session['authenticated'] = True
                                 session['active_key'] = key.upper()
                                 session['key_expire_iso'] = expire_iso
