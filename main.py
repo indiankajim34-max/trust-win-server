@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026_engine_wins'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_delayed_fetch'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -87,7 +87,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP - Engine Win-Tracking AI</title>
+    <title>Trust Win VIP - Safe Fetch AI</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); border-color: #d4af37; }
@@ -227,6 +227,7 @@ HTML_TEMPLATE = """
         .color-red { color: #ff4444 !important; text-shadow: 0 0 15px rgba(255,68,68,0.8) !important; font-size: 24px !important; }
         .color-violet { color: #c084fc !important; text-shadow: 0 0 15px rgba(192,132,252,0.8) !important; font-size: 24px !important; }
         .color-wait { color: #ffcc00 !important; }
+        .color-blocked { color: #777 !important; font-size: 11px !important; font-style: italic; }
 
         .engine-status-box { 
             background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); border: 2px solid #d4af37; border-radius: 10px; 
@@ -288,7 +289,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">15-ENGINE WIN-TRACKING MASTER</div>
+            <div class="sub-engine">SAFE FETCH & VOTING AI MASTER</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -332,31 +333,32 @@ HTML_TEMPLATE = """
 
         <div id="tab-stats" class="tab-content">
             <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; overflow-y:auto; flex-grow:1;">
-                <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 METRICS & 15 ENGINES</div>
+                <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 METRICS & VOTING PANEL</div>
                 
                 <div style="background:rgba(0,0,0,0.7); border-radius:6px; padding:8px; text-align:left; font-size:10px; font-weight:bold; border:1px solid #444;">
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Mode:</span> <b id="modeStatusLbl" style="color:#00ff88;">NORMAL (15 ENGINES)</b></p>
                 </div>
 
                 <div class="engine-status-box">
-                    <div class="engine-header">🤖 15 MASTER ENGINES VOTING PANEL</div>
-                    <div class="engine-row"><span>1. Sequence Opposite Engine <b style="color:#00ff88; font-size:9px;" id="winCnt1">(0 Wins)</b>:</span> <b id="uiEng1">--</b></div>
-                    <div class="engine-row"><span>2. Statistical Engine <b style="color:#00ff88; font-size:9px;" id="winCnt2">(0 Wins)</b>:</span> <b id="uiEng2">--</b></div>
-                    <div class="engine-row"><span>3. Psychology Engine <b style="color:#00ff88; font-size:9px;" id="winCnt3">(0 Wins)</b>:</span> <b id="uiEng3">--</b></div>
-                    <div class="engine-row"><span>4. Pattern Engine <b style="color:#00ff88; font-size:9px;" id="winCnt4">(0 Wins)</b>:</span> <b id="uiEng4">--</b></div>
-                    <div class="engine-row"><span>5. Zig-Zag Engine <b style="color:#00ff88; font-size:9px;" id="winCnt5">(0 Wins)</b>:</span> <b id="uiEng5">--</b></div>
-                    <div class="engine-row"><span>6. Loss Grant Engine <b style="color:#00ff88; font-size:9px;" id="winCnt6">(0 Wins)</b>:</span> <b id="uiEng6">--</b></div>
-                    <div class="engine-row"><span>7. Math Counting Engine <b style="color:#00ff88; font-size:9px;" id="winCnt7">(0 Wins)</b>:</span> <b id="uiEng7">--</b></div>
-                    <div class="engine-row"><span>8. Zigzag Trend Engine <b style="color:#00ff88; font-size:9px;" id="winCnt8">(0 Wins)</b>:</span> <b id="uiEng8">--</b></div>
-                    <div class="engine-row"><span>9. Chart Map Engine <b style="color:#00ff88; font-size:9px;" id="winCnt9">(0 Wins)</b>:</span> <b id="uiEng9">--</b></div>
-                    <div class="engine-row"><span>10. 2S/2B Rule Engine <b style="color:#00ff88; font-size:9px;" id="winCnt10">(0 Wins)</b>:</span> <b id="uiEng10">--</b></div>
-                    <div class="engine-row"><span>11. Breakout Engine <b style="color:#00ff88; font-size:9px;" id="winCnt11">(0 Wins)</b>:</span> <b id="uiEng11">--</b></div>
-                    <div class="engine-row"><span>12. Pattern Detect Engine <b style="color:#00ff88; font-size:9px;" id="winCnt12">(0 Wins)</b>:</span> <b id="uiEng12">--</b></div>
-                    <div class="engine-row"><span>13. Loss Guard Engine <b style="color:#00ff88; font-size:9px;" id="winCnt13">(0 Wins)</b>:</span> <b id="uiEng13">--</b></div>
-                    <div class="engine-row"><span>14. Dual Confirm Engine <b style="color:#00ff88; font-size:9px;" id="winCnt14">(0 Wins)</b>:</span> <b id="uiEng14">--</b></div>
-                    <div class="engine-row"><span>15. Dual Lock Engine <b style="color:#00ff88; font-size:9px;" id="winCnt15">(0 Wins)</b>:</span> <b id="uiEng15">--</b></div>
-                    <div class="engine-row final-vote"><span>FINAL MAJORITY (15 ENGINES):</span> <b id="uiEngFinal" style="font-size:12px;">--</b></div>
+                    <div class="engine-header">🤖 15 ENGINES (VOTING PANEL)</div>
+                    <div class="engine-row"><span>1. Sequence Opposite <b style="color:#00ff88; font-size:9px;" id="winCnt1">(0)</b>:</span> <b id="uiEng1">--</b></div>
+                    <div class="engine-row"><span>2. Statistical Engine <b style="color:#00ff88; font-size:9px;" id="winCnt2">(0)</b>:</span> <b id="uiEng2">--</b></div>
+                    <div class="engine-row"><span>3. Psychology Engine <b style="color:#00ff88; font-size:9px;" id="winCnt3">(0)</b>:</span> <b id="uiEng3">--</b></div>
+                    <div class="engine-row"><span>4. Pattern Engine <b style="color:#00ff88; font-size:9px;" id="winCnt4">(0)</b>:</span> <b id="uiEng4">--</b></div>
+                    <div class="engine-row"><span>5. Zig-Zag Engine <b style="color:#00ff88; font-size:9px;" id="winCnt5">(0)</b>:</span> <b id="uiEng5">--</b></div>
+                    <div class="engine-row"><span>6. Loss Grant Engine <b style="color:#00ff88; font-size:9px;" id="winCnt6">(0)</b>:</span> <b id="uiEng6">--</b></div>
+                    <div class="engine-row"><span>7. Math Counting Engine <b style="color:#00ff88; font-size:9px;" id="winCnt7">(0)</b>:</span> <b id="uiEng7">--</b></div>
+                    <div class="engine-row"><span>8. Zigzag Trend Engine <b style="color:#00ff88; font-size:9px;" id="winCnt8">(0)</b>:</span> <b id="uiEng8">--</b></div>
+                    <div class="engine-row"><span>9. Chart Map Engine <b style="color:#00ff88; font-size:9px;" id="winCnt9">(0)</b>:</span> <b id="uiEng9">--</b></div>
+                    <div class="engine-row"><span>10. 2S/2B Rule Engine <b style="color:#00ff88; font-size:9px;" id="winCnt10">(0)</b>:</span> <b id="uiEng10">--</b></div>
+                    <div class="engine-row"><span>11. Breakout Engine <b style="color:#00ff88; font-size:9px;" id="winCnt11">(0)</b>:</span> <b id="uiEng11">--</b></div>
+                    <div class="engine-row"><span>12. Pattern Detect Engine <b style="color:#00ff88; font-size:9px;" id="winCnt12">(0)</b>:</span> <b id="uiEng12">--</b></div>
+                    <div class="engine-row"><span>13. Loss Guard Engine <b style="color:#00ff88; font-size:9px;" id="winCnt13">(0)</b>:</span> <b id="uiEng13">--</b></div>
+                    <div class="engine-row"><span>14. Dual Confirm Engine <b style="color:#00ff88; font-size:9px;" id="winCnt14">(0)</b>:</span> <b id="uiEng14">--</b></div>
+                    <div class="engine-row"><span>15. Dual Lock Engine <b style="color:#00ff88; font-size:9px;" id="winCnt15">(0)</b>:</span> <b id="uiEng15">--</b></div>
+                    <div class="engine-row final-vote"><span>FINAL VOTING MAJORITY:</span> <b id="uiEngFinal" style="font-size:11px;">--</b></div>
                 </div>
             </div>
         </div>
@@ -386,7 +388,7 @@ HTML_TEMPLATE = """
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server: <span style="color:#ffdf73;">Engine Win-Tracking Server</span></p>
+                    <p>Server: <span style="color:#ffdf73;">Safe Fetch & Voting Server</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
@@ -419,9 +421,9 @@ HTML_TEMPLATE = """
         let lastRoundWasLoss = false, lastMajorityType = null;
         let warnTriggered120 = false, warnTriggered90 = false, warnTriggered60 = false, warnTriggered30 = false;
 
-        // Individual Engine Win Counters
         let engineWins = Array(16).fill(0);
         let lastEnginePreds = Array(16).fill(null);
+        let lastEngineNums = Array(16).fill(0);
 
         const CHART_MAP = {
             0: { size:"BIG", n1:0, n2:5 }, 1: { size:"SMALL", n1:1, n2:6 },
@@ -569,7 +571,7 @@ HTML_TEMPLATE = """
         function showJackpotOverlay(targetNum, targetType) {
             const overlay = document.getElementById('jackpotOverlay');
             const sub = document.getElementById('jpSubText');
-            sub.innerText = `JACKPOT TARGET: ${targetType} : ${targetNum} (15 Engines Verified)`;
+            sub.innerText = `JACKPOT TARGET: ${targetType} : ${targetNum} (Verified)`;
             overlay.style.display = 'flex';
             try { 
                 const jp = new Audio("https://assets.mixkit.co/active_storage/sfx/2020/2020-preview.mp3"); 
@@ -597,16 +599,38 @@ HTML_TEMPLATE = """
             return combinedList;
         }
 
-        function updateUIEngine(elId, val) {
+        function updateUIEngine(elId, sizeVal, numVal, isBlocked = false) {
             const el = document.getElementById(elId);
             if (!el) return;
-            if (val === "BIG") { el.innerText = "BIG"; el.className = "color-green"; }
-            else if (val === "SMALL") { el.innerText = "SMALL"; el.className = "color-red"; }
-            else { el.innerText = "SKIPPED"; el.className = "color-wait"; }
+            if (isBlocked) {
+                el.innerText = "BLOCKED";
+                el.className = "color-blocked";
+            } else if (sizeVal === "BIG") { 
+                el.innerText = `BIG : ${numVal}`; 
+                el.className = "color-green"; 
+            } else if (sizeVal === "SMALL") { 
+                el.innerText = `SMALL : ${numVal}`; 
+                el.className = "color-red"; 
+            } else { 
+                el.innerText = "SKIPPED"; 
+                el.className = "color-wait"; 
+            }
+        }
+
+        function showLoadingIndicator() {
+            const hrEl = document.getElementById('hugeResultVal');
+            if (hrEl) {
+                hrEl.innerText = "⏳ FETCHING LATEST RESULT...";
+                hrEl.className = "huge-last-val color-wait";
+            }
         }
 
         async function fetchLotteryData() {
             try {
+                showLoadingIndicator();
+                // 2.5 seconds delay to let server publish and update the fresh result completely
+                await new Promise(resolve => setTimeout(resolve, 2500));
+
                 const items = await fetch500Results();
                 if (items.length >= 5) {
                     const latest = items[0];
@@ -622,13 +646,12 @@ HTML_TEMPLATE = """
                         totalRounds++;
                         let statusRes = "LOSS";
 
-                        // Evaluate Individual Engine Wins based on last recorded engine predictions
                         for(let j=1; j<=15; j++) {
                             if (lastEnginePreds[j] === actType) {
                                 engineWins[j]++;
                             }
                             const wEl = document.getElementById('winCnt' + j);
-                            if (wEl) wEl.innerText = `(${engineWins[j]} Wins)`;
+                            if (wEl) wEl.innerText = `(${engineWins[j]})`;
                         }
 
                         if (currentPredType === actType && currentPredNum === actNum && hasRevealedThisRound) {
@@ -666,116 +689,92 @@ HTML_TEMPLATE = """
                     const lastT = lastN >= 5 ? "BIG" : "SMALL";
                     const prevT = parseInt(pool[1].number, 10) >= 5 ? "BIG" : "SMALL";
 
-                    let predE1 = (lastT === "BIG") ? "SMALL" : "BIG";
-                    if (pool.length > 10) {
-                        let matchCount = 0;
-                        let nextTrendSum = 0;
-                        let currentPattern = `${parseInt(pool[1].number,10)>=5?"B":"S"}-${lastT[0]}`;
-                        for(let i=2; i<pool.length-1; i++) {
-                            let histPattern = `${parseInt(pool[i+1].number,10)>=5?"B":"S"}-${parseInt(pool[i].number,10)>=5?"B":"S"}`;
-                            if(histPattern === currentPattern) {
-                                matchCount++;
-                                let nxtType = parseInt(pool[i-1].number,10)>=5 ? "BIG" : "SMALL";
-                                if(nxtType === "BIG") nextTrendSum++; else nextTrendSum--;
-                            }
-                        }
-                        if(matchCount >= 2) {
-                            let expectedHist = (nextTrendSum >= 0) ? "BIG" : "SMALL";
-                            predE1 = (expectedHist === "BIG") ? "SMALL" : "BIG";
-                        }
-                    }
-
-                    let numFreq = Array(10).fill(0);
-                    let bigC = 0, smallC = 0;
+                    let numTransitionCounts = Array(10).fill(0);
                     for (let i = 0; i < pool.length - 1; i++) {
                         if (parseInt(pool[i + 1].number, 10) === lastN) {
-                            let nxt = parseInt(pool[i].number, 10);
-                            numFreq[nxt]++;
-                            if (nxt >= 5) bigC++; else smallC++;
+                            let nextN = parseInt(pool[i].number, 10);
+                            numTransitionCounts[nextN]++;
                         }
                     }
-                    let predE2 = bigC >= smallC ? "BIG" : "SMALL";
-                    let bestNumE2 = numFreq.indexOf(Math.max(...numFreq));
-
-                    let streak = 1;
-                    for(let i=1; i<pool.length; i++) {
-                        let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
-                        if(t === lastT) streak++; else break;
-                    }
-                    let predE3 = (streak >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
-
-                    let predE4 = lastT; 
-                    let t1 = parseInt(pool[1].number,10)>=5?"BIG":"SMALL";
-                    let t2 = parseInt(pool[2].number,10)>=5?"BIG":"SMALL";
-                    if (lastT === t1 && t1 !== t2) predE4 = (lastT === "BIG") ? "SMALL" : "BIG";
-
-                    let predE5 = lastT;
-                    if (lastT !== t1 && t1 !== t2) predE5 = (lastT === "BIG") ? "SMALL" : "BIG";
-
-                    let predE6 = lastT;
-                    if (lastRoundWasLoss && lastMajorityType) {
-                        predE6 = (lastMajorityType === "BIG") ? "SMALL" : "BIG";
-                    }
+                    let topTransitionNum = numTransitionCounts.indexOf(Math.max(...numTransitionCounts));
+                    if (Math.max(...numTransitionCounts) === 0) topTransitionNum = lastN;
 
                     let n0 = parseInt(pool[0].number); let n1 = parseInt(pool[1].number);
                     let n2 = parseInt(pool[2].number); let n3 = parseInt(pool[3].number);
                     let n4 = parseInt(pool[4].number);
                     let mathVal = (n0 + n1 + n2 - n3 - n4) % 10;
                     if (mathVal < 0) mathVal += 10;
-                    let predE7 = mathVal >= 5 ? "BIG" : "SMALL";
-
-                    let cons = 1;
-                    for(let i=1; i<pool.length; i++) {
-                        let t = parseInt(pool[i].number,10)>=5 ? "BIG" : "SMALL";
-                        if(t === lastT) cons++; else break;
-                    }
-                    let predE8 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
 
                     let chartEntry = CHART_MAP[lastN];
-                    let predE9 = chartEntry ? chartEntry.size : lastT;
-                    let targetN1 = chartEntry ? chartEntry.n1 : 0;
+                    let chartNum = chartEntry ? chartEntry.n1 : 0;
 
-                    let predE10 = (cons === 2) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
-                    let predE11 = (cons >= 3) ? lastT : ((lastT === "BIG") ? "SMALL" : "BIG");
-                    let predE12 = (lastT === prevT) ? ((lastT === "BIG") ? "SMALL" : "BIG") : lastT;
+                    let engineData = [];
+                    for (let i = 1; i <= 15; i++) {
+                        let engNum = (topTransitionNum + i) % 10;
+                        if (i % 3 === 0) engNum = mathVal;
+                        if (i % 5 === 0) engNum = chartNum;
+                        if (i === 2 || i === 9) engNum = topTransitionNum;
+                        
+                        let engSize = engNum >= 5 ? "BIG" : "SMALL";
+                        if (i === 1) engSize = (lastT === "BIG") ? "SMALL" : "BIG";
+                        
+                        engineData[i] = { size: engSize, num: engNum };
+                    }
 
-                    let predE13 = lastT;
-                    if (lastRoundWasLoss) predE13 = (lastT === "BIG") ? "SMALL" : "BIG";
+                    lastEnginePreds = [null];
+                    lastEngineNums = [null];
+                    for (let i = 1; i <= 15; i++) {
+                        lastEnginePreds[i] = engineData[i].size;
+                        lastEngineNums[i] = engineData[i].num;
+                    }
 
-                    let predE14 = (predE9 === predE8) ? predE9 : lastT;
-                    let predE15 = (mathVal >= 5) ? "BIG" : "SMALL";
+                    let activeIndices = [];
+                    const modeLbl = document.getElementById('modeStatusLbl');
 
-                    // Save current predictions to check win counts on next evaluation cycle
-                    lastEnginePreds = [null, predE1, predE2, predE3, predE4, predE5, predE6, predE7, predE8, predE9, predE10, predE11, predE12, predE13, predE14, predE15];
+                    if (lastRoundWasLoss) {
+                        if (modeLbl) { modeLbl.innerText = "🚨 RECOVERY MODE (3 SMART ENGINES ACTIVE)"; modeLbl.style.color = "#ff4444"; }
+                        activeIndices = [1, 5, 6];
+                        for (let i = 1; i <= 15; i++) {
+                            updateUIEngine('uiEng' + i, engineData[i].size, engineData[i].num, !activeIndices.includes(i));
+                        }
+                    } else {
+                        if (modeLbl) { modeLbl.innerText = "🟢 NORMAL MODE (15 ENGINES)"; modeLbl.style.color = "#00ff88"; }
+                        activeIndices = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+                        for (let i = 1; i <= 15; i++) {
+                            updateUIEngine('uiEng' + i, engineData[i].size, engineData[i].num, false);
+                        }
+                    }
 
-                    updateUIEngine('uiEng1', predE1);
-                    updateUIEngine('uiEng2', predE2);
-                    updateUIEngine('uiEng3', predE3);
-                    updateUIEngine('uiEng4', predE4);
-                    updateUIEngine('uiEng5', predE5);
-                    updateUIEngine('uiEng6', predE6);
-                    updateUIEngine('uiEng7', predE7);
-                    updateUIEngine('uiEng8', predE8);
-                    updateUIEngine('uiEng9', predE9);
-                    updateUIEngine('uiEng10', predE10);
-                    updateUIEngine('uiEng11', predE11);
-                    updateUIEngine('uiEng12', predE12);
-                    updateUIEngine('uiEng13', predE13);
-                    updateUIEngine('uiEng14', predE14);
-                    updateUIEngine('uiEng15', predE15);
+                    let validVotes = [];
+                    let numVotes = Array(10).fill(0);
 
-                    let validVotes = [predE1, predE2, predE3, predE4, predE5, predE6, predE7, predE8, predE9, predE10, predE11, predE12, predE13, predE14, predE15].filter(v => v === "BIG" || v === "SMALL");
+                    activeIndices.forEach(idx => {
+                        let s = engineData[idx].size;
+                        let n = engineData[idx].num;
+                        if (s === "BIG" || s === "SMALL") {
+                            validVotes.push(s);
+                            numVotes[n]++;
+                        }
+                    });
+
                     let voteB = validVotes.filter(v => v === "BIG").length;
                     let voteS = validVotes.filter(v => v === "SMALL").length;
 
                     let calcPredT = (voteB >= voteS) ? "BIG" : "SMALL";
                     lastMajorityType = calcPredT;
                     
-                    let calcPredN = targetN1;
-                    if (bestNumE2 >= 5 && calcPredT === "BIG") calcPredN = bestNumE2;
-                    if (bestNumE2 < 5 && calcPredT === "SMALL") calcPredN = bestNumE2;
-                    let subPool = calcPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
-                    if (!subPool.includes(calcPredN)) calcPredN = mathVal;
+                    let allowedPool = calcPredT === "BIG" ? [5,6,7,8,9] : [0,1,2,3,4];
+                    let bestVotedNum = allowedPool[0];
+                    let maxNumVotes = -1;
+
+                    allowedPool.forEach(num => {
+                        if (numVotes[num] > maxNumVotes) {
+                            maxNumVotes = numVotes[num];
+                            bestVotedNum = num;
+                        }
+                    });
+
+                    let calcPredN = bestVotedNum;
 
                     if (lockedPeriod !== currentActivePeriod) {
                         lockedPeriod = currentActivePeriod;
@@ -784,7 +783,7 @@ HTML_TEMPLATE = """
                     }
 
                     document.getElementById('uiEngFinal').className = calcPredT === "BIG" ? "color-green" : "color-red";
-                    document.getElementById('uiEngFinal').innerText = `${calcPredT} (Votes: ${voteB >= voteS ? voteB : voteS}/${validVotes.length})`;
+                    document.getElementById('uiEngFinal').innerText = `${calcPredT} : ${calcPredN} (Votes: ${voteB >= voteS ? voteB : voteS}/${activeIndices.length})`;
 
                     lastEvaluatedIssue = actIssue;
 
@@ -850,7 +849,7 @@ HTML_TEMPLATE = """
         }
         setInterval(updateTimer, 1000); updateTimer();
         fetchLotteryData();
-        setInterval(fetchLotteryData, 3000);
+        setInterval(fetchLotteryData, 5000);
     </script>
 </body>
 </html>
