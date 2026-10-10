@@ -137,6 +137,16 @@ HTML_TEMPLATE = """
         }
         .win-toast.show { top: 30px; }
 
+        .jackpot-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 10001; align-items: center; justify-content: center; flex-direction: column;
+        }
+        .jackpot-text {
+            font-size: 42px; font-weight: 900; background: linear-gradient(45deg, #ffcc00, #fff, #ffcc00);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px #ffcc00;
+            animation: radar-pulse 0.5s infinite; text-align: center; line-height: 1.3; padding: 0 20px;
+        }
+
         * { box-sizing: border-box; }
         body { 
             background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -173,7 +183,7 @@ HTML_TEMPLATE = """
         .huge-last-title { font-size: 9px; color: #ffdf73; font-weight: bold; letter-spacing: 1px; }
         .huge-last-val { font-size: 15px; font-weight: 900; text-shadow: 0 0 10px rgba(255,255,255,0.3); margin-top:2px; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin: 2px 0; flex-shrink: 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin: 2px 0; flex-shrink: 0; }
         .stat-card { background: rgba(18,18,18,0.5); backdrop-filter: blur(6px); border: 1px solid #d4af3755; padding: 4px 2px; border-radius: 6px; }
         .stat-card .lbl { font-size: 8px; color: #ccc; font-weight:bold; }
         .stat-card .val { font-size: 12px; font-weight: 900; color: #fff; margin-top: 1px; display: block; }
@@ -259,6 +269,10 @@ HTML_TEMPLATE = """
 
     <div id="winToast" class="win-toast">🏆 WINNER 🏆</div>
 
+    <div id="jackpotOverlay" class="jackpot-overlay" onclick="this.style.display='none'">
+        <div class="jackpot-text" id="jackpotMsg">🎉 MEGA JACKPOT 🎉<br><span id="jpSubText" style="font-size:22px; color:#00ff88;"></span></div>
+    </div>
+
     <div id="keyWarnModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
         <div style="background:linear-gradient(145deg, #220000, #3d0000); border:3px solid #ff3300; border-radius:20px; padding:20px; text-align:center; max-width:320px; box-shadow:0 0 35px #ff3300; animation:pulse-warn 1.5s infinite;">
             <div style="font-size:38px; margin-bottom:5px;">⚠️</div>
@@ -296,6 +310,9 @@ HTML_TEMPLATE = """
             </div>
             <div class="stat-card" style="border-color: #ff4444aa; background: rgba(255,68,68,0.15);">
                 <div class="lbl" style="color:#ff4444;">LOSS</div><span class="val" id="statLosses" style="color: #ff4444;">0</span>
+            </div>
+            <div class="stat-card" style="border-color: #ffcc00aa; background: rgba(255,204,0,0.15);">
+                <div class="lbl" style="color:#ffcc00;">JACKPOT</div><span class="val" id="statJackpots" style="color: #ffcc00;">0</span>
             </div>
         </div>
 
@@ -392,7 +409,7 @@ HTML_TEMPLATE = """
         const WORKER_URL = "https://wingo-cloudflare-worker.anishanisha143love.workers.dev";
         const KEY_EXPIRE_ISO = "{{ session.get('key_expire_iso', '') }}";
         
-        let totalRounds = 0, winsCount = 0, lossesCount = 0;
+        let totalRounds = 0, winsCount = 0, lossesCount = 0, jackpotsCount = 0;
         let historyLogs = [];
         let hasRevealedThisRound = false; 
         let isAnalyzing = false;
@@ -553,6 +570,18 @@ HTML_TEMPLATE = """
             }, 3500);
         }
 
+        function showJackpotOverlay(targetNum, targetType) {
+            const overlay = document.getElementById('jackpotOverlay');
+            const sub = document.getElementById('jpSubText');
+            sub.innerText = `JACKPOT TARGET: ${targetType} : ${targetNum} (Verified via 16 Engines)`;
+            overlay.style.display = 'flex';
+            try { 
+                const jp = new Audio("https://assets.mixkit.co/active_storage/sfx/2020/2020-preview.mp3"); 
+                jp.volume = 1.0; jp.play().catch(e=>{}); 
+            } catch(e) {}
+            setTimeout(() => { overlay.style.display = 'none'; }, 5000);
+        }
+
         function getLiveUTCPeriod() {
             const now = new Date();
             const totalMins = now.getUTCHours() * 60 + now.getUTCMinutes();
@@ -626,8 +655,7 @@ HTML_TEMPLATE = """
                             const wEl = document.getElementById('winCnt' + j);
                             if (wEl) wEl.innerText = `(${engineWins[j]})`;
 
-                            // Exact Number Match Calculation 
-                            // ये काउंट तब बढ़ेगा जब इंजन का नंबर रिजल्ट के नंबर से मैच करेगा 
+                            // Exact Number Match Calculation (Status bar me update - 🎯(0) )
                             if (lastEngineNums[j] !== null && lastEngineNums[j] === actNum) {
                                 engineExactMatches[j]++;
                             }
@@ -635,7 +663,12 @@ HTML_TEMPLATE = """
                             if (exactEl) exactEl.innerText = `🎯(${engineExactMatches[j]})`;
                         }
 
-                        if (currentPredType === actType && hasRevealedThisRound) {
+                        // Main display Win/Loss/Jackpot Logic
+                        if (currentPredType === actType && currentPredNum === actNum && hasRevealedThisRound) {
+                            jackpotsCount++; winsCount++; statusRes = "JACKPOT";
+                            showJackpotOverlay(currentPredNum, currentPredType);
+                            lastRoundWasLoss = false;
+                        } else if (currentPredType === actType && hasRevealedThisRound) {
                             winsCount++; statusRes = "WIN";
                             showWinToast();
                             lastRoundWasLoss = false;
@@ -802,9 +835,12 @@ HTML_TEMPLATE = """
 
                     lastEvaluatedIssue = actIssue;
 
+                    // Update Main Display Stats
                     document.getElementById('statTotal').innerText = totalRounds;
                     document.getElementById('statWins').innerText = winsCount;
                     document.getElementById('statLosses').innerText = lossesCount;
+                    document.getElementById('statJackpots').innerText = jackpotsCount;
+                    
                     document.getElementById('statTotal2').innerText = totalRounds;
                     let acc = totalRounds > 0 ? ((winsCount / totalRounds) * 100).toFixed(1) : "0.0";
                     document.getElementById('statAccuracy').innerText = acc + "%";
@@ -839,6 +875,7 @@ HTML_TEMPLATE = """
             let html = '';
             historyLogs.forEach(log => {
                 let badge = log.status === 'WIN' ? '<span class="badge-win">WIN ✅</span>' :
+                            log.status === 'JACKPOT' ? '<span class="badge-win" style="color:#ffcc00; border-color:#ffcc00;">JACKPOT 🌟</span>' :
                             '<span class="badge-loss">LOSS ❌</span>';
                 let actColor = log.act_type === 'BIG' ? '#00ff88' : '#ff4444';
                 html += `
