@@ -732,7 +732,7 @@ HTML_TEMPLATE = """
                     }
 
                     // ==========================================
-                    // ENGINE 16: Sequence Trend Engine (Last 100 Results, Consecutive Transitions)
+                    // ENGINE 16: Sequence Trend Engine (Last 100 Results)
                     // ==========================================
                     let seqPool = pool.slice(0, 100);
                     let seqNum = lastN;
@@ -780,8 +780,31 @@ HTML_TEMPLATE = """
                     const modeLbl = document.getElementById('modeStatusLbl');
 
                     if (lastRoundWasLoss) {
-                        if (modeLbl) { modeLbl.innerText = "🚨 RECOVERY MODE (TOP 5 + ENG 16 ACTIVE)"; modeLbl.style.color = "#ff4444"; }
-                        activeIndices = [1, 2, 5, 8, 9, 16]; // Top 5 + Sequence Trend Engine 16
+                        // --- NEW DYNAMIC RECOVERY LOGIC ---
+                        let engineRanking = [];
+                        for (let i = 1; i <= 16; i++) {
+                            engineRanking.push({ id: i, score: engineExactMatches[i] });
+                        }
+                        
+                        // Sort engines based on exact match score (highest first)
+                        engineRanking.sort((a, b) => b.score - a.score);
+                        
+                        let top5Dynamic = [];
+                        // Check if any engine has a score > 0
+                        if (engineRanking[0].score > 0) {
+                            for (let i = 0; i < 5; i++) {
+                                top5Dynamic.push(engineRanking[i].id);
+                            }
+                        } else {
+                            // Default fallback if no engine has scored yet
+                            top5Dynamic = [1, 2, 5, 8, 9];
+                        }
+
+                        if (modeLbl) { 
+                            modeLbl.innerText = "🚨 RECOVERY MODE (DYNAMIC TOP 5 ENGINES)"; 
+                            modeLbl.style.color = "#ff4444"; 
+                        }
+                        activeIndices = top5Dynamic;
                         for (let i = 1; i <= 16; i++) {
                             updateUIEngine('uiEng' + i, engineData[i].size, engineData[i].num, !activeIndices.includes(i));
                         }
