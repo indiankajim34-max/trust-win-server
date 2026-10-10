@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'trustwin_ultimate_secret_key_2026_engine16_jackpot'
+app.secret_key = 'trustwin_ultimate_secret_key_2026_engine17_seq_trend'
 
 # Secure Firebase Initialization via Render Environment Variables
 if not firebase_admin._apps:
@@ -87,7 +87,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Trust Win VIP - 16 Engines Jackpot Tracker</title>
+    <title>Trust Win VIP - 17 Engines Sequence Trend AI</title>
     <style>
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); border-color: #d4af37; }
@@ -289,7 +289,7 @@ HTML_TEMPLATE = """
                 <span>🔑 KEY: <span style="color:#00ff88;">ACTIVE</span> (<span id="keyTimer" style="color:#ffdf73;">Syncing...</span>)</span>
             </div>
             <div class="main-title">🍁 TRUST WIN 🍁</div>
-            <div class="sub-engine">16-ENGINES JACKPOT TRACKER AI</div>
+            <div class="sub-engine">17-ENGINES SEQUENCE TREND AI</div>
             <div class="time-row">
                 <span id="currentTime">--:--:-- PM</span>
                 <span id="currentDate">--/--/----</span>
@@ -333,16 +333,16 @@ HTML_TEMPLATE = """
 
         <div id="tab-stats" class="tab-content">
             <div style="background:rgba(20,20,20,0.6); backdrop-filter:blur(6px); border:1px solid #d4af37; border-radius:10px; padding:10px; overflow-y:auto; flex-grow:1;">
-                <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 16 ENGINES & JACKPOT TRACKER</div>
+                <div style="font-size:11px; color:#ffdf73; font-weight:900; margin-bottom:8px; text-align:center;">📊 17 ENGINES & JACKPOT TRACKER</div>
                 
                 <div style="background:rgba(0,0,0,0.7); border-radius:6px; padding:8px; text-align:left; font-size:10px; font-weight:bold; border:1px solid #444;">
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Total Rounds:</span> <b id="statTotal2" style="color:#fff;">0</b></p>
                     <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Real Accuracy:</span> <b id="statAccuracy" style="color:#00ff88;">0.0%</b></p>
-                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Mode:</span> <b id="modeStatusLbl" style="color:#00ff88;">NORMAL (16 ENGINES)</b></p>
+                    <p style="display:flex; justify-content:space-between; margin:3px 0;"><span>Mode:</span> <b id="modeStatusLbl" style="color:#00ff88;">NORMAL (17 ENGINES)</b></p>
                 </div>
 
                 <div class="engine-status-box">
-                    <div class="engine-header">🤖 16 ENGINES (W: Wins | 🅩 J: Jackpots)</div>
+                    <div class="engine-header">🤖 17 ENGINES (W: Wins | 🅩 J: Jackpots)</div>
                     <div class="engine-row"><span>1. Sequence Opposite <b style="color:#00ff88; font-size:9px;" id="winCnt1">(0)</b> <b style="color:#ffcc00; font-size:9px;" id="jpCnt1">🅩(0)</b>:</span> <b id="uiEng1">--</b></div>
                     <div class="engine-row"><span>2. Statistical Engine <b style="color:#00ff88; font-size:9px;" id="winCnt2">(0)</b> <b style="color:#ffcc00; font-size:9px;" id="jpCnt2">🅩(0)</b>:</span> <b id="uiEng2">--</b></div>
                     <div class="engine-row"><span>3. Psychology Engine <b style="color:#00ff88; font-size:9px;" id="winCnt3">(0)</b> <b style="color:#ffcc00; font-size:9px;" id="jpCnt3">🅩(0)</b>:</span> <b id="uiEng3">--</b></div>
@@ -359,6 +359,7 @@ HTML_TEMPLATE = """
                     <div class="engine-row"><span>14. Dual Confirm Engine <b style="color:#00ff88; font-size:9px;" id="winCnt14">(0)</b> <b style="color:#ffcc00; font-size:9px;" id="jpCnt14">🅩(0)</b>:</span> <b id="uiEng14">--</b></div>
                     <div class="engine-row"><span>15. Dual Lock Engine <b style="color:#00ff88; font-size:9px;" id="winCnt15">(0)</b> <b style="color:#ffcc00; font-size:9px;" id="jpCnt15">🅩(0)</b>:</span> <b id="uiEng15">--</b></div>
                     <div class="engine-row"><span>16. Adaptive History Engine <b style="color:#00ff88; font-size:9px;" id="winCnt16">(0)</b> <b style="color:#ffcc00; font-size:9px;" id="jpCnt16">🅩(0)</b>:</span> <b id="uiEng16">--</b></div>
+                    <div class="engine-row"><span>17. Sequence Trend Engine <b style="color:#00ff88; font-size:9px;" id="winCnt17">(0)</b> <b style="color:#ffcc00; font-size:9px;" id="jpCnt17">🅩(0)</b>:</span> <b id="uiEng17">--</b></div>
                     <div class="engine-row final-vote"><span>FINAL VOTING MAJORITY:</span> <b id="uiEngFinal" style="font-size:11px;">--</b></div>
                 </div>
             </div>
@@ -389,7 +390,7 @@ HTML_TEMPLATE = """
                     <p>Active Key: <span style="color:#00ff88;">{{ session.get('active_key', 'N/A') }}</span></p>
                     <p>License Status: <span style="color:#00ff88;">Active VIP</span></p>
                     <p>Time Remaining: <span id="profileKeyTimer" style="color:#ffdf73;">Calculating...</span></p>
-                    <p>Server: <span style="color:#ffdf73;">16 Engines Jackpot Tracker Server</span></p>
+                    <p>Server: <span style="color:#ffdf73;">17 Engines Sequence Trend Server</span></p>
                     <br>
                     <a href="/logout" style="display:block; text-align:center; background:linear-gradient(45deg, #ff4444, #cc0000); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-weight:900; font-size:13px; box-shadow:0 4px 10px rgba(255,0,0,0.4);">LOGOUT ACCOUNT</a>
                 </div>
@@ -422,10 +423,10 @@ HTML_TEMPLATE = """
         let lastRoundWasLoss = false, lastMajorityType = null;
         let warnTriggered120 = false, warnTriggered90 = false, warnTriggered60 = false, warnTriggered30 = false;
 
-        let engineWins = Array(17).fill(0);
-        let engineJackpots = Array(17).fill(0);
-        let lastEnginePreds = Array(17).fill(null);
-        let lastEngineNums = Array(17).fill(0);
+        let engineWins = Array(18).fill(0);
+        let engineJackpots = Array(18).fill(0);
+        let lastEnginePreds = Array(18).fill(null);
+        let lastEngineNums = Array(18).fill(0);
 
         let eng16Mode = "OLD";
         let eng16ConsecutiveLosses = 0;
@@ -577,7 +578,7 @@ HTML_TEMPLATE = """
         function showJackpotOverlay(targetNum, targetType) {
             const overlay = document.getElementById('jackpotOverlay');
             const sub = document.getElementById('jpSubText');
-            sub.innerText = `JACKPOT TARGET: ${targetType} : ${targetNum} (Verified via 16 Engines)`;
+            sub.innerText = `JACKPOT TARGET: ${targetType} : ${targetNum} (Verified via 17 Engines)`;
             overlay.style.display = 'flex';
             try { 
                 const jp = new Audio("https://assets.mixkit.co/active_storage/sfx/2020/2020-preview.mp3"); 
@@ -651,7 +652,7 @@ HTML_TEMPLATE = """
                         totalRounds++;
                         let statusRes = "LOSS";
 
-                        for(let j=1; j<=16; j++) {
+                        for(let j=1; j<=17; j++) {
                             if (lastEnginePreds[j] === actType) {
                                 engineWins[j]++;
                             }
@@ -659,13 +660,12 @@ HTML_TEMPLATE = """
                             if (wEl) wEl.innerText = `(${engineWins[j]})`;
                         }
 
-                        // Check Jackpots for each engine when actual result matches exact prediction
                         if (currentPredType === actType && currentPredNum === actNum && hasRevealedThisRound) {
                             jackpotsCount++; winsCount++; statusRes = "JACKPOT";
                             showJackpotOverlay(currentPredNum, currentPredType);
                             lastRoundWasLoss = false;
 
-                            for(let j=1; j<=16; j++) {
+                            for(let j=1; j<=17; j++) {
                                 if (lastEnginePreds[j] === actType && lastEngineNums[j] === actNum) {
                                     engineJackpots[j]++;
                                 }
@@ -752,7 +752,7 @@ HTML_TEMPLATE = """
                         engineData[i] = { size: engSize, num: engNum };
                     }
 
-                    // Engine 16 Adaptive History & Trend Number Engine
+                    // Engine 16: Adaptive History & Trend Number Engine
                     let eng16Pool = pool.slice(0, 300);
                     let eng16Num = lastN;
                     let eng16TransitionMap = Array(10).fill(0).map(() => Array(10).fill(0));
@@ -797,9 +797,48 @@ HTML_TEMPLATE = """
                     engineData[16] = { size: eng16Size, num: eng16Num };
                     eng16LastPredType = eng16Size;
 
+                    // ==========================================
+                    // ENGINE 17: Sequence Trend Engine (Last 100 Results, Consecutive Transitions)
+                    // ==========================================
+                    let eng17Pool = pool.slice(0, 100);
+                    let eng17Num = lastN;
+                    let eng17TransitionMap = Array(10).fill(0).map(() => Array(10).fill(0));
+
+                    for (let i = 0; i < eng17Pool.length - 1; i++) {
+                        let prevNum = parseInt(eng17Pool[i+1].number, 10);
+                        let currNum = parseInt(eng17Pool[i].number, 10);
+                        eng17TransitionMap[prevNum][currNum]++;
+                    }
+
+                    let row17 = eng17TransitionMap[lastN];
+                    let maxFreq17 = -1;
+                    let bestN17 = lastN;
+                    for (let n = 0; n <= 9; n++) {
+                        if (row17[n] > maxFreq17) {
+                            maxFreq17 = row17[n];
+                            bestN17 = n;
+                        }
+                    }
+
+                    // If exact pair transition not found, check the latest active sequence pair (e.g. n1 -> lastN) in last 100
+                    if (maxFreq17 === 0 && eng17Pool.length >= 2) {
+                        let nPrev = parseInt(eng17Pool[1].number, 10);
+                        let nCurr = parseInt(eng17Pool[0].number, 10);
+                        for (let i = 0; i < eng17Pool.length - 2; i++) {
+                            if (parseInt(eng17Pool[i+2].number, 10) === nPrev && parseInt(eng17Pool[i+1].number, 10) === nCurr) {
+                                bestN17 = parseInt(eng17Pool[i].number, 10);
+                                break;
+                            }
+                        }
+                    }
+
+                    eng17Num = (maxFreq17 > 0 || bestN17 !== lastN) ? bestN17 : topTransitionNum;
+                    let eng17Size = eng17Num >= 5 ? "BIG" : "SMALL";
+                    engineData[17] = { size: eng17Size, num: eng17Num };
+
                     lastEnginePreds = [null];
                     lastEngineNums = [null];
-                    for (let i = 1; i <= 16; i++) {
+                    for (let i = 1; i <= 17; i++) {
                         lastEnginePreds[i] = engineData[i].size;
                         lastEngineNums[i] = engineData[i].num;
                     }
@@ -808,15 +847,15 @@ HTML_TEMPLATE = """
                     const modeLbl = document.getElementById('modeStatusLbl');
 
                     if (lastRoundWasLoss) {
-                        if (modeLbl) { modeLbl.innerText = "🚨 RECOVERY MODE (TOP 5 + ENG 16 ACTIVE)"; modeLbl.style.color = "#ff4444"; }
-                        activeIndices = [1, 2, 5, 8, 9, 16];
-                        for (let i = 1; i <= 16; i++) {
+                        if (modeLbl) { modeLbl.innerText = "🚨 RECOVERY MODE (TOP 5 + ENG 16 & 17 ACTIVE)"; modeLbl.style.color = "#ff4444"; }
+                        activeIndices = [1, 2, 5, 8, 9, 16, 17]; // Top 5 + Adaptive Engine 16 + Sequence Trend Engine 17
+                        for (let i = 1; i <= 17; i++) {
                             updateUIEngine('uiEng' + i, engineData[i].size, engineData[i].num, !activeIndices.includes(i));
                         }
                     } else {
-                        if (modeLbl) { modeLbl.innerText = "🟢 NORMAL MODE (16 ENGINES)"; modeLbl.style.color = "#00ff88"; }
-                        activeIndices = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
-                        for (let i = 1; i <= 16; i++) {
+                        if (modeLbl) { modeLbl.innerText = "🟢 NORMAL MODE (17 ENGINES)"; modeLbl.style.color = "#00ff88"; }
+                        activeIndices = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+                        for (let i = 1; i <= 17; i++) {
                             updateUIEngine('uiEng' + i, engineData[i].size, engineData[i].num, false);
                         }
                     }
